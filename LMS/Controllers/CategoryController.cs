@@ -75,7 +75,7 @@ namespace YourNamespace.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(string id)
         {
             await _categoryService.DeleteCategory(id);
 

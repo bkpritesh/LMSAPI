@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using LMS.Utility;
+using Model.Students;
 
 namespace LMS.Controllers
 {
@@ -25,15 +26,9 @@ namespace LMS.Controllers
             _configuration = configuration;
         }
 
-
-
-
-
         [HttpPost]
         public async Task<IActionResult> AddAccount([FromBody] Account account) 
-       
-
-          {
+        {
             try
             {
                 var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
@@ -63,19 +58,25 @@ namespace LMS.Controllers
                 {
                     return BadRequest("Failed to send password reset link to your email address.");
                 }
-
-                                       
-
-              
             }
             catch (Exception ex)
             {
             
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-         }
-               
+        }
 
-     
-    }
+        [HttpPost("Student")]
+        public async Task<IActionResult> StudentAdmission(RequestRegister requestRegister)
+        {
+			// Check ISStudent 
+			// If Student  get Last STudent Code and create New 
+			// Is Paid then add Billing Record 
+			// INsert StudentEnrollment and BillingPayment and UsersDetails
+            // Send Email 
+
+			return Ok();
+        }
+
+	}
 }
