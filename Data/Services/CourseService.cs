@@ -2,6 +2,7 @@
 using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
+using Model.Courses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -104,6 +105,17 @@ namespace Data.Services
             return results;
         }
 
+		public async Task<IEnumerable<Course>> CourseFilter(RequestCourseFilter course)
+		{
+			var parameters = new DynamicParameters();
+			parameters.Add("@param_CategoryCode", course.CategoryCode);
+			parameters.Add("@param_Level", course.Level);
+			parameters.Add("@param_SkillTags", course.SkillTags);
+			parameters.Add("@param_Price", course.Price);
+			parameters.Add("@param_CourseKeyWord", course.CourseKeyWord);
 
-    }
+			var results = await _dbConnection.QueryAsync<Course>("GetCourse", parameters, commandType: CommandType.StoredProcedure);
+            return results;
+		}
+	}
 }

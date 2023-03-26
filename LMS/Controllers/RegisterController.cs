@@ -73,7 +73,8 @@ namespace LMS.Controllers
 			// If Student  get Last STudent Code and create New 
 			// Is Paid then add Billing Record 
 			// INsert StudentEnrollment and BillingPayment and UsersDetails
-            // Send Email 
+			// Send Email 
+			// ProfileImg Set Detailt Image Path 
 
 			return Ok();
         }

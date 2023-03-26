@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Courses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace Data.Repositary
         Task<Course> GetCourseByID(string CourseCode);
         //  Task<Course> GetCourseByID(string CourseCode);
  
-
         Task<Course> UpdateCourse(Course course);
         Task<AddCourse> AddCourse(AddCourse course);
         Task<IEnumerable<Course>> DeleteCourse(string CourseCode);
-    }
+		Task<IEnumerable<Course>> CourseFilter(RequestCourseFilter course);
+	}
 }

@@ -81,5 +81,13 @@ namespace YourNamespace.Controllers
 
             return NoContent();
         }
-    }
+
+        [HttpPost]
+		public async Task<IActionResult> GetCourseFilter(string CourseCode)
+		{
+			await _courseService.DeleteCourse(CourseCode);
+
+			return NoContent();
+		}
+	}
 }
