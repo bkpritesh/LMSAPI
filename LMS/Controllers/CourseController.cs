@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Data.Services;
 using Data.Repositary;
 using Model;
+using Model.Courses;
 
 namespace YourNamespace.Controllers
 {
@@ -82,11 +83,11 @@ namespace YourNamespace.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-		public async Task<IActionResult> GetCourseFilter(string CourseCode)
+	
+		[HttpPost("CourseSearch")]
+		public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
 		{
-			await _courseService.DeleteCourse(CourseCode);
-
+			await _courseService.CourseFilter(courseFilter);
 			return NoContent();
 		}
 	}
