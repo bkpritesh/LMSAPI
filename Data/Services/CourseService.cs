@@ -3,11 +3,13 @@ using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
 using Model.Courses;
+using NLog.Web;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,8 +20,8 @@ namespace Data.Services
 
 
         private readonly IDbConnection _dbConnection;
-
-        public CourseService(IConfiguration configuration)
+		private static NLog.Logger Log = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+		public CourseService(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("SqlConnection");
             _dbConnection = new SqlConnection(connectionString);
@@ -27,7 +29,8 @@ namespace Data.Services
 
         public async Task<IEnumerable<Course>> GetCourse()
         {
-            var results = await _dbConnection.QueryAsync<Course>("GetCourse", commandType: CommandType.StoredProcedure);
+			Log.Error("Service");
+			var results = await _dbConnection.QueryAsync<Course>("GetCourse", commandType: CommandType.StoredProcedure);
             return results;
         }
         public async Task<Course> GetCourseByID(string CourseCode)
@@ -114,7 +117,7 @@ namespace Data.Services
 			parameters.Add("@param_Price", course.Price);
 			parameters.Add("@param_CourseKeyWord", course.CourseKeyWord);
 
-			var results = await _dbConnection.QueryAsync<Course>("GetCourse", parameters, commandType: CommandType.StoredProcedure);
+			var results = await _dbConnection.QueryAsync<Course>("usp_Course_Filter", parameters, commandType: CommandType.StoredProcedure);
             return results;
 		}
 	}

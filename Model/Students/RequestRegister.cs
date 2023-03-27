@@ -19,9 +19,10 @@ namespace Model.Students
 		public string ContactNo { get; set; }
 		public string Education { get; set; }
 		public string SkillSet { get; set; }
-		public string Birthdate { get; set; }
-		public string JoiningDate { get; set; }
+		public DateTime? Birthdate { get; set; }
+		public DateTime? JoiningDate { get; set; }
 		public string AccountType { get; set; }
+		public string CategoryCode { get; set; }
 		public string  CourseCode { get; set; }
 		public decimal CourseFees { get; set; }
 		public decimal Discount { get; set; }

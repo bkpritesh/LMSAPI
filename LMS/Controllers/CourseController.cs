@@ -4,6 +4,7 @@ using Data.Services;
 using Data.Repositary;
 using Model;
 using Model.Courses;
+using NLog.Web;
 
 namespace YourNamespace.Controllers
 {
@@ -12,8 +13,8 @@ namespace YourNamespace.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourse _courseService;
-
-        public CourseController(ICourse courseService)
+		private static NLog.Logger Log = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+		public CourseController(ICourse courseService)
         {
             _courseService = courseService;
         }
@@ -22,8 +23,9 @@ namespace YourNamespace.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get()
-        {
-            var course = await _courseService.GetCourse();
+		{
+			Log.Error("Manin");
+			var course = await _courseService.GetCourse();
             return Ok(course);
         }
 
@@ -87,8 +89,8 @@ namespace YourNamespace.Controllers
 		[HttpPost("CourseSearch")]
 		public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
 		{
-			await _courseService.CourseFilter(courseFilter);
-			return NoContent();
+			var result = await _courseService.CourseFilter(courseFilter);
+            return Ok(result);
 		}
 	}
 }
