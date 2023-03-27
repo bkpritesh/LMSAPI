@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IStateandCities, StateandCitiesServices>();
 builder.Services.AddSingleton<ICourse,CourseService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<IValidateResetToken, ValidateResetTokenService>();
