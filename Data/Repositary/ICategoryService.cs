@@ -17,6 +17,8 @@ namespace Data.Repositary
         Task<Category> UpdateCategory(Category category);
     
         Task<IEnumerable<Category>> DeleteCategory(string id);
-    
+
+
+        Task<IEnumerable<dynamic>> GetCourseByCategoryID(string CategoryId);
     }
 }

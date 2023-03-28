@@ -81,5 +81,24 @@ namespace YourNamespace.Controllers
 
             return NoContent();
         }
+
+
+
+
+
+        [HttpGet]
+        [Route("cities/{CategoryId}")]
+        public async Task<IActionResult> GetCourseByCategoryID(string CategoryId)
+        {
+            var Category = await _categoryService.GetCourseByCategoryID(CategoryId);
+
+            if (Category == null)
+            {
+                return NotFound(false);
+            }
+
+            return Ok(Category);
+        }
+
     }
 }

@@ -11,5 +11,7 @@ namespace Data.Repositary
         Task<IEnumerable<dynamic>> GetState();
 
         Task<IEnumerable<dynamic>> GetCitiesByStateId(int stateId);
+
+        
     }
 }

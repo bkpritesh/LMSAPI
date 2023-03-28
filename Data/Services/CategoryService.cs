@@ -88,5 +88,12 @@ namespace Data.Services
         }
 
 
+        public async Task<IEnumerable<dynamic>> GetCourseByCategoryID(string CategoryId)
+        {
+
+            var results = await _dbConnection.QueryAsync("[GetCoursebyCategoryID]", new { CategoryId }, commandType: CommandType.StoredProcedure);
+
+            return results;
+        }
     }
 }

@@ -54,28 +54,7 @@ namespace Data.Services
             parameter.Add("@IsAdmin", UserDetails.IsAdmin);
             parameter.Add("@IsGuest", UserDetails.IsGuest);
             parameter.Add("@Email", UserDetails.Email);
-            parameter.Add("@FName", UserDetails.FName);
-            parameter.Add("@MName", UserDetails.MName);
-            parameter.Add("@LName ", UserDetails.LName);
-            parameter.Add("@Address ",UserDetails.Address);
-            parameter.Add("@Status", UserDetails.Status);
-            parameter.Add("@City", UserDetails.City);
-            parameter.Add("@Country", UserDetails.Country);
-            parameter.Add("@ContactNo",UserDetails.ContactNo);
-            parameter.Add("@Education", UserDetails.Education);
-            parameter.Add("@SkillSet", UserDetails.SkillSet);
-            parameter.Add("@BirthDate", UserDetails.BirthDate);
-            parameter.Add("@JoingDate", UserDetails.JoingDate);
-            parameter.Add("@LeavingDate ", UserDetails.LeavingDate);
-            parameter.Add("@IsLeaving ", UserDetails.IsLeaving);
-            parameter.Add("@ProfileDes", UserDetails.ProfileDes);
-            parameter.Add("@ProfileImg", UserDetails.ProfileImg);
-            parameter.Add("@CreatedBy ", UserDetails.CreatedBy);
-
-            parameter.Add("@ModifiedBy", UserDetails.ModifiedBy);
-            parameter.Add("@AccounType", UserDetails.AccounType);
-            parameter.Add("@StudentCode ", UserDetails.StudentCode);
-            parameter.Add("@InstructorCode", UserDetails.InstructorCode);
+           
 
             var results = await _dbConnection.QueryAsync<UserDetails>("InsertUserDetail", parameter, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();

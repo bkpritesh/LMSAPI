@@ -30,6 +30,8 @@ namespace Data.Services
         public async Task<Account> AddAccount(Account Rs)
         {
             var parameter = new DynamicParameters();
+            Guid accountId = Guid.NewGuid();
+            parameter.Add("@AccountId", accountId);
             parameter.Add("@FirstName", Rs.FirstName);
             parameter.Add("@LastName", Rs.LastName);
             parameter.Add("@Address", Rs.Address);
@@ -47,7 +49,19 @@ namespace Data.Services
 
             var results = await _dbConnection.QueryAsync<Account>("AddAccount", parameter, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
+            //var userDetail = new UserDetails
+            //{
+            //    AccountId=accountId,
+            //    IsInstructor = false,
+            //    IsStudent = false,
+            //    IsAdmin = false,
+            //    IsGuest = false,
+            //    Email = Rs.Email
+            //};
 
+            //await AddUserDetails(accountId, userDetail);
+
+            //return accountId;
         }
     }
 }

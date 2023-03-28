@@ -25,15 +25,15 @@ namespace Model
         public string? Education { get; set; }
         public string? SkillSet { get; set; }
         public DateTime BirthDate { get; set; }
-        public DateTime? JoingDate { get; set; }
+        public DateTime JoingDate { get; set; }
         public DateTime? LeavingDate { get; set; }
         public bool? IsLeaving { get; set; }
-        public string? ProfileDes { get; set; }
-        public string? ProfileImg { get; set; }
+        public string ProfileDes { get; set; }
+        public string ProfileImg { get; set; }
 
         public string? CreatedBy { get; set; }
         public string? ModifiedBy{ get; set; }
-        public string? AccounType { get; set; }
+        public string AccounType { get; set; }
         public string StudentCode { get; set; }
         public string? InstructorCode { get; set; }
     }
