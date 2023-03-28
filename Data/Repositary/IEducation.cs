@@ -9,8 +9,9 @@ namespace Data.Repositary
 {
     public interface  IEducation
     {
-        Task<IEnumerable<Education>> GetSkills();
+        Task<IEnumerable<dynamic>> GetEducaton();
 
-        Task<IEnumerable<Education>> GetQualification();
+        Task<IEnumerable<dynamic>> GetSkills();
     }
 }
+ 

@@ -3,10 +3,14 @@ using Data.Repositary;
 using Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Model;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+builder.Services.AddSingleton<IUserDetail, UserDetailService>();
 builder.Services.AddSingleton<IStateandCities, StateandCitiesServices>();
 builder.Services.AddSingleton<ICourse,CourseService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);

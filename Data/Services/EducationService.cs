@@ -23,14 +23,14 @@ namespace Data.Services
             _dbConnection = new SqlConnection(connectionString);
         }
 
-        public async Task<IEnumerable<Education>> GetQualification()
+        public async Task<IEnumerable<dynamic>> GetEducaton()
         {
-            var results = await _dbConnection.QueryAsync<Education>("GetEducationQualification", commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync("SELECT [EducationID],[Education]FROM [TBLEducations]");
             return results;
         }
-        public async Task<IEnumerable<Education>> GetSkills()
+        public async Task<IEnumerable<dynamic>> GetSkills ()
         {
-            var results = await _dbConnection.QueryAsync<Education>("GetSkills", commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync("SELECT [SkillId],[Skills] FROM [TBLSkills]");
             return results;
         }
     }

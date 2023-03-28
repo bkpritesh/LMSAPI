@@ -9,7 +9,6 @@ namespace Data.Repositary
 {
     public interface IFilterCourse
     {
-       
-        Task<List<FilterCourse>> FilterCourses(FilterCourse Fcourse);
+       Task<List<FilterCourse>> FilterCourses(FilterCourse Fcourse);
     }
 }

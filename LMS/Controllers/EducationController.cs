@@ -20,9 +20,9 @@ namespace LMS.Controllers
         
 
         [HttpGet("Qualification")]
-        public async Task<IActionResult> GetQualification()
+        public async Task<IActionResult> GetEducaton()
         {
-            var education = await _EducationService.GetQualification();
+            var education = await _EducationService.GetEducaton();
             return Ok(education);
         }
 
