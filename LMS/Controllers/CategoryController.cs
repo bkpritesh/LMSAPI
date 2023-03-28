@@ -87,7 +87,7 @@ namespace YourNamespace.Controllers
 
 
         [HttpGet]
-        [Route("cities/{CategoryId}")]
+        [Route("Course/{CategoryId}")]
         public async Task<IActionResult> GetCourseByCategoryID(string CategoryId)
         {
             var Category = await _categoryService.GetCourseByCategoryID(CategoryId);
