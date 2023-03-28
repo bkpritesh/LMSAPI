@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class FIlterCourse
+    public class FilterCourse
     {
+
+        public string? CategoryCode { get; set; }
+        public string? CourseName { get; set; }
+
+        public int? Level { get; set; }
+
+        public bool? IsFree { get; set; }
+        public string? SkillTags { get; set; }
+
     }
 }
