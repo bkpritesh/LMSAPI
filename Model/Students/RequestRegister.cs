@@ -8,6 +8,7 @@ namespace Model.Students
 {
 	public class RequestRegister
 	{
+
 		public string FName { get; set; }
 		public string MName { get; set; }
 		public string LName { get; set; }

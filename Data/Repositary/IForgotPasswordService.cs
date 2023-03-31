@@ -14,6 +14,5 @@ namespace Data.Repositary
         Task<Account> IsEmailExists(string email, string resetToken);
 
 
-
     }
 }

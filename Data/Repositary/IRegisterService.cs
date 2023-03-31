@@ -10,7 +10,9 @@ namespace Data.Repositary
 {
      public interface IRegisterService
      {
-
+       
         Task<Account> AddAccount(Account Rs);
+
+
     }
 }

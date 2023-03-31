@@ -102,7 +102,7 @@ namespace Data.Services
         public async Task<IEnumerable<Course>> DeleteCourse(string CourseCode)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@CourseId", CourseCode);
+            parameters.Add("@CourseCode", CourseCode);
 
             var results = await _dbConnection.QueryAsync<Course>("DeleteCourse", parameters, commandType: CommandType.StoredProcedure);
             return results;
