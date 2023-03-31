@@ -1,6 +1,7 @@
 using Data;
 using Data.Repositary;
 using Data.Services;
+using LMS.Utility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Model;
@@ -9,8 +10,10 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-builder.Services.AddSingleton<IUserDetail, UserDetailService>();
+builder.Services.AddSingleton<ICommanUtility,CommanUtility>();
+builder.Services.AddSingleton<IAccountID, AccountIDService>();
+builder.Services.AddSingleton<IFilterCourse, FilterCourseService>();
+builder.Services.AddScoped<IUserDetail, UserDetailService>();
 builder.Services.AddSingleton<IStateandCities, StateandCitiesServices>();
 builder.Services.AddSingleton<ICourse,CourseService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
