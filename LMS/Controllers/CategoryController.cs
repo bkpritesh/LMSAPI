@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using Data.Services;
 using Data.Repositary;
 using Model;
+using Microsoft.AspNetCore.Authorization;
 
-namespace YourNamespace.Controllers
+namespace LMS.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase

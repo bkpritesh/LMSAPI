@@ -6,7 +6,7 @@ using Model;
 using Model.Courses;
 using NLog.Web;
 
-namespace YourNamespace.Controllers
+namespace LMS.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
