@@ -10,7 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddSingleton<IStudentEnrollment, StudentEnrollmentService>();
 builder.Services.AddSingleton<ICommanUtility,CommanUtility>();
 builder.Services.AddSingleton<IAccountID, AccountIDService>();
 builder.Services.AddSingleton<IFilterCourse, FilterCourseService>();

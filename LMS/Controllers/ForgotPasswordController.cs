@@ -23,7 +23,7 @@ namespace LMS.Controllers
         private readonly IForgotPasswordService _forgotPasswordService;
 
         private readonly IWebHostEnvironment _hostingEnvironment;
-
+       
         public ForgotPasswordController(IForgotPasswordService forgotPasswordService, IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
         {
             _forgotPasswordService = forgotPasswordService;

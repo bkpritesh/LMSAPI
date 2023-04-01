@@ -34,7 +34,7 @@ namespace Data.Services
             return results;
         }
         public async Task<Course> GetCourseByID(string CourseCode)
-        {
+        { 
             var parameters = new DynamicParameters();
             parameters.Add("@CourseCode", CourseCode);
 
@@ -85,8 +85,9 @@ namespace Data.Services
         {
             var parameters = new DynamicParameters();
        
-            parameters.Add("@CourseCode", Ccourse.CategoryCode);
-            parameters.Add("@CourseName", Ccourse.CourseName);
+            parameters.Add("@CourseCode", Ccourse.CourseCode);
+            parameters.Add("@CategoryCode", Ccourse.CategoryCode);
+            parameters.Add("@CourseName", Ccourse.CourseName); 
             parameters.Add("@Description", Ccourse.Description);
             parameters.Add("@Level", Ccourse.Level);
             parameters.Add("@CourseFee", Ccourse.CourseFee);

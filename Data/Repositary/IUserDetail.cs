@@ -11,7 +11,8 @@ namespace Data.Repositary
     public interface IUserDetail
     {
         Task<IEnumerable<UserDetails>> GetUserDetail();
-        Task<UserDetails> AddUserDetail(UserDetails UserDetails);
 
+        // Task<UserDetails> AddUserDetail(RequestRegister RgDetail);
+        Task<UserDetails> AddUserDetail(UserDetails RgDetail);
     }
 }

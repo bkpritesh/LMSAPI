@@ -38,31 +38,14 @@ namespace LMS.Controllers
         }
 
 
-        [HttpPost]
-        //public async Task<ActionResult<UserDetails>> AddUserDetail(UserDetails userDetails)
-        //{
-        //    var result = await _userDetailService.AddUserDetail(userDetails);
-        //    return Ok(result);
-        //}
 
-
-
-        //public async Task<ActionResult<UserDetails>> AddUserDetail(UserDetails userDetails)
-        //{
-        //    userDetails.AccountId = new Account { 
-        //    };
-        //    var result = await _userDetailService.AddUserDetail(userDetails);
-        //    return Ok(result);
-        //}
 
         [HttpPost]
         public async Task<ActionResult<UserDetails>> AddUserDetail(UserDetails userDetails)
         {
             var account = new Account { /* populate account properties here */ };
-            var accountId = await _RgService.AddAccount(account);
-            userDetails.AccountId = accountId.ToString();
-            var result = await _userDetailService.AddUserDetail(userDetails);
-            return Ok(result);
+      
+            return Ok();
         }
 
 

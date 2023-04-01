@@ -20,7 +20,7 @@ namespace Model.Students
 		public string ContactNo { get; set; }
 		public string Education { get; set; }
 		public string SkillSet { get; set; }
-		public DateTime? Birthdate { get; set; }
+		public DateTime? BirthDate { get; set; }
 		public DateTime? JoiningDate { get; set; }
 		public string AccountType { get; set; }
 		public string CategoryCode { get; set; }

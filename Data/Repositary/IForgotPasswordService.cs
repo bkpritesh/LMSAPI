@@ -12,7 +12,5 @@ namespace Data.Repositary
     public interface IForgotPasswordService
     {
         Task<Account> IsEmailExists(string email, string resetToken);
-
-
     }
 }

@@ -35,9 +35,9 @@ namespace LMS.Controllers
         {
             var Course = await _courseService.GetCourseByID(CourseCode);
 
-            if (CourseCode != null)
+            if (Course != null)
             {
-                Course.CourseCode = CourseCode;
+                Course.CourseCode =CourseCode;
             }
             if (Course == null)
             {
@@ -63,15 +63,12 @@ namespace LMS.Controllers
         {
             if (Coursecode!= course.CourseCode)
             {
-                return BadRequest("The Course  ID in the URL doesn't match the one in the request body.");
+                return BadRequest();
             }
 
             var update = await _courseService.UpdateCourse(course);
 
-            if (update == null)
-            {
-                return NotFound($"No category found with ID {Coursecode}");
-            }
+       
 
             return Ok(update);
         }
@@ -81,8 +78,7 @@ namespace LMS.Controllers
         public async Task<IActionResult> DeleteCourse(string  CourseCode)
         {
             await _courseService.DeleteCourse (CourseCode);
-
-            return NoContent();
+            return Ok();
         }
 
 	

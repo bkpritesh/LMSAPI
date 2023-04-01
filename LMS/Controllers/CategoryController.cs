@@ -67,11 +67,6 @@ namespace LMS.Controllers
 
             var updatedCategory = await _categoryService.UpdateCategory(category);
 
-            if (updatedCategory == null)
-            {
-                return NotFound($"No category found with ID {id}");
-            }
-
             return Ok(updatedCategory);
         }
 

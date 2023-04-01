@@ -22,15 +22,19 @@ namespace LMS.Controllers
         private readonly IRegisterService _RgService;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
-
+        private readonly IUserDetail _userDetail;
+        private readonly IStudentEnrollment _studentEnrollment;
         public RegisterController(IRegisterService RgService, IWebHostEnvironment hostingEnvironment, 
-            IConfiguration configuration, IAccountID accountID,ICommanUtility commanUtility)
+            IConfiguration configuration, IAccountID accountID,ICommanUtility commanUtility,
+            IUserDetail userDetail,IStudentEnrollment studentEnrollment)
         {
             _RgService = RgService;
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
             _accountID = accountID;
             _commanUtility = commanUtility;
+            _userDetail= userDetail;
+            _studentEnrollment = studentEnrollment;
         }
 
         [HttpPost]
@@ -84,6 +88,7 @@ namespace LMS.Controllers
         {
 
             {
+            
                 var password = "test@123";
                 var encrypted = _commanUtility.EncryptPassword(password);
                 var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
@@ -103,10 +108,51 @@ namespace LMS.Controllers
                     AccountType= requestRegister.AccountType,
 
 
+
                 };
                 var accountId = await _RgService.AddAccount(account);
 
 
+                var UserDetails = new UserDetails
+                {
+                    IsStudent = requestRegister.IsStudent,
+                    Email = requestRegister.Email,
+                    FName = requestRegister.FName,
+                    MName = requestRegister.MName,
+                    LName = requestRegister.LName,
+                    Address = requestRegister.Address,
+                    City = requestRegister.City,
+                    Country = requestRegister.Country,
+                    ContactNo = requestRegister.ContactNo,
+                    Education = requestRegister.Education,
+                    SkillSet = requestRegister.SkillSet,
+                    BirthDate = requestRegister.BirthDate,
+                    JoiningDate = requestRegister.JoiningDate,
+                    
+
+
+                };
+
+
+
+                var UD = await _userDetail.AddUserDetail(UserDetails);
+
+
+                var StudEnrolment = new StudentEnrollment
+                { 
+                 CategoryCode=requestRegister.CategoryCode,
+                 CourseCode=requestRegister.CourseCode, 
+                 CourseFees= requestRegister.CourseFees, 
+                 Discount=requestRegister.Discount,
+                 TotalFees= requestRegister.TotalFees,  
+                 IsPaid = requestRegister.IsPaid,
+                 PaidAmount= requestRegister.PaidAmount,
+                
+                
+                };
+
+
+               // var StudentEnrolment = await _studentEnrollmen(UserDetails);
                 // Account Id= GUID
                 // IsStudent
                 // Student Code - 
