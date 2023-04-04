@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Students;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Data.Repositary
 {
     public interface IStudentEnrollment
     {
+        Task<StudentEnrollment> Enrollment(StudentEnrollment StudEnrol);
     }
 }

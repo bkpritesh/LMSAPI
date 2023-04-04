@@ -66,7 +66,7 @@ namespace LMS.Controllers
                     }
                     else
                     {
-                        return BadRequest("Failed to send password reset link to your email address.");
+                        return BadRequest(false);
                     }
                     return Ok(emailExists);
 

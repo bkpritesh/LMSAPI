@@ -10,5 +10,7 @@ namespace Data.Services
     public  class AccountIDService: IAccountID
     {
        public  Guid AccountId { get; set; }
+
+        public string StudentID { get; set; }
     }
 }

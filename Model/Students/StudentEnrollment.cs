@@ -13,7 +13,6 @@ namespace Model.Students
         public decimal CourseFees { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalFees { get; set; }
-        public bool IsPaid { get; set; }
-        public decimal PaidAmount { get; set; }
+ 
     }
 }

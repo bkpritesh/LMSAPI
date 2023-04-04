@@ -71,8 +71,8 @@ namespace Data.Services
                 NewStudId = 0;
             }
             var nextStudentID = $"S-{NewStudId + 1:D4}";
-
-   
+            _accountId.StudentID = nextStudentID;
+            
 
             parameters.Add("@IsStudent", RgDetail.IsStudent);
             parameters.Add("@Email", RgDetail.Email);

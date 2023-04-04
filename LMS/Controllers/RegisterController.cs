@@ -10,6 +10,7 @@ using LMS.Utility;
 using Model.Students;
 using Data.Services;
 using System.Security.Principal;
+using System.Data;
 
 namespace LMS.Controllers
 {
@@ -24,9 +25,12 @@ namespace LMS.Controllers
         private readonly IConfiguration _configuration;
         private readonly IUserDetail _userDetail;
         private readonly IStudentEnrollment _studentEnrollment;
+        private readonly IBIllPayment _BillPayment;
+        private readonly IDbConnection _dbConnection;
         public RegisterController(IRegisterService RgService, IWebHostEnvironment hostingEnvironment, 
             IConfiguration configuration, IAccountID accountID,ICommanUtility commanUtility,
-            IUserDetail userDetail,IStudentEnrollment studentEnrollment)
+            IUserDetail userDetail,IStudentEnrollment studentEnrollment,
+            IBIllPayment billPayment,IDbConnection dbConnection)
         {
             _RgService = RgService;
             _hostingEnvironment = hostingEnvironment;
@@ -35,7 +39,10 @@ namespace LMS.Controllers
             _commanUtility = commanUtility;
             _userDetail= userDetail;
             _studentEnrollment = studentEnrollment;
+            _BillPayment= billPayment;
+            _dbConnection = dbConnection; 
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddAccount([FromBody] Account account)
@@ -144,20 +151,82 @@ namespace LMS.Controllers
                  CourseCode=requestRegister.CourseCode, 
                  CourseFees= requestRegister.CourseFees, 
                  Discount=requestRegister.Discount,
-                 TotalFees= requestRegister.TotalFees,  
-                 IsPaid = requestRegister.IsPaid,
-                 PaidAmount= requestRegister.PaidAmount,
-                
-                
+                 TotalFees = requestRegister.CourseFees - requestRegister.Discount,
+
+
+            };
+                var StudR = await _studentEnrollment.Enrollment(StudEnrolment);
+
+
+                var bill = new BillPayment
+                {
+                   Amount=requestRegister.PaidAmount,
+                   CourseCode=requestRegister.CourseCode,
+
+
                 };
 
+                var Billpayment = await _BillPayment.BillPayment(bill);
 
-               // var StudentEnrolment = await _studentEnrollmen(UserDetails);
+
+
+
+
+                try
+                {
+                    var ResetToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                    var emailExists = requestRegister.Email;
+
+                    if (emailExists != null)
+                    {
+                        var senderEmail = requestRegister.Email; ;
+                        var subject = "Password Reset Request";
+
+                        var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "AccountConfirmation.html");
+
+                        
+                        //var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplate", "PasswordReset.html");
+                        var message = await System.IO.File.ReadAllTextAsync(path);
+
+
+                        //  var message = System.IO.File.ReadAllText(@"~/EmailTemplate/PasswordReset.html");
+                        var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
+
+                        var CourseNameResult = await _dbConnection.QueryAsync("GetCourseNameByCourseID", new { requestRegister.CourseCode }, commandType: CommandType.StoredProcedure);
+                        var CourseName = CourseNameResult.FirstOrDefault();
+
+                        message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/ForgortPassword/ResetPassword/RestToken=?" + ResetToken)
+                                         .Replace("[Course Name]", CourseName)
+                                         .Replace("[]");
+
+                        bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+
+
+                        if (isEmailSent)
+                        {
+                            return Ok(true);
+                        }
+                        else
+                        {
+                            return BadRequest(false);
+                        }
+                        return Ok(emailExists);
+
+                    }
+
+                    return BadRequest(false);
+                }
+                catch (Exception ex)
+                {
+
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
+                // var StudentEnrolment = await _studentEnrollmen(UserDetails);
                 // Account Id= GUID
                 // IsStudent
                 // Student Code - 
                 // 1. Account Insert 
-                // 2. userdestk
+                // 2. userdestkpp
 
 
                 // Check ISStudent 

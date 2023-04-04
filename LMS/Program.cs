@@ -10,6 +10,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+builder.Services.AddSingleton<IBIllPayment, BillPaymentSevice>();
+builder.Services.AddSingleton<IBIllPayment, BillPaymentSevice>();
 builder.Services.AddSingleton<IStudentEnrollment, StudentEnrollmentService>();
 builder.Services.AddSingleton<ICommanUtility,CommanUtility>();
 builder.Services.AddSingleton<IAccountID, AccountIDService>();

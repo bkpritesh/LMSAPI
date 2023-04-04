@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Students;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Repositary
 {
-public interface IAccountID
+    public interface  IBIllPayment
     {
-        Guid AccountId { get; set; }
-
-        string StudentID { get; set; }
+        Task<BillPayment> BillPayment(BillPayment billPayment);
     }
 }

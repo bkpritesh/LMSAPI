@@ -37,7 +37,7 @@ namespace Data.Services
 
 
             parameter.Add("@AccountId", _accountID.AccountId);
-                parameter.Add("@FirstName", Rs.FirstName);
+            parameter.Add("@FirstName", Rs.FirstName);
             parameter.Add("@LastName", Rs.LastName);
             parameter.Add("@Address", Rs.Address);
             parameter.Add("@Skills", Rs.Skills);

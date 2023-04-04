@@ -2,7 +2,6 @@
 using Data.Repositary;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Model;
 using Model.Students;
 using System;
 using System.Collections.Generic;
@@ -13,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace Data.Services
 {
-   public class StudentEnrollmentService : IStudentEnrollment
+    public class BillPaymentSevice : IBIllPayment
     {
+
         private readonly IAccountID _accountID;
         private readonly IDbConnection _dbConnection;
 
-        public StudentEnrollmentService(IConfiguration configuration, IAccountID accountID)
+        public BillPaymentSevice(IConfiguration configuration, IAccountID accountID)
         {
             var connectionString = configuration.GetConnectionString("SqlConnection");
             _dbConnection = new SqlConnection(connectionString);
@@ -27,27 +27,26 @@ namespace Data.Services
 
 
 
-        public async Task<StudentEnrollment> Enrollment(StudentEnrollment StudEnrol)
+        public async Task<BillPayment> BillPayment(BillPayment billPayment)
         {
 
             var parameter = new DynamicParameters();
 
-
-            parameter.Add("@AccountId", _accountID.AccountId);
-            parameter.Add("@CategoryCode", StudEnrol.CategoryCode);
-            parameter.Add("@CourseCode", StudEnrol.CourseCode);
-            parameter.Add("@CourseFees", StudEnrol.CourseFees);
-            parameter.Add("@Discount", StudEnrol.Discount);
-            parameter.Add("@TotalFees", StudEnrol.TotalFees);
+         
+            parameter.Add("@AccountID", _accountID.AccountId);
             parameter.Add("@StudentCode", _accountID.StudentID);
+            parameter.Add("@Amount", billPayment.Amount);
+            parameter.Add("@PaymentType", billPayment.PaymentType);
+            parameter.Add("@IsPaid", billPayment.IsPaid);
+            parameter.Add("@CourseCode", billPayment.CourseCode);
+
+
             //
-            var results = await _dbConnection.QueryAsync<StudentEnrollment>("ADDStudentEnrollment", parameter, commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync<BillPayment>("InsertBillingPayment", parameter, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
 
 
 
         }
-
-
     }
 }
