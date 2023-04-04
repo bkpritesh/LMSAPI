@@ -17,6 +17,6 @@ namespace Data.Repositary
 
 
 
-        Task<int> AddDocument(string filePath, string DocumentType, string documentType);
+        Task<int> AddDocument(string filePath, string DocumentType, string AccountId);
     }
 }

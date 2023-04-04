@@ -131,7 +131,7 @@ namespace LMS.Controllers
                 var fileName = Path.GetFileName(file.FileName);
 
                 // Path where the file to be stored 
-                var uploadsPath = Path.Combine(_hostingEnvironment.ContentRootPath, "Uploads" , AccountId,"DocumentType");
+                var uploadsPath = Path.Combine(_hostingEnvironment.ContentRootPath, "Document");
 
                 switch (DocumentType)
                 {
@@ -156,8 +156,8 @@ namespace LMS.Controllers
                     default:
                         return BadRequest("Invalid document type.");
                 }
-
-                if (!Directory.Exists(uploadsPath))
+             uploadsPath = Path.Combine(uploadsPath, AccountId);
+             if (!Directory.Exists(uploadsPath))
                 {
                     // Creating the directory
                     Directory.CreateDirectory(uploadsPath);
@@ -173,10 +173,10 @@ namespace LMS.Controllers
                 // Adding the document to the database
                 var result = await _Document.AddDocument(filePath, DocumentType, AccountId);
 
-                if (result < 0)
+                if (result > 0)
                 {
                 // Document added successfully, returning file path and document information
-                return Ok(new { FilePath = filePath, Document = DocumentType });
+                return Ok(new { FilePath = filePath, Document = DocumentType,DocumentID=result });
              
                 }
                 else

@@ -69,19 +69,31 @@ namespace Data.Services
 
 
 
+        //public async Task<int> AddDocument(string filePath, string DocumentType, string AccountId)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@AccountId",AccountId);
+        //    parameters.Add("@DocumentType", DocumentType);
+        //    parameters.Add("@DocumentPath", filePath);
+
+        //    var result = await _dbConnection.ExecuteAsync("AddDocument", parameters, commandType: CommandType.StoredProcedure);
+        //    return result;
+        //}
+
+
+
         public async Task<int> AddDocument(string filePath, string DocumentType, string AccountId)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@AccountId",AccountId);
+            parameters.Add("@AccountId", AccountId);
             parameters.Add("@DocumentType", DocumentType);
             parameters.Add("@DocumentPath", filePath);
+            parameters.Add("@DocumentId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            var result = await _dbConnection.ExecuteAsync("AddDocument", parameters, commandType: CommandType.StoredProcedure);
-            return result;
+            await _dbConnection.ExecuteAsync("AddDocument", parameters, commandType: CommandType.StoredProcedure);
+
+            return parameters.Get<int>("@DocumentId");
         }
-
-
-
 
 
 
