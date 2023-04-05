@@ -163,20 +163,24 @@ namespace LMS.Controllers
                     Directory.CreateDirectory(uploadsPath);
                 }
 
-                var filePath = Path.Combine(uploadsPath, fileName);
+             var filePath = Path.Combine(uploadsPath, fileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+            using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                // Adding the document to the database
-                var result = await _Document.AddDocument(filePath, DocumentType, AccountId);
+            // Adding the document to the database
+            // var result = await _Document.AddDocument(filePath, DocumentType, AccountId);
+            var savedPath = Path.Combine("Document", DocumentType, AccountId, fileName);
+            string normalizedFilePath = savedPath.Replace("\\", "/");
+       
+            var result = await _Document.AddDocument(normalizedFilePath, DocumentType, AccountId);
 
-                if (result > 0)
+            if (result > 0)
                 {
                 // Document added successfully, returning file path and document information
-                return Ok(new { FilePath = filePath, Document = DocumentType,DocumentID=result });
+                return Ok(new { FilePath = normalizedFilePath, Document = DocumentType,DocumentID=result });
              
                 }
                 else

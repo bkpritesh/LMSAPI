@@ -48,19 +48,12 @@ namespace Data.Services
 
         }
 
-        public async Task<StudentEnrollment> GetCourse(StudentEnrollment Course)
+        public async Task<string> GetCourse(StudentEnrollment Course)
         {
-
             var parameter = new DynamicParameters();
-
             parameter.Add("@CourseCode", Course.CourseCode);
-            
-            var CourseNameResult = await _dbConnection.QueryAsync<StudentEnrollment>("GetCourseNameByCourseID", parameter, commandType: CommandType.StoredProcedure);
-
-            return CourseNameResult.SingleOrDefault();
-
-
-
+            var result = await _dbConnection.QueryFirstOrDefaultAsync<string>("GetCourseNameByCourseID", parameter, commandType: CommandType.StoredProcedure);
+            return result;
         }
 
 

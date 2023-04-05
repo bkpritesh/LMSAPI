@@ -184,15 +184,15 @@ namespace LMS.Controllers
                     if (emailExists != null)
                     {
                         var senderEmail = requestRegister.Email; ;
-                        var subject = "Password Reset Request";
+                        var subject = "Addmission Confrimation ";
 
-                        var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "AccountConfirmation.html");
+                        var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "StudentAdmission.html");
 
                         
                         //var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplate", "PasswordReset.html");
                         var message = await System.IO.File.ReadAllTextAsync(path);
 
-                        var StudsddR = await _studentEnrollment.GetCourse(StudEnrolment);
+                        
 
                         //  var message = System.IO.File.ReadAllText(@"~/EmailTemplate/PasswordReset.html");
                         var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
@@ -200,8 +200,15 @@ namespace LMS.Controllers
                         //var CourseNameResult = await .QueryAsync("GetCourseNameByCourseID", new { requestRegister.CourseCode }, commandType: CommandType.StoredProcedure);
                         //var CourseName = CourseNameResult.FirstOrDefault();
 
+                        var CourseCode = new StudentEnrollment
+                        {
+                            CourseCode = requestRegister.CourseCode,
+
+                        };
+                        var CourseName = await _studentEnrollment.GetCourse(CourseCode);
+
                         message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/ForgortPassword/ResetPassword/RestToken=?" + ResetToken)
-                                       //  .Replace("[Course Name]", CourseName)
+                                         .Replace("[Course Name]",CourseName)
                                          .Replace("[Address]", requestRegister.Address)
                                          .Replace("[Student Name]",requestRegister.FName+requestRegister.LName) ;
 

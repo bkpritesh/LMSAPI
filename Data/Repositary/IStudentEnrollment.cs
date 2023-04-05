@@ -12,7 +12,7 @@ namespace Data.Repositary
     {
         Task<StudentEnrollment> Enrollment(StudentEnrollment StudEnrol);
 
-        Task<StudentEnrollment> GetCourse(StudentEnrollment Course);
+        Task<string> GetCourse(StudentEnrollment Course);
     }
 }
 

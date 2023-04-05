@@ -86,11 +86,13 @@ namespace Data.Services
         {
             var parameters = new DynamicParameters();
             parameters.Add("@AccountId", AccountId);
+
+      
             parameters.Add("@DocumentType", DocumentType);
             parameters.Add("@DocumentPath", filePath);
             parameters.Add("@DocumentId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dbConnection.ExecuteAsync("AddDocument", parameters, commandType: CommandType.StoredProcedure);
+             await _dbConnection.ExecuteAsync("AddDocument", parameters, commandType: CommandType.StoredProcedure);
 
             return parameters.Get<int>("@DocumentId");
         }
