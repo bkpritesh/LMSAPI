@@ -52,41 +52,44 @@ namespace LMS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCourse([FromBody] AddCourse course)
         {
-            var result = await _courseService.AddCourse(course);
-            return Ok(result);
-        }
+           
 
-
-
-        [HttpPut("CourseCode")]
-        public async Task<IActionResult> UpdateCourse(string Coursecode, [FromBody] Course course)
-        {
-            if (Coursecode!= course.CourseCode)
-            {
-                return BadRequest();
+                var result = await _courseService.AddCourse(course);
+                return Ok(result);
             }
 
-            var update = await _courseService.UpdateCourse(course);
 
-       
 
-            return Ok(update);
+            [HttpPut("CourseCode")]
+            public async Task<IActionResult> UpdateCourse(string Coursecode, [FromBody] Course course)
+            {
+                if (Coursecode != course.CourseCode)
+                {
+                    return BadRequest();
+                }
+
+                var update = await _courseService.UpdateCourse(course);
+
+
+
+                return Ok(update);
+            }
+
+
+            [HttpDelete("{CourseCode}")]
+            public async Task<IActionResult> DeleteCourse(string CourseCode)
+            {
+                await _courseService.DeleteCourse(CourseCode);
+                return Ok();
+            }
+
+
+            [HttpPost("CourseSearch")]
+            public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
+            {
+                var result = await _courseService.CourseFilter(courseFilter);
+                return Ok(result);
+            }
         }
-
-
-        [HttpDelete("{CourseCode}")]
-        public async Task<IActionResult> DeleteCourse(string  CourseCode)
-        {
-            await _courseService.DeleteCourse (CourseCode);
-            return Ok();
-        }
-
-	
-		[HttpPost("CourseSearch")]
-		public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
-		{
-			var result = await _courseService.CourseFilter(courseFilter);
-            return Ok(result);
-		}
 	}
-}
+

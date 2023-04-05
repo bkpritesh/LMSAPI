@@ -1,4 +1,4 @@
-﻿using Dapper;
+﻿ using Dapper;
 using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
@@ -33,8 +33,18 @@ namespace Data.Services
 			var results = await _dbConnection.QueryAsync<Course>("GetCourse", commandType: CommandType.StoredProcedure);
             return results;
         }
+
+        //  for getting the documentPath to store in the next parameter
+     
+            //var results = await _dbConnection.QueryAsync("GetDocumentPathByDocID", new { DocID }, commandType: CommandType.StoredProcedure);
+            //return results;
+
+
+
+
+
         public async Task<Course> GetCourseByID(string CourseCode)
-        { 
+        {
             var parameters = new DynamicParameters();
             parameters.Add("@CourseCode", CourseCode);
 
@@ -42,9 +52,16 @@ namespace Data.Services
             return results.FirstOrDefault();
         }
 
+
+
         public async Task<AddCourse> AddCourse(AddCourse course)
         {
+             var parameter = new DynamicParameters();
+             parameter.Add("@DocID", course.DocID);
+            IEnumerable<string> docpath = await _dbConnection.QueryAsync<string>("GetDocumentPathByDocID", parameter, commandType: CommandType.StoredProcedure);
+            string resultString = docpath.FirstOrDefault()?.ToString();
 
+            var DocPath = resultString;
 
             var NewCId = await _dbConnection.ExecuteScalarAsync<string>("SELECT TOP 1 CourseCode FROM TBLCourse ORDER BY CourseCode DESC");
 
@@ -64,6 +81,8 @@ namespace Data.Services
 
 
             var parameters = new DynamicParameters();
+ 
+            parameters.Add("@CourseBanner", DocPath);
             parameters.Add("@CourseCode", nextCategoryId);
             parameters.Add("@CategoryCode", course.CategoryCode);
             parameters.Add("@CourseName", course.CourseName);
@@ -77,7 +96,7 @@ namespace Data.Services
 
 
 
-            var results = await _dbConnection.QueryAsync<AddCourse>("AddCourse", parameters, commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync("AddCourse", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
 
