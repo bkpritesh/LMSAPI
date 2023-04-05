@@ -61,7 +61,7 @@ namespace Data.Services
                 "GyanShaktiTech",
                 "GyanShaktiTech.com",
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddDays(10),
                 signingCredentials: signIn);
 
             var token = tokenHandler.WriteToken(tokenDes);
