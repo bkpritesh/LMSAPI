@@ -11,6 +11,7 @@ using Model.Students;
 using Data.Services;
 using System.Security.Principal;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace LMS.Controllers
 {
@@ -26,11 +27,12 @@ namespace LMS.Controllers
         private readonly IUserDetail _userDetail;
         private readonly IStudentEnrollment _studentEnrollment;
         private readonly IBIllPayment _BillPayment;
-        private readonly IDbConnection _dbConnection;
+        //private readonly IDbConnection _dbConnection;
         public RegisterController(IRegisterService RgService, IWebHostEnvironment hostingEnvironment, 
             IConfiguration configuration, IAccountID accountID,ICommanUtility commanUtility,
             IUserDetail userDetail,IStudentEnrollment studentEnrollment,
-            IBIllPayment billPayment,IDbConnection dbConnection)
+            IBIllPayment billPayment)
+            //IDbConnection dbConnection)
         {
             _RgService = RgService;
             _hostingEnvironment = hostingEnvironment;
@@ -40,7 +42,9 @@ namespace LMS.Controllers
             _userDetail= userDetail;
             _studentEnrollment = studentEnrollment;
             _BillPayment= billPayment;
-            _dbConnection = dbConnection; 
+            //var connectionString = configuration.GetConnectionString("SqlConnection");
+            //_dbConnection = new SqlConnection(connectionString);
+      
         }
 
 
@@ -188,16 +192,18 @@ namespace LMS.Controllers
                         //var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplate", "PasswordReset.html");
                         var message = await System.IO.File.ReadAllTextAsync(path);
 
+                        var StudsddR = await _studentEnrollment.GetCourse(StudEnrolment);
 
                         //  var message = System.IO.File.ReadAllText(@"~/EmailTemplate/PasswordReset.html");
                         var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
 
-                        var CourseNameResult = await _dbConnection.QueryAsync("GetCourseNameByCourseID", new { requestRegister.CourseCode }, commandType: CommandType.StoredProcedure);
-                        var CourseName = CourseNameResult.FirstOrDefault();
+                        //var CourseNameResult = await .QueryAsync("GetCourseNameByCourseID", new { requestRegister.CourseCode }, commandType: CommandType.StoredProcedure);
+                        //var CourseName = CourseNameResult.FirstOrDefault();
 
                         message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/ForgortPassword/ResetPassword/RestToken=?" + ResetToken)
-                                         .Replace("[Course Name]", CourseName)
-                                         .Replace("[]");
+                                       //  .Replace("[Course Name]", CourseName)
+                                         .Replace("[Address]", requestRegister.Address)
+                                         .Replace("[Student Name]",requestRegister.FName+requestRegister.LName) ;
 
                         bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
 

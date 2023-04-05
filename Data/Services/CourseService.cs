@@ -106,6 +106,7 @@ namespace Data.Services
        
             parameters.Add("@CourseCode", Ccourse.CourseCode);
             parameters.Add("@CategoryCode", Ccourse.CategoryCode);
+            parameters.Add("@CourseBanner", Ccourse.CourseBanner);
             parameters.Add("@CourseName", Ccourse.CourseName); 
             parameters.Add("@Description", Ccourse.Description);
             parameters.Add("@Level", Ccourse.Level);
