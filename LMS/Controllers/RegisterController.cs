@@ -123,31 +123,30 @@ namespace LMS.Controllers
                 };
                 var accountId = await _RgService.AddAccount(account);
 
-
-                var UserDetails = new UserDetails
+                if (requestRegister.IsStudent)
                 {
-                    IsStudent = requestRegister.IsStudent,
-                    Email = requestRegister.Email,
-                    FName = requestRegister.FName,
-                    MName = requestRegister.MName,
-                    LName = requestRegister.LName,
-                    Address = requestRegister.Address,
-                    City = requestRegister.City,
-                    Country = requestRegister.Country,
-                    ContactNo = requestRegister.ContactNo,
-                    Education = requestRegister.Education,
-                    SkillSet = requestRegister.SkillSet,
-                    BirthDate = requestRegister.BirthDate,
-                    JoiningDate = requestRegister.JoiningDate,
-                    
+                    var UserDetails = new UserDetails
+                    {
+                  
+                        IsStudent = requestRegister.IsStudent,
 
+                        Email = requestRegister.Email,
+                        FName = requestRegister.FName,
+                        MName = requestRegister.MName,
+                        LName = requestRegister.LName,
+                        Address = requestRegister.Address,
+                        City = requestRegister.City,
+                        Country = requestRegister.Country,
+                        ContactNo = requestRegister.ContactNo,
+                        Education = requestRegister.Education,
+                        SkillSet = requestRegister.SkillSet,
+                        BirthDate = requestRegister.BirthDate,
+                        JoiningDate = requestRegister.JoiningDate
+                    };
 
-                };
-
-
-
-                var UD = await _userDetail.AddUserDetail(UserDetails);
-
+                    var UD = await _userDetail.AddUserDetail(UserDetails);
+                }
+              
 
                 var StudEnrolment = new StudentEnrollment
                 { 
