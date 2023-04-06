@@ -171,18 +171,19 @@ namespace LMS.Controllers
             };
                 var StudR = await _studentEnrollment.Enrollment(StudEnrolment);
 
-
+                if (requestRegister.IsPaid ) { 
                 var bill = new BillPayment
                 {
                    Amount=requestRegister.PaidAmount,
                    CourseCode=requestRegister.CourseCode,
-
+                   IsPaid=requestRegister.IsPaid,   
+                   
 
                 };
 
                 var Billpayment = await _BillPayment.BillPayment(bill);
-
-
+    
+                }
 
 
 

@@ -60,7 +60,7 @@ namespace Data.Services
 
         public async Task<IEnumerable<dynamic>> GetStudentIsTrue()
         {
-            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[Status] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
+            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
             return results;
         }
     }

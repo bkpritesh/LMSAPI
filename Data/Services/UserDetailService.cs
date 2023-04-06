@@ -98,7 +98,7 @@ namespace Data.Services
             
             parameters.Add("@AccountType",RgDetail.AccountType);
 
-            parameters.Add("@StudentCode", nextStudentID);
+            parameters.Add("@StudentCode", _accountId.StudentID);
 
 
             var results = await _dbConnection.QueryAsync<UserDetails>("InsertUserDetail", parameters, commandType: CommandType.StoredProcedure);

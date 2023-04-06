@@ -29,14 +29,7 @@ namespace Data.Services
             return results;
         }
 
-        //public async Task<Category> GetCategoByID(string id)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@CategoryId", id);
-
-        //    var results = await _dbConnection.QueryAsync<Category>("GetCategory", parameters, commandType: CommandType.StoredProcedure);
-        //    return results.FirstOrDefault();
-        //}
+       
 
 
 
@@ -118,6 +111,32 @@ namespace Data.Services
             var results = await _dbConnection.QueryAsync<Batch>("UpdateBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
