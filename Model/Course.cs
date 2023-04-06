@@ -8,7 +8,9 @@ namespace Model
 {
     public  class Course
     {
+     
         public string CourseCode { get; set; }
+        public int DocID { get; set; }
         public string CategoryCode { get; set; }
         public string CourseName { get; set; }
         public string CourseBanner { get; set; }

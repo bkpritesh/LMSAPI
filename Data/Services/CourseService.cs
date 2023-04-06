@@ -3,6 +3,7 @@ using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
 using Model.Courses;
+using Model.Students;
 using NLog.Web;
 using System;
 using System.Collections.Generic;
@@ -40,18 +41,13 @@ namespace Data.Services
             //return results;
 
 
-
-
-
         public async Task<Course> GetCourseByID(string CourseCode)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@CourseCode", CourseCode);
-
             var results = await _dbConnection.QueryAsync<Course>("GetCourse", parameters, commandType: CommandType.StoredProcedure);
             return results.FirstOrDefault();
         }
-
 
 
         public async Task<AddCourse> AddCourse(AddCourse course)
@@ -79,9 +75,7 @@ namespace Data.Services
             }
             var nextCategoryId = $"CID-{NewCategoryId + 1:D4}";
 
-
-            var parameters = new DynamicParameters();
- 
+            var parameters = new DynamicParameters(); 
             parameters.Add("@CourseBanner", DocPath);
             parameters.Add("@CourseCode", nextCategoryId);
             parameters.Add("@CategoryCode", course.CategoryCode);
@@ -94,19 +88,18 @@ namespace Data.Services
             parameters.Add("@Lectures", course.Lectures);
             parameters.Add("@DurationWeek", course.DurationWeek);
 
-
-
             var results = await _dbConnection.QueryAsync("AddCourse", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
 
         public async Task<Course> UpdateCourse(Course Ccourse)
         {
-            var parameters = new DynamicParameters();
-       
+            var parameters = new DynamicParameters();   
             parameters.Add("@CourseCode", Ccourse.CourseCode);
+            var gettingDocbyDocID = await _dbConnection.QueryAsync<string>("[GetDocumentPathByDocID]", new { Ccourse.DocID }, commandType: CommandType.StoredProcedure);
+            var DocumnentPath = gettingDocbyDocID.FirstOrDefault();
             parameters.Add("@CategoryCode", Ccourse.CategoryCode);
-            parameters.Add("@CourseBanner", Ccourse.CourseBanner);
+            parameters.Add("@CourseBanner", DocumnentPath);
             parameters.Add("@CourseName", Ccourse.CourseName); 
             parameters.Add("@Description", Ccourse.Description);
             parameters.Add("@Level", Ccourse.Level);
@@ -137,7 +130,6 @@ namespace Data.Services
 			parameters.Add("@param_SkillTags", course.SkillTags);
 			parameters.Add("@param_Price", course.Price);
 			parameters.Add("@param_CourseKeyWord", course.CourseKeyWord);
-
 			var results = await _dbConnection.QueryAsync<Course>("usp_Course_Filter", parameters, commandType: CommandType.StoredProcedure);
             return results;
 		}
