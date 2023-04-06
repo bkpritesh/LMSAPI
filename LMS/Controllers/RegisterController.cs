@@ -182,7 +182,7 @@ namespace LMS.Controllers
 
                     if (emailExists != null)
                     {
-                        var senderEmail = requestRegister.Email; ;
+                        var senderEmail = requestRegister.Email;
                         var subject = "Addmission Confrimation ";
 
                         var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "StudentAdmission.html");
