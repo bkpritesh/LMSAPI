@@ -62,7 +62,7 @@ namespace LMS.Controllers
         {
             if (id != category.CategoryId)
             {
-                return BadRequest("The category ID in the URL doesn't match the one in the request body.");
+                return BadRequest(false);
             }
 
             var updatedCategory = await _categoryService.UpdateCategory(category);
