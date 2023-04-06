@@ -48,6 +48,17 @@ namespace LMS.Controllers
         }
 
 
+
+
+        [HttpGet("StudIsTrue")]
+
+        public async Task<IActionResult> GetStudent()
+        {
+
+            var student = await _studentEnrollment.GetStudentIsTrue();
+            return Ok(student);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddAccount([FromBody] Account account)
         {

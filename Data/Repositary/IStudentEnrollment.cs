@@ -13,6 +13,7 @@ namespace Data.Repositary
         Task<StudentEnrollment> Enrollment(StudentEnrollment StudEnrol);
 
         Task<string> GetCourse(StudentEnrollment Course);
+        Task<IEnumerable<dynamic>> GetStudentIsTrue();
     }
 }
 
