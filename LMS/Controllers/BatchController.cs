@@ -60,9 +60,14 @@ namespace LMS.Controllers
 
             var Student = new StudentBatch
             {
-                BatchCode= Batch.BatchCode,
-                StudentCode=Batch.Students,
-            }
+                BatchCode = Batch.BatchCode,
+                StudentCode = Batch.Students
+               
+            };
+
+
+
+            
         }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class StudentBatch
+    public class StudentBatch 
     {
    //    public int StudentBatchId { get; set; }  
         public string BatchCode { get; set; }
