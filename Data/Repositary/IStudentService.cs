@@ -9,13 +9,17 @@ namespace Data.Repositary
 {
     public interface IStudentService
     {
-        Task<IEnumerable<Student>> GetStudent();
-        Task<Student> GetStudentByID(int id);
-        Task<Student> AddStudent(Student student);
 
-        Task<Student> UpdateStudent(Student student);
 
-        Task<IEnumerable<Student>> DeleteStudent(int id);
+
+        Task<IEnumerable<dynamic>> GetStudent();
+      
+        //Task<Student> GetStudentByID(int id);
+        //Task<Student> AddStudent(Student student);
+
+        //Task<Student> UpdateStudent(Student student);
+
+        //Task<IEnumerable<Student>> DeleteStudent(int id);
 
     }
 }

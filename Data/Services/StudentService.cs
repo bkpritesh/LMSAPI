@@ -23,71 +23,92 @@ namespace Data.Services
             _dbConnection = new SqlConnection(connectionString);
         }
 
-        public async Task<IEnumerable<Student>> GetStudent()
+
+        public async Task<IEnumerable<dynamic>> GetStudent()
         {
-            var results = await _dbConnection.QueryAsync<Student>("GetStudent", commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
             return results;
         }
 
-        public async Task<Student> GetStudentByID(int id)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@StudentId", id);
-
-            var results = await _dbConnection.QueryAsync<Student>("GetStudent", parameters, commandType: CommandType.StoredProcedure);
-            return results.FirstOrDefault();
-        }
-
-        public async Task<Student> AddStudent(Student student)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@FirstName", student.FirstName);
-            parameters.Add("@LastName", student.LastName);
-            parameters.Add("@EmailID", student.EmailID);
-            parameters.Add("@DateOfBirth", student.DateOfBirth);
-            parameters.Add("@Address", student.Address);
-            parameters.Add("@City", student.City);
-            parameters.Add("@PinCode", student.PinCode);
-            parameters.Add("@State", student.State);
-            parameters.Add("@Country", student.Country);
-            parameters.Add("@MobileNo", student.MobileNo);
-            parameters.Add("@Qualification", student.Qualification);
-            parameters.Add("@CourseName", student.CourseName);
-
-            var results = await _dbConnection.QueryAsync<Student>("AddStudent", parameters, commandType: CommandType.StoredProcedure);
-            return results.SingleOrDefault();
-        }
 
 
-        public async Task<Student> UpdateStudent(Student student)
-        {
+
+
+
+
+
+
+
+
+
+
+
+
+        //public async Task<IEnumerable<Student>> GetStudent()
+        //{
+        //    var results = await _dbConnection.QueryAsync<Student>("GetStudent", commandType: CommandType.StoredProcedure);
+        //    return results;
+        //}
+
+        //public async Task<Student> GetStudentByID(int id)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@StudentId", id);
+
+        //    var results = await _dbConnection.QueryAsync<Student>("GetStudent", parameters, commandType: CommandType.StoredProcedure);
+        //    return results.FirstOrDefault();
+        //}
+
+        //public async Task<Student> AddStudent(Student student)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@FirstName", student.FirstName);
+        //    parameters.Add("@LastName", student.LastName);
+        //    parameters.Add("@EmailID", student.EmailID);
+        //    parameters.Add("@DateOfBirth", student.DateOfBirth);
+        //    parameters.Add("@Address", student.Address);
+        //    parameters.Add("@City", student.City);
+        //    parameters.Add("@PinCode", student.PinCode);
+        //    parameters.Add("@State", student.State);
+        //    parameters.Add("@Country", student.Country);
+        //    parameters.Add("@MobileNo", student.MobileNo);
+        //    parameters.Add("@Qualification", student.Qualification);
+        //    parameters.Add("@CourseName", student.CourseName);
+
+        //    var results = await _dbConnection.QueryAsync<Student>("AddStudent", parameters, commandType: CommandType.StoredProcedure);
+        //    return results.SingleOrDefault();
+        //}
+
+
+        //public async Task<Student> UpdateStudent(Student student)
+        //{
             
-            var parameters = new DynamicParameters();
-            parameters.Add("StudentID", student.StudentID);
-            parameters.Add("@FirstName", student.FirstName);
-            parameters.Add("@LastName", student.LastName);
-            parameters.Add("@EmailID", student.EmailID);
-            parameters.Add("@DateOfBirth", student.DateOfBirth);
-            parameters.Add("@Address", student.Address);
-            parameters.Add("@City", student.City);
-            parameters.Add("@PinCode", student.PinCode);
-            parameters.Add("@State", student.State);
-            parameters.Add("@Country", student.Country);
-            parameters.Add("@MobileNo", student.MobileNo);
-            parameters.Add("@Qualification", student.Qualification);
-            parameters.Add("@CourseName", student.CourseName);
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("StudentID", student.StudentID);
+        //    parameters.Add("@FirstName", student.FirstName);
+        //    parameters.Add("@LastName", student.LastName);
+        //    parameters.Add("@EmailID", student.EmailID);
+        //    parameters.Add("@DateOfBirth", student.DateOfBirth);
+        //    parameters.Add("@Address", student.Address);
+        //    parameters.Add("@City", student.City);
+        //    parameters.Add("@PinCode", student.PinCode);
+        //    parameters.Add("@State", student.State);
+        //    parameters.Add("@Country", student.Country);
+        //    parameters.Add("@MobileNo", student.MobileNo);
+        //    parameters.Add("@Qualification", student.Qualification);
+        //    parameters.Add("@CourseName", student.CourseName);
 
-            var results = await _dbConnection.QueryAsync<Student>("AddStudent", parameters, commandType: CommandType.StoredProcedure);
-            return results.SingleOrDefault();
-        }
+        //    var results = await _dbConnection.QueryAsync<Student>("AddStudent", parameters, commandType: CommandType.StoredProcedure);
+        //    return results.SingleOrDefault();
+        //}
 
-        public async Task<IEnumerable<Student>> DeleteStudent(int id)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@StudentId", id);
+        //public async Task<IEnumerable<Student>> DeleteStudent(int id)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@StudentId", id);
 
-            var results = await _dbConnection.QueryAsync<Student>("DeleteStudentByID", parameters, commandType: CommandType.StoredProcedure);
-            return results;
-        }
+        //    var results = await _dbConnection.QueryAsync<Student>("DeleteStudentByID", parameters, commandType: CommandType.StoredProcedure);
+        //    return results;
+        //}
     }
 }

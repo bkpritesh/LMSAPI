@@ -28,66 +28,72 @@ namespace LMS.Controllers
             return Ok(student);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetStudentByID(int id)
-        {
-          var student = await _StudentService.GetStudentByID(id);
-            return Ok(student);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody] Student student)
-        {
 
 
-            var result = await _StudentService.AddStudent(student);
-            string senderEmail = "thamas9824@gmail.com";
-            string subject = "New Student Added";
+
+
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetStudentByID(int id)
+        //{
+        //  var student = await _StudentService.GetStudentByID(id);
+        //    return Ok(student);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> AddStudent([FromBody] Student student)
+        //{
+
+
+        //    var result = await _StudentService.AddStudent(student);
+        //    string senderEmail = "thamas9824@gmail.com";
+        //    string subject = "New Student Added";
           
-            string message = System.IO.File.ReadAllText(@"D:\C# projects\LMSAPI\LMS\EmailTemplate\AccountConfirmation.html");
+        //    string message = System.IO.File.ReadAllText(@"D:\C# projects\LMSAPI\LMS\EmailTemplate\AccountConfirmation.html");
 
-            message = message.Replace("[[StudentName]]", student.EmailID);
-
-
-            bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+        //    message = message.Replace("[[StudentName]]", student.EmailID);
 
 
+        //    bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
 
 
-            return Ok(result);
 
 
-        }
+        //    return Ok(result);
 
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudent(int id, [FromBody] Student student)
-        {
-            if (id != null)
-            {
-                student.StudentID = id;
-            }
-            if (id != student.StudentID)
-            {
-                return BadRequest("The category ID in the URL doesn't match the one in the request body.");
-            }
+        //}
 
-            var updatedCategory = await _StudentService.UpdateStudent(student);
 
-            if (updatedCategory == null)
-            {
-                return NotFound($"No category found with ID {id}");
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateStudent(int id, [FromBody] Student student)
+        //{
+        //    if (id != null)
+        //    {
+        //        student.StudentID = id;
+        //    }
+        //    if (id != student.StudentID)
+        //    {
+        //        return BadRequest("The category ID in the URL doesn't match the one in the request body.");
+        //    }
 
-            return Ok(updatedCategory);
-        }
+        //    var updatedCategory = await _StudentService.UpdateStudent(student);
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudent(int id)
-        {
-            await _StudentService.DeleteStudent(id);
+        //    if (updatedCategory == null)
+        //    {
+        //        return NotFound($"No category found with ID {id}");
+        //    }
 
-            return NoContent();
-        }
+        //    return Ok(updatedCategory);
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteStudent(int id)
+        //{
+        //    await _StudentService.DeleteStudent(id);
+
+        //    return NoContent();
+        //}
+
+       
     }
 }

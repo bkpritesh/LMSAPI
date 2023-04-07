@@ -82,12 +82,14 @@ namespace Data.Services
             parameters.Add("@BatchCode", NextBatchId);
             parameters.Add("@BatchName", Batch.BatchName);
             parameters.Add("@CourseCode", Batch.CourseCode);
-            parameters.Add("@BatchTime", Batch.BatchTime);
-
+           // parameters.Add("@BatchTime", Batch.BatchTime);
+      
             parameters.Add("@Assessment", Batch.Assessment);
 
             parameters.Add("@Description",Batch.Description);
-
+            parameters.Add("@StartTime", Batch.Assessment);
+            parameters.Add("@EndTime", Batch.Assessment);
+            parameters.Add("@InstructorCode", Batch.Assessment);
             var results = await _dbConnection.QueryAsync<Batch>("AddBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }

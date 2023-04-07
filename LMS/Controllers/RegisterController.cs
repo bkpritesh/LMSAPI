@@ -27,12 +27,12 @@ namespace LMS.Controllers
         private readonly IUserDetail _userDetail;
         private readonly IStudentEnrollment _studentEnrollment;
         private readonly IBIllPayment _BillPayment;
-        //private readonly IDbConnection _dbConnection;
+ 
         public RegisterController(IRegisterService RgService, IWebHostEnvironment hostingEnvironment, 
             IConfiguration configuration, IAccountID accountID,ICommanUtility commanUtility,
             IUserDetail userDetail,IStudentEnrollment studentEnrollment,
             IBIllPayment billPayment)
-            //IDbConnection dbConnection)
+      
         {
             _RgService = RgService;
             _hostingEnvironment = hostingEnvironment;
@@ -42,23 +42,13 @@ namespace LMS.Controllers
             _userDetail= userDetail;
             _studentEnrollment = studentEnrollment;
             _BillPayment= billPayment;
-            //var connectionString = configuration.GetConnectionString("SqlConnection");
-            //_dbConnection = new SqlConnection(connectionString);
-      
+         
         }
 
 
 
 
-        [HttpGet("StudIsTrue")]
-
-        public async Task<IActionResult> GetStudent()
-        {
-
-            var student = await _studentEnrollment.GetStudentIsTrue();
-            return Ok(student);
-        }
-
+  
         [HttpPost]
         public async Task<IActionResult> AddAccount([FromBody] Account account)
         {

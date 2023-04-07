@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Data.Services
 {
-   public class StudentEnrollmentService : IStudentEnrollment
+    public class StudentEnrollmentService : IStudentEnrollment
     {
         private readonly IAccountID _accountID;
         private readonly IDbConnection _dbConnection;
@@ -40,8 +40,7 @@ namespace Data.Services
             parameter.Add("@Discount", StudEnrol.Discount);
             parameter.Add("@TotalFees", StudEnrol.TotalFees);
             parameter.Add("@StudentCode", _accountID.StudentID);
-            //
-            var results = await _dbConnection.QueryAsync<StudentEnrollment>("ADDStudentEnrollment", parameter, commandType: CommandType.StoredProcedure);
+                    var results = await _dbConnection.QueryAsync<StudentEnrollment>("ADDStudentEnrollment", parameter, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
 
 
@@ -54,14 +53,8 @@ namespace Data.Services
             parameter.Add("@CourseCode", Course.CourseCode);
             var result = await _dbConnection.QueryFirstOrDefaultAsync<string>("GetCourseNameByCourseID", parameter, commandType: CommandType.StoredProcedure);
             return result;
+
         }
-
-
-
-        public async Task<IEnumerable<dynamic>> GetStudentIsTrue()
-        {
-            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
-            return results;
-        }
+     
     }
 }

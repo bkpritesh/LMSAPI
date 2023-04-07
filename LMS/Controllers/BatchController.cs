@@ -55,6 +55,14 @@ namespace LMS.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+
+
+
+            var Student = new StudentBatch
+            {
+                BatchCode= Batch.BatchCode,
+                StudentCode=Batch.Students,
+            }
         }
 
 
