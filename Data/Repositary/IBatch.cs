@@ -17,5 +17,6 @@ namespace Data.Repositary
         Task<Batch> CreateBatch(Batch Batch);
 
         Task<ActionResult<string>> GetLastBatchID();
+        Task<StudentBatch> AddStudentBatch(StudentBatch Batch);
     }
 }

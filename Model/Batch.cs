@@ -14,14 +14,14 @@ namespace Model
 
         public string? CourseCode { get; set; }
 
-        public int BatchTime { get; set; }
+        
 
         public int Assessment { get; set; }
         public string? Description { get; set; }
         public string Students { get; set; }
         public string StartTIme { get; set;}
         public string EndTIme { get; set; }
-        public string   InstructorCode { get; set;}
+        public string  InstructorCode { get; set;}
 
     }
 }

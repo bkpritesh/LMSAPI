@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Services
 {
-    public class StudentBatchSercvice
+    public class StudentBatchSercvice 
     {
         private readonly IDbConnection _dbConnection;
 

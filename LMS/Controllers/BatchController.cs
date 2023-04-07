@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 using Data.Services;
 using System;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ using NLog.Fluent;
 using NLog.Web;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace LMS.Controllers
 {
@@ -41,34 +42,38 @@ namespace LMS.Controllers
             var LastbatchID = await _batchService.GetLastBatchID();
             return Ok(new { BatchCode = LastbatchID.Value });
         }
-
-
+      
         [HttpPost]
-        public async Task<ActionResult<Batch>> CreateBatch(Batch Batch)
+        public async Task<ActionResult<Batch>> CreateBatch(Batch batch)
         {
             try
             {
-                var newBatch = await _batchService.CreateBatch(Batch);
-                return Ok(newBatch);
+                var newBatch = await _batchService.CreateBatch(batch);
+                // Deserialize the students property from the input JSON object
+                var studentsArray = JArray.Parse(batch.Students);
+
+                // Extract the student codes from each student object in the array
+                var studentCodes = string.Join(",", studentsArray.Select(s => s["StudentCode"].ToString()));
+
+             
+                var studentBatch = new StudentBatch
+                {
+
+                    BatchCode = batch.BatchCode,
+                    StudentCode = studentCodes
+                };
+
+                await _batchService.AddStudentBatch(studentBatch);
+
+                return Ok(batch);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-
-
-
-            var Student = new StudentBatch
-            {
-                BatchCode = Batch.BatchCode,
-                StudentCode = Batch.Students
-               
-            };
-
-
-
-            
         }
+
+
 
 
 
