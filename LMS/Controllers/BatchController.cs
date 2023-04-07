@@ -10,6 +10,7 @@ using NLog.Web;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using Data.Repositary;
 
 namespace LMS.Controllers
 {
@@ -50,12 +51,12 @@ namespace LMS.Controllers
             {
                 var newBatch = await _batchService.CreateBatch(batch);
                 // Deserialize the students property from the input JSON object
-                var studentsArray = JArray.Parse(batch.Students);
+                var studentsJson = "[{\"StudentCode\":\"S-0001\",\"FName\":\"string\"},{\"StudentCode\":\"S-0002\",\"FName\":\"Honey\"}]";
+                    // sample JSON string
+                var studentsList = JsonConvert.DeserializeObject<List<Batch>>(studentsJson); // deserialize JSON string into List<Batch> object
+                var studentCodes = string.Join(",", studentsList.Select(s => s.Students)); // select the StudentCode properties and join them into a comma-separated string
 
-                // Extract the student codes from each student object in the array
-                var studentCodes = string.Join(",", studentsArray.Select(s => s["StudentCode"].ToString()));
 
-             
                 var studentBatch = new StudentBatch
                 {
 
@@ -116,6 +117,19 @@ namespace LMS.Controllers
 
 
 
+        [HttpGet]
+        [Route("{CourseCode}")]
+        public async Task<IActionResult> GetCoureNameByBCID(string CourseCode)
+        {
+            var Category = await _batchService.GetCoureNameByBCID(CourseCode);
+
+            if (Category == null)
+            {
+                return NotFound(false);
+            }
+
+            return Ok(Category);
+        }
 
 
 

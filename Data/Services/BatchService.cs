@@ -139,6 +139,13 @@ namespace Data.Services
         }
 
 
+        public async Task<IEnumerable<dynamic>> GetCoureNameByBCID(string CourseCode)
+        {
+
+            var results = await _dbConnection.QueryAsync("GETCoursenamebyBatchCourseCode", new { CourseCode }, commandType: CommandType.StoredProcedure);
+            return results;
+        }
+
 
 
 
