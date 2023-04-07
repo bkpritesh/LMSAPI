@@ -53,18 +53,21 @@ namespace LMS.Controllers
                 // Deserialize the students property from the input JSON object
                 var studentsJson = "[{\"StudentCode\":\"S-0001\",\"FName\":\"string\"},{\"StudentCode\":\"S-0002\",\"FName\":\"Honey\"}]";
                     // sample JSON string
-                var studentsList = JsonConvert.DeserializeObject<List<Batch>>(studentsJson); // deserialize JSON string into List<Batch> object
-                var studentCodes = string.Join(",", studentsList.Select(s => s.Students)); // select the StudentCode properties and join them into a comma-separated string
+                var studentsList = JsonConvert.DeserializeObject<List<StudentBatch>>(studentsJson); // deserialize JSON string into List<Batch> object
+                var studentCodes = string.Join(",", studentsList.Select(s => s.StudentCode)); // select the StudentCode properties and join them into a comma-separated string
 
 
-                var studentBatch = new StudentBatch
+                foreach (var student in studentsList)
                 {
+                    var studentBatch = new StudentBatch
+                    {
+                        BatchCode = batch.BatchCode,
+                        StudentCode = student.StudentCode
+                    };
+                    await _batchService.AddStudentBatch(studentBatch);
+                }
 
-                    BatchCode = batch.BatchCode,
-                    StudentCode = studentCodes
-                };
-
-                await _batchService.AddStudentBatch(studentBatch);
+               // await _batchService.AddStudentBatch(studentBatch);
 
                 return Ok(batch);
             }

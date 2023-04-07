@@ -133,7 +133,7 @@ namespace Data.Services
             parameters.Add("@Student", Batch.StudentCode);
         
 
-            var results = await _dbConnection.QueryAsync<StudentBatch>("UpdateBatch", parameters, commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync<StudentBatch>("UpdateStudentBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
 
         }
