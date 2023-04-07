@@ -22,10 +22,10 @@ namespace Data.Services
             var connectionString = configuration.GetConnectionString("SqlConnection");
             _dbConnection = new SqlConnection(connectionString);
         }
-        public async Task<IEnumerable<Batch>> GetBatch()
+        public async Task<IEnumerable<GetBatch>> GetBatch()
         {
-            var query = "SELECT * FROM TBLBatch";
-            var results = await _dbConnection.QueryAsync<Batch>(query);
+            var query = "SELECT TBLBatch.*, TBLCourse.CourseName FROM TBLBatch JOIN TBLCourse ON TBLBatch.CourseCode = TBLCourse.CourseCode WHERE TBLBatch.CourseCode = TBLCourse.CourseCode;";
+            var results = await _dbConnection.QueryAsync<GetBatch>(query);
             return results;
         }
 
@@ -87,9 +87,9 @@ namespace Data.Services
             parameters.Add("@Assessment", Batch.Assessment);
 
             parameters.Add("@Description",Batch.Description);
-            parameters.Add("@StartTime", Batch.Assessment);
-            parameters.Add("@EndTime", Batch.Assessment);
-            parameters.Add("@InstructorCode", Batch.Assessment);
+            parameters.Add("@StartTime", Batch.StartTIme);
+            parameters.Add("@EndTime", Batch.EndTIme);
+            parameters.Add("@InstructorCode", Batch.InstructorCode);
             var results = await _dbConnection.QueryAsync<Batch>("AddBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }

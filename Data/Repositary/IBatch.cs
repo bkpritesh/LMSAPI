@@ -10,7 +10,7 @@ namespace Data.Repositary
 {
     public  interface IBatch
     {
-        Task<IEnumerable<Batch>> GetBatch();
+        Task<IEnumerable<GetBatch>> GetBatch();
 
         Task<Batch> UpdateBatch(Batch Batch);
 
