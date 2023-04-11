@@ -32,54 +32,52 @@ namespace Data.Services
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
             AuthenticateResponse authenticate= new AuthenticateResponse();
-            string email = await _dbConnection.QueryFirstOrDefaultAsync<string>(
-      "SELECT Email FROM TBLAccount WHERE Email = @Email",
-      new {model.Email }
-  );
+                string email = await _dbConnection.QueryFirstOrDefaultAsync<string>(
+                "SELECT Email FROM TBLAccount WHERE Email = @Email",
+                new { model.Email });
 
-          //  string encryptedPasswordFromDB = await _dbConnection.QueryFirstOrDefaultAsync<string>("  SELECT [AccountId],[PasswordHash],[AccountType],[FirstName],[LastName]FROM TBLAccount WHERE Email = 'priya@gmail.com'", new { Email = email });
-
-
-            BindingAccountService binding = await _dbConnection.QueryFirstOrDefaultAsync<BindingAccountService>(
-    "SELECT AccountId, PasswordHash, AccountType, FirstName, LastName,Email  FROM TBLAccount WHERE Email = @Email",
-    new { Email = model.Email }
-);
-          
-
-            ////var results = await _dbConnection.QueryAsync("GetCitiesByStateId", new { stateId }, commandType: CommandType.StoredProcedure);
-            //if (binding == null)
-            //{
-
-            //    throw new Exception();
-            //}
-
-
-
-            if (model.Email.ToLower() == email.ToLower() && model.Password == binding.PasswordHash)
+            if (email != null)
             {
-            
-             
 
- 
-                Account account = new Account();
-                string token = generateJwtToken(account);
-                authenticate.RefreshToken = GenerateRefreshToken().Token;
-                //get the refresh token from the database 
-                authenticate.AccountId = binding.AccountId;
-                var RFTOKEN = await _dbConnection.ExecuteAsync(
-                        "UPDATE TBLAccount SET RefreshToken = @RefreshToken WHERE AccountId = @AccountId",
-                        new { authenticate.RefreshToken,authenticate.AccountId }
-                    );
-                authenticate.RefreshToken = RFTOKEN.ToString();
-                authenticate.AccountType = binding.AccountType;
-              
-                authenticate.Email = binding.Email;
-                authenticate.FirstName = binding.FirstName;
-                authenticate.LastName = binding.LastName;
-                authenticate.JwtToken= token;
+                BindingAccountService binding = await _dbConnection.QueryFirstOrDefaultAsync<BindingAccountService>(
+                "SELECT AccountId, PasswordHash, AccountType, FirstName, LastName,Email  FROM TBLAccount WHERE Email = @Email",
+                new { Email = model.Email });
 
+
+                ////var results = await _dbConnection.QueryAsync("GetCitiesByStateId", new { stateId }, commandType: CommandType.StoredProcedure);
+                //if (binding == null)
+                //{
+
+                //    throw new Exception();
+                //}
+
+
+
+                if (binding != null && model.Email.ToLower() == email.ToLower() && model.Password == binding.PasswordHash)
+                {
+
+
+
+
+                    Account account = new Account();
+                    string token = generateJwtToken(account);
+                    authenticate.RefreshToken = GenerateRefreshToken().Token;
+                    //get the refresh token from the database 
+                    authenticate.AccountId = binding.AccountId;
+                    var RFTOKEN = await _dbConnection.ExecuteAsync(
+                            "UPDATE TBLAccount SET RefreshToken = @RefreshToken WHERE AccountId = @AccountId",
+                            new { authenticate.RefreshToken, authenticate.AccountId }
+                        );
+                    authenticate.RefreshToken = RFTOKEN.ToString();
+                    authenticate.AccountType = binding.AccountType;
+
+                    authenticate.Email = binding.Email;
+                    authenticate.FirstName = binding.FirstName;
+                    authenticate.LastName = binding.LastName;
+                    authenticate.JwtToken = token;
+
+                }
             }
-            
             return authenticate;
         }
         private string generateJwtToken(Account account)
