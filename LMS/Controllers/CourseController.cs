@@ -37,7 +37,7 @@ namespace LMS.Controllers
 
             if (Course != null)
             {
-                Course.CourseCode =CourseCode;
+                Course.CategoryCode =CourseCode;
             }
             if (Course == null)
             {

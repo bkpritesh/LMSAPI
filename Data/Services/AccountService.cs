@@ -52,6 +52,7 @@ namespace Data.Services
                 //}
 
 
+               
 
                 if (binding != null && model.Email.ToLower() == email.ToLower() && model.Password == binding.PasswordHash)
                 {

@@ -35,7 +35,24 @@ namespace LMS.Controllers
             return Ok(course);
         }
 
+        [HttpGet("BatchCode")]
+        public async Task<IActionResult> GetBatchByID(string BatchCode)
+        {
+            var batch = await _batchService.GetBatchByID(BatchCode);
 
+            if (batch != null)
+            {
+                batch.BatchCode = BatchCode;
+            }
+            if (batch == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(batch);
+        }
+
+        
         [HttpGet("batchId")]
         public async Task<IActionResult> GetLastBatchID()
         {

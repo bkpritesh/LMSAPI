@@ -20,5 +20,7 @@ namespace Data.Repositary
         Task<StudentBatch> AddStudentBatch(StudentBatch Batch);
         
         Task<IEnumerable<dynamic>> GetCoureNameByBCID(string CourseID);
+
+        Task<GetBatch> GetBatchByID(string BatchCode);
     }
 }

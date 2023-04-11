@@ -29,7 +29,14 @@ namespace Data.Services
             return results;
         }
 
-       
+        public async Task<GetBatch> GetBatchByID(string BatchCode)
+        {
+            var results = await _dbConnection.QueryAsync<GetBatch>("SELECT * FROM [LMS].[dbo].[TBLBatch] where BatchCode = @BatchCode", new { BatchCode = BatchCode });
+            return results.FirstOrDefault();
+        }
+
+
+
 
 
 
