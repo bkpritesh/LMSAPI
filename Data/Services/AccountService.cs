@@ -126,15 +126,15 @@ namespace Data.Services
             do
             {
                 // Query the database to check if the token is unique
-                var existingToken = _dbConnection.QuerySingleOrDefault<RefreshToken>("SELECT * FROM RefreshTokens WHERE Token = @Token", new { Token = refreshToken.Token });
+                var existingToken = _dbConnection.QuerySingleOrDefault<RefreshToken>("SELECT RefreshToken from TBLAccount WHERE RefreshToken = @Token", new { Token = refreshToken.Token });
 
                 tokenIsUnique = existingToken == null;
 
                 if (!tokenIsUnique)
                 {
-                    //return GenerateRefreshToken();
+                    return GenerateRefreshToken();
                     // If the token is not unique, generate a new one and check again
-                    refreshToken.Token = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                  //  refreshToken.Token = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
                 }
 
             } while (!tokenIsUnique);
