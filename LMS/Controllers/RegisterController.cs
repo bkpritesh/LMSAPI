@@ -49,51 +49,51 @@ namespace LMS.Controllers
 
 
   
-        [HttpPost]
-        public async Task<IActionResult> AddAccount([FromBody] Account account)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> AddAccount([FromBody] Account account)
+        //{
 
 
-            try
-            {
-                var AccountID = Guid.NewGuid();
-                var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-                _accountID.AccountId = AccountID;
-                account.VerificationToken = VerificationToken;
+        //    try
+        //    {
+        //        var AccountID = Guid.NewGuid();
+        //        var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        //        _accountID.AccountId = AccountID;
+        //        account.VerificationToken = VerificationToken;
 
-                var result = await _RgService.AddAccount(account);
-
-
-                var senderEmail = account.Email;
-                var subject = "Password Reset Request";
-                // reading The HTML file from the directory using the _hostingEnvironment
-                var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "AccountConfirmation.html");
-                // to read that path and convert it into the Mesafe 
-                var message = await System.IO.File.ReadAllTextAsync(path);
-                var VerificationLink = _configuration.GetValue<string>("VerificationTokenLink");
+        //        var result = await _RgService.AddAccount(account);
 
 
-                message = message.Replace("{UserFullName}", account.FirstName + account.LastName)
-                                    .Replace("{ConfirmationLink}", "/verifyEmail/" + VerificationToken)
-                                    .Replace("{Username}", account.FirstName)
-                                    .Replace("{Password}", account.PasswordHash);
-                bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+        //        var senderEmail = account.Email;
+        //        var subject = "Password Reset Request";
+        //        // reading The HTML file from the directory using the _hostingEnvironment
+        //        var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "AccountConfirmation.html");
+        //        // to read that path and convert it into the Mesafe 
+        //        var message = await System.IO.File.ReadAllTextAsync(path);
+        //        var VerificationLink = _configuration.GetValue<string>("VerificationTokenLink");
 
-                if (isEmailSent)
-                {
-                    return Ok(result);
-                }
-                else
-                {
-                    return BadRequest(false);
-                }
-            }
-            catch (Exception ex)
-            {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        message = message.Replace("{UserFullName}", account.FirstName + account.LastName)
+        //                            .Replace("{ConfirmationLink}", "/verifyEmail/" + VerificationToken)
+        //                            .Replace("{Username}", account.FirstName)
+        //                            .Replace("{Password}", account.PasswordHash);
+        //        bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+
+        //        if (isEmailSent)
+        //        {
+        //            return Ok(result);
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(false);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
         [HttpPost("Student")]
         public async Task<IActionResult> StudentAdmission(RequestRegister requestRegister)
