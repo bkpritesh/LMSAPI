@@ -1,4 +1,5 @@
 ﻿using Data.Repositary;
+using LMS.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -9,12 +10,13 @@ namespace LMS.Controllers
     [ApiController]
     public class ResetPasswordController : ControllerBase
     {
-
+        private readonly ICommanUtility _commanUtility;
         private readonly IResetPassword _ResetPassword;
 
-        public ResetPasswordController(IResetPassword resetpassword)
+        public ResetPasswordController(IResetPassword resetpassword,ICommanUtility commanUtility)
         {
             _ResetPassword = resetpassword;
+            _commanUtility = commanUtility;
         }
 
         [HttpPost]
@@ -22,7 +24,13 @@ namespace LMS.Controllers
         {
             try
             {
-                bool success = await _ResetPassword.ResetPassword(resetPassword);
+                resetPassword.Password = _commanUtility.EncryptPassword(resetPassword.Password);
+                var Reset = new ResetPassword { 
+                
+                Password= resetPassword.Password,
+                ResetToken =resetPassword.ResetToken,    
+                };
+                bool success = await _ResetPassword.ResetPassword(Reset);
                 return Ok(new { success });
             }
             catch (ArgumentException ex)

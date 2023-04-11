@@ -80,6 +80,7 @@ namespace Data.Services
             parameters.Add("@Mname", RgDetail.MName);
             parameters.Add("@Lname" ,RgDetail.LName);
             parameters.Add("@Address",RgDetail.Address);
+            parameters.Add("@State", RgDetail.State);
             parameters.Add("@City",   RgDetail.City);
             parameters.Add("@Country",RgDetail.Country);
             parameters.Add("@ContactNo",RgDetail.ContactNo);
@@ -91,9 +92,10 @@ namespace Data.Services
             parameters.Add("@IsLeaving ", RgDetail.IsLeaving);
 
             
-            
+            //
             
             parameters.Add("@ProfileDes", RgDetail.ProfileDes);
+            //
             parameters.Add("@ProfileImg", RgDetail.ProfileImg);
             
             parameters.Add("@AccountType",RgDetail.AccountType);

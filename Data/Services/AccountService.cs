@@ -1,4 +1,5 @@
-﻿using Data.Repositary;
+﻿using Dapper;
+using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
@@ -16,6 +17,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Data.Services
 {
     public class AccountService : IAccountService
@@ -27,31 +29,69 @@ namespace Data.Services
             var connectionString = configuration.GetConnectionString("SqlConnection");
             _dbConnection = new SqlConnection(connectionString);
         }
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
             AuthenticateResponse authenticate= new AuthenticateResponse();
-            //Temp condtion
-            if (model.Email == "test@test.com" && model.Password == "Test@123")
+            string email = await _dbConnection.QueryFirstOrDefaultAsync<string>(
+      "SELECT Email FROM TBLAccount WHERE Email = @Email",
+      new {model.Email }
+  );
+
+          //  string encryptedPasswordFromDB = await _dbConnection.QueryFirstOrDefaultAsync<string>("  SELECT [AccountId],[PasswordHash],[AccountType],[FirstName],[LastName]FROM TBLAccount WHERE Email = 'priya@gmail.com'", new { Email = email });
+
+
+            BindingAccountService binding = await _dbConnection.QueryFirstOrDefaultAsync<BindingAccountService>(
+    "SELECT AccountId, PasswordHash, AccountType, FirstName, LastName,Email  FROM TBLAccount WHERE Email = @Email",
+    new { Email = model.Email }
+);
+          
+
+            ////var results = await _dbConnection.QueryAsync("GetCitiesByStateId", new { stateId }, commandType: CommandType.StoredProcedure);
+            //if (binding == null)
+            //{
+
+            //    throw new Exception();
+            //}
+
+
+
+            if (model.Email == email && model.Password == binding.PasswordHash)
             {
+            
+             
+
+ 
                 Account account = new Account();
                 string token = generateJwtToken(account);
                 authenticate.RefreshToken = GenerateRefreshToken().Token;
-                authenticate.RefreshToken = "CCD1F3DB9AA432B6358BE1D40BCAC04FD3D32BFBC48ADAAB66E656B9A84A79F6E76CC4860A9BE220FAE76B49E56525F4C42A189D0E240E3F96F56F679F930FB9";
-                authenticate.AccountType = "Admin";
-                authenticate.AccountId = Guid.NewGuid().ToString();
-                authenticate.FirstName = "Pritesh";
-                authenticate.LastName = "Maturkar";
+                //get the refresh token from the database 
+                authenticate.AccountId = binding.AccountId;
+                var RFTOKEN = await _dbConnection.ExecuteAsync(
+                        "UPDATE TBLAccount SET RefreshToken = @RefreshToken WHERE AccountId = @AccountId",
+                        new { authenticate.RefreshToken,authenticate.AccountId }
+                    );
+                authenticate.RefreshToken = RFTOKEN.ToString();
+                authenticate.AccountType = binding.AccountType;
+              
+                authenticate.Email = binding.Email;
+                authenticate.FirstName = binding.FirstName;
+                authenticate.LastName = binding.LastName;
                 authenticate.JwtToken= token;
 
             }
+            
             return authenticate;
         }
         private string generateJwtToken(Account account)
         {  
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>() {
+                // get the Username 
                 new Claim(ClaimTypes.Name, "Admin"),
+
+                // get role account type
                 new Claim(ClaimTypes.Role, "Admin"),
+
                 new Claim("AccountId",  Guid.NewGuid().ToString()),
             };
 
@@ -61,7 +101,7 @@ namespace Data.Services
                 "GyanShaktiTech",
                 "GyanShaktiTech.com",
                 claims,
-                expires: DateTime.UtcNow.AddDays(10),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: signIn);
 
             var token = tokenHandler.WriteToken(tokenDes);
@@ -89,31 +129,70 @@ namespace Data.Services
             return refreshToken;
         }
 
-        public AuthenticateResponse RefreshToken(string token)
-        {
-            AuthenticateResponse authenticate = new AuthenticateResponse();
-            
-            
-           
-            // Cheeck token in DB
-            if (token == "CCD1F3DB9AA432B6358BE1D40BCAC04FD3D32BFBC48ADAAB66E656B9A84A79F6E76CC4860A9BE220FAE76B49E56525F4C42A189D0E240E3F96F56F679F930FB9")
+     //   public Task<AuthenticateResponse> RefreshToken(string token)
+     //   {
+     //       {
+     //       AuthenticateResponse authenticate = new AuthenticateResponse();
+
+     //           BindingAccountService binding = await _dbConnection.QueryFirstOrDefaultAsync<BindingAccountService>(
+     //"SELECT AccountId, PasswordHash, AccountType, FirstName, LastName,Email  FROM TBLAccount WHERE Email = @Email",
+     //new { Email = model.Email }
+
+     //       // Cheeck token in DB
+     //       if (token == "CCD1F3DB9AA432B6358BE1D40BCAC04FD3D32BFBC48ADAAB66E656B9A84A79F6E76CC4860A9BE220FAE76B49E56525F4C42A189D0E240E3F96F56F679F930FB9")
+     //       {
+     //           Account account = new Account();
+     //           authenticate.RefreshToken = GenerateRefreshToken().Token;
+     //           authenticate.RefreshToken = "CCD1F3DB9AA432B6358BE1D40BCAC04FD3D32BFBC48ADAAB66E656B9A84A79F6E76CC4860A9BE220FAE76B49E56525F4C42A189D0E240E3F96F56F679F930FB9";
+     //           authenticate.AccountType = "Admin";
+     //           authenticate.AccountId = Guid.NewGuid().ToString();
+     //           authenticate.FirstName = "Pritesh";
+     //           authenticate.LastName = "Maturkar";
+     //           authenticate.JwtToken = generateJwtToken(account);
+
+     //       }
+     //       // replace old refresh token with a new one(rotate token)
+     //       // remove old refresh tokens from account
+     //       // save changes to db
+     //       return authenticate;
+     //   }
+
+
+            public async Task<AuthenticateResponse> RefreshToken(string token)
             {
-                Account account = new Account();
-                authenticate.RefreshToken = GenerateRefreshToken().Token;
-                authenticate.RefreshToken = "CCD1F3DB9AA432B6358BE1D40BCAC04FD3D32BFBC48ADAAB66E656B9A84A79F6E76CC4860A9BE220FAE76B49E56525F4C42A189D0E240E3F96F56F679F930FB9";
-                authenticate.AccountType = "Admin";
-                authenticate.AccountId = Guid.NewGuid().ToString();
-                authenticate.FirstName = "Pritesh";
-                authenticate.LastName = "Maturkar";
-                authenticate.JwtToken = generateJwtToken(account);
+                AuthenticateResponse authenticate = new AuthenticateResponse();
 
+                // Check token in DB
+                BindingAccountService binding = await _dbConnection.QueryFirstOrDefaultAsync<BindingAccountService>(
+                    "SELECT AccountId, AccountType, FirstName, LastName , RefreshToken From TBLAccount WHERE [RefreshToken] = @token",
+                    new { token }
+                );
+
+                if (binding != null && token == binding.RefreshToken)
+                {
+                    Account account = new Account();
+                    authenticate.RefreshToken = GenerateRefreshToken().Token;
+                    authenticate.AccountType = binding.AccountType;
+                    authenticate.AccountId = binding.AccountId;
+                    authenticate.FirstName = binding.FirstName;
+                    authenticate.LastName = binding.LastName;
+                    authenticate.JwtToken = generateJwtToken(account);
+
+                    // Replace old refresh token with a new one (rotate token)
+                    binding.RefreshToken = authenticate.RefreshToken;
+
+                    // Save changes to DB
+                    await _dbConnection.ExecuteAsync(
+                        "UPDATE TBLAccount SET RefreshToken = @RefreshToken WHERE AccountId = @AccountId",
+                        new { binding.RefreshToken, binding.AccountId }
+                    );
+                }
+
+                // Return the authenticate object wrapped in a completed Task
+                return authenticate;
             }
-            // replace old refresh token with a new one(rotate token)
-            // remove old refresh tokens from account
-            // save changes to db
-            return authenticate;
-        }
-    }
 
-    
-}
+        }
+
+
+    }

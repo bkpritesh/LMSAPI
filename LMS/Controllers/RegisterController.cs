@@ -137,12 +137,15 @@ namespace LMS.Controllers
                         LName = requestRegister.LName,
                         Address = requestRegister.Address,
                         City = requestRegister.City,
+                        State=  requestRegister.State,
                         Country = requestRegister.Country,
                         ContactNo = requestRegister.ContactNo,
                         Education = requestRegister.Education,
                         SkillSet = requestRegister.SkillSet,
                         BirthDate = requestRegister.BirthDate,
-                        JoiningDate = requestRegister.JoiningDate
+                        JoiningDate = requestRegister.JoiningDate,
+                       
+                       
                     };
 
                     var UD = await _userDetail.AddUserDetail(UserDetails);
@@ -208,7 +211,7 @@ namespace LMS.Controllers
                         };
                         var CourseName = await _studentEnrollment.GetCourse(CourseCode);
 
-                        message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/ForgortPassword/ResetPassword/RestToken=?" + ResetToken)
+                        message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/resetpassword?RestToken=?" + ResetToken)
                                          .Replace("[Course Name]",CourseName)
                                          .Replace("[Address]", requestRegister.Address)
                                          .Replace("[Student Name]",requestRegister.FName+requestRegister.LName) ;

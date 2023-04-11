@@ -10,6 +10,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddScoped<BatchDetailService>();
+builder.Services.AddScoped<IBatchDetail, BatchDetailService>();
 builder.Services.AddScoped<BatchService>();
 builder.Services.AddSingleton<IBatch,BatchService>();
 builder.Services.AddSingleton<IBIllPayment, BillPaymentSevice>();

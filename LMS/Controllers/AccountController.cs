@@ -1,8 +1,11 @@
 ﻿using Data.Repositary;
+using Data.Services;
+using LMS.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 
 namespace LMS.Controllers
 {
@@ -10,29 +13,55 @@ namespace LMS.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService accountService)
+        private readonly IAccountService _accountService;
+        private readonly ICommanUtility _commanUtility;
+        public AccountController(IAccountService accountService, ICommanUtility commanUtility, ILogger<AccountController> logger)
         {
             _accountService = accountService;
+            _commanUtility = commanUtility;
+            _logger = logger;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = _accountService.Authenticate(model);
+           
+           var DecryptPassword = _commanUtility.EncryptPassword(model.Password);
+            var models = new AuthenticateRequest
+            {
+                Email= model.Email,
+                Password=DecryptPassword
+            };
+
+
+            var response = await _accountService.Authenticate(models);
+            if (response.AccountId == null)
+            {
+                return NoContent();
+            }
+
             return Ok(response);
+
+
+
+
+         
+
         }
+
 
 
         [AllowAnonymous]
         [HttpPost("refresh-token")]
-        public ActionResult<AuthenticateResponse> RefreshToken()
+        public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
         {
-            var refreshToken = Request.Cookies["refreshToken"];
-            var response = _accountService.RefreshToken(refreshToken);
+            var response = await _accountService.RefreshToken(refreshToken);
             return Ok(response);
         }
+
+
     }
 }

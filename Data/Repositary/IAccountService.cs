@@ -9,7 +9,8 @@ namespace Data.Repositary
 {
     public interface IAccountService
     {
-        public AuthenticateResponse Authenticate(AuthenticateRequest model);
-        public AuthenticateResponse RefreshToken(string token);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+        //public AuthenticateResponse Authenticate(AuthenticateRequest model);
+        Task<AuthenticateResponse> RefreshToken(string token);
     }
 }

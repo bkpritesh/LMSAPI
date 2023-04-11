@@ -53,6 +53,9 @@ namespace Data.Services
             // Update the user password using the AccountId
             var updateParams = new DynamicParameters();
             updateParams.Add("@AccountId", accountId);
+
+
+
             updateParams.Add("@PasswordHash", resetPassword.Password);
 
             int rowsAffected = await _dbConnection.ExecuteAsync("UpdateUserPasswordByAccoubtId", updateParams, commandType: CommandType.StoredProcedure);
