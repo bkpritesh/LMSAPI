@@ -105,8 +105,16 @@ namespace LMS.Controllers
                 var encrypted = _commanUtility.EncryptPassword(password);
                 var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
 
+                //Reset token stored to the IAccount Serives 
+                var ResetToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                _accountID.RestToken = ResetToken;
+                
+
+
                 var AccountID = Guid.NewGuid();
                 _accountID.AccountId = AccountID;
+
+
                 var account = new Account
                 {
                     VerificationToken= VerificationToken,
@@ -118,7 +126,7 @@ namespace LMS.Controllers
                     Address = requestRegister.Address,
                     Skills = requestRegister.SkillSet,
                     AccountType= requestRegister.AccountType,
-
+                   
 
 
                 };
@@ -182,7 +190,7 @@ namespace LMS.Controllers
 
                 try
                 {
-                    var ResetToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                  
                     var emailExists = requestRegister.Email;
 
                     if (emailExists != null)

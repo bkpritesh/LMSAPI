@@ -12,5 +12,7 @@ namespace Data.Services
        public  Guid AccountId { get; set; }
 
         public string StudentID { get; set; }
+
+        public string RestToken { get; set; }             
     }
 }

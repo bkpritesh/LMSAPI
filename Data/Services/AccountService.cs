@@ -199,7 +199,7 @@ namespace Data.Services
 
                     // Replace old refresh token with a new one (rotate token)
                     binding.RefreshToken = authenticate.RefreshToken;
-
+                
                     // Save changes to DB
                     await _dbConnection.ExecuteAsync(
                         "UPDATE TBLAccount SET RefreshToken = @RefreshToken WHERE AccountId = @AccountId",

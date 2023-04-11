@@ -46,6 +46,7 @@ namespace Data.Services
             parameter.Add("@AccountType", Rs.AccountType);
             parameter.Add("@DisplayName", Rs.DisplayName);
             parameter.Add("@VerificationToken", Rs.VerificationToken);
+            parameter.Add("@ResetToken", _accountID.RestToken);
 
             var results = await _dbConnection.QueryAsync<Account>("AddAccount", parameter, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
