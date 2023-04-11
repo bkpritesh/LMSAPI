@@ -41,7 +41,7 @@ namespace Data.Services
             parameter.Add("@LastName", Rs.LastName);
             parameter.Add("@Address", Rs.Address);
             parameter.Add("@Skills", Rs.Skills);
-            parameter.Add("@Email", Rs.Email);
+            parameter.Add("@Email", Rs.Email.ToLower());
             parameter.Add("@PasswordHash", Rs.PasswordHash);
             parameter.Add("@AccountType", Rs.AccountType);
             parameter.Add("@DisplayName", Rs.DisplayName);

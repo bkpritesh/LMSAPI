@@ -55,7 +55,7 @@ namespace Data.Services
 
 
 
-            if (model.Email == email && model.Password == binding.PasswordHash)
+            if (model.Email.ToLower() == email.ToLower() && model.Password == binding.PasswordHash)
             {
             
              
@@ -121,12 +121,31 @@ namespace Data.Services
             };
 
             // ensure token is unique by checking against db
-            var tokenIsUnique = true;
+            bool tokenIsUnique;
 
-            if (!tokenIsUnique)
-                return GenerateRefreshToken();
+            do
+            {
+                // Query the database to check if the token is unique
+                var existingToken = _dbConnection.QuerySingleOrDefault<RefreshToken>("SELECT * FROM RefreshTokens WHERE Token = @Token", new { Token = refreshToken.Token });
+
+                tokenIsUnique = existingToken == null;
+
+                if (!tokenIsUnique)
+                {
+                    //return GenerateRefreshToken();
+                    // If the token is not unique, generate a new one and check again
+                    refreshToken.Token = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                }
+
+            } while (!tokenIsUnique);
 
             return refreshToken;
+            //var existingTdoken = _dbConnection.QuerySingleOrDefault<RefreshToken>("SELECT * FROM RefreshTokens WHERE Token = @Token", new { Token = refreshToken.Token });
+            //tokenIsUnique = existingToken == null;
+            //if (!tokenIsUnique)
+            //    return GenerateRefreshToken();
+
+            //return refreshToken;
         }
 
      //   public Task<AuthenticateResponse> RefreshToken(string token)

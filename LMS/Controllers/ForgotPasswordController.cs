@@ -56,7 +56,7 @@ namespace LMS.Controllers
                     var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
                   
                    
-                    message = message.Replace("{ResetPasswordLink}", resetPasswordLink+"/ForgortPassword/ResetPassword/RestToken=?"+ ResetToken);
+                    message = message.Replace("{ResetPasswordLink}", resetPasswordLink+ "/resetpassword?RestToken=?" + ResetToken);
                     bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
              
 
