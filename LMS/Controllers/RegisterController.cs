@@ -219,7 +219,7 @@ namespace LMS.Controllers
                         };
                         var CourseName = await _studentEnrollment.GetCourse(CourseCode);
 
-                        message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/resetpassword?RestToken=?" + ResetToken)
+                        message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/resetpassword?RestToken=" + ResetToken)
                                          .Replace("[Course Name]",CourseName)
                                          .Replace("[Address]", requestRegister.Address)
                                          .Replace("[Student Name]",requestRegister.FName+requestRegister.LName) ;
