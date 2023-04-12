@@ -45,45 +45,54 @@ namespace Data.Services
                 BirthDate = s.BirthDate,
                 JoiningDate = s.JoiningDate,
                 ProfileImg = s.ProfileImg,
-                StudentCode = s.StudentCode
-            })
-            .Select(s => new StudentFNameandLnameBinding
-            {
-                UGUID = s.UGUID,
-                Email = s.Email,
-                FName = s.FName,
-                MName = s.MName,
-                LName = s.LName,
-                Address = s.Address,
-                State = s.State,
-                City = s.City,
-                Country = s.Country,
-                ContactNo = s.ContactNo,
-                Education = s.Education,
-                SkillSet = s.SkillSet,
-                BirthDate = s.BirthDate,
-                JoiningDate = s.JoiningDate,
-                ProfileImg = s.ProfileImg,
                 StudentCode = s.StudentCode,
                 FullName = $"{s.FName} {s.LName}"
             });
 
+
+            //var studentsWithFullName = results.Select(s => new StudentFNameandLnameBinding
+            //{
+            //    UGUID = s.UGUID,
+            //    Email = s.Email,
+            //    FName = s.FName,
+            //    MName = s.MName,
+            //    LName = s.LName,
+            //    Address = s.Address,
+            //    State = s.State,
+            //    City = s.City,
+            //    Country = s.Country,
+            //    ContactNo = s.ContactNo,
+            //    Education = s.Education,
+            //    SkillSet = s.SkillSet,
+            //    BirthDate = s.BirthDate,
+            //    JoiningDate = s.JoiningDate,
+            //    ProfileImg = s.ProfileImg,
+            //    StudentCode = s.StudentCode
+               
+            //})
+            //.Select(s => new StudentFNameandLnameBinding
+            //{
+            //    UGUID = s.UGUID,
+            //    Email = s.Email,
+            //    FName = s.FName,
+            //    MName = s.MName,
+            //    LName = s.LName,
+            //    Address = s.Address,
+            //    State = s.State,
+            //    City = s.City,
+            //    Country = s.Country,
+            //    ContactNo = s.ContactNo,
+            //    Education = s.Education,
+            //    SkillSet = s.SkillSet,
+            //    BirthDate = s.BirthDate,
+            //    JoiningDate = s.JoiningDate,
+            //    ProfileImg = s.ProfileImg,
+            //    StudentCode = s.StudentCode,
+            //    FullName = $"{s.FName} {s.LName}"
+            //});
+
             return studentsWithFullName;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //public async Task<IEnumerable<Student>> GetStudent()
