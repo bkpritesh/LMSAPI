@@ -1,4 +1,5 @@
 ﻿using Data.Repositary;
+using Data.Services;
 using LMS.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +20,13 @@ namespace LMS.Controllers
             _StudentService = StudentService;
         }
 
-
-
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetStudents()
         {
-            var student = await _StudentService.GetStudent();
-            return Ok(student);
-        }
+            var students = await _StudentService.GetStudent();
 
+            return Ok(students);
+        }
 
 
 
@@ -47,7 +46,7 @@ namespace LMS.Controllers
         //    var result = await _StudentService.AddStudent(student);
         //    string senderEmail = "thamas9824@gmail.com";
         //    string subject = "New Student Added";
-          
+
         //    string message = System.IO.File.ReadAllText(@"D:\C# projects\LMSAPI\LMS\EmailTemplate\AccountConfirmation.html");
 
         //    message = message.Replace("[[StudentName]]", student.EmailID);
@@ -94,6 +93,6 @@ namespace LMS.Controllers
         //    return NoContent();
         //}
 
-       
+
     }
 }

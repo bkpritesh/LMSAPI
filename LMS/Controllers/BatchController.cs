@@ -31,8 +31,8 @@ namespace LMS.Controllers
         public async Task<IActionResult> Get()
         {
             Log.Error("Manin");
-            var course = await _batchService.GetBatch();
-            return Ok(course);
+            var batch = await _batchService.GetBatch();
+            return Ok(batch);
         }
 
         [HttpGet("BatchCode")]
@@ -67,13 +67,7 @@ namespace LMS.Controllers
             try
             {
                 var newBatch = await _batchService.CreateBatch(batch);
-                // Deserialize the students property from the input JSON object
-              //  var studentsJson = "[{\"StudentCode\":\"S-0001\",\"FName\":\"string\"},{\"StudentCode\":\"S-0002\",\"FName\":\"Honey\"}]";
-                // sample JSON string
                 var studentsJson = batch.Students;
-
-
-
                 var studentsList = JsonConvert.DeserializeObject<List<StudentBatch>>(studentsJson); // deserialize JSON string into List<Batch> object
                 var studentCodes = string.Join(",", studentsList.Select(s => s.StudentCode)); // select the StudentCode properties and join them into a comma-separated string
 
@@ -88,8 +82,7 @@ namespace LMS.Controllers
                     await _batchService.AddStudentBatch(studentBatch);
                 }
 
-               // await _batchService.AddStudentBatch(studentBatch);
-
+            
                 return Ok(batch);
             }
             catch (Exception ex)
@@ -97,29 +90,6 @@ namespace LMS.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -139,8 +109,6 @@ namespace LMS.Controllers
         }
 
 
-
-
         [HttpGet]
         [Route("{CourseCode}")]
         public async Task<IActionResult> GetCoureNameByBCID(string CourseCode)
@@ -154,8 +122,6 @@ namespace LMS.Controllers
 
             return Ok(Category);
         }
-
-
 
     }
 }

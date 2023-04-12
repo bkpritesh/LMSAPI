@@ -45,9 +45,6 @@ namespace LMS.Controllers
          
         }
 
-
-
-
   
         //[HttpPost]
         //public async Task<IActionResult> AddAccount([FromBody] Account account)
@@ -158,32 +155,33 @@ namespace LMS.Controllers
 
                     var UD = await _userDetail.AddUserDetail(UserDetails);
                 }
-              
+
 
                 var StudEnrolment = new StudentEnrollment
-                { 
-                 CategoryCode=requestRegister.CategoryCode,
-                 CourseCode=requestRegister.CourseCode, 
-                 CourseFees= requestRegister.CourseFees, 
-                 Discount=requestRegister.Discount,
-                 TotalFees = requestRegister.CourseFees - requestRegister.Discount,
-
-
-            };
-                var StudR = await _studentEnrollment.Enrollment(StudEnrolment);
-
-                if (requestRegister.IsPaid ) { 
-                var bill = new BillPayment
                 {
-                   Amount=requestRegister.PaidAmount,
-                   CourseCode=requestRegister.CourseCode,
-                   IsPaid=requestRegister.IsPaid,   
-                   
+                    CategoryCode = requestRegister.CategoryCode,
+                    CourseCode = requestRegister.CourseCode,
+                    CourseFees = requestRegister.CourseFees,
+                    Discount = requestRegister.Discount,
+                    TotalFees = requestRegister.CourseFees - requestRegister.Discount,
+
 
                 };
+                var StudR = await _studentEnrollment.Enrollment(StudEnrolment);
 
-                var Billpayment = await _BillPayment.BillPayment(bill);
-    
+                if (requestRegister.IsPaid)
+                {
+                    var bill = new BillPayment
+                    {
+                        Amount = requestRegister.PaidAmount,
+                        CourseCode = requestRegister.CourseCode,
+                        IsPaid = requestRegister.IsPaid,
+
+
+                    };
+
+                    var Billpayment = await _BillPayment.BillPayment(bill);
+
                 }
 
 
@@ -201,17 +199,13 @@ namespace LMS.Controllers
                         var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "StudentAdmission.html");
 
                         
-                        //var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplate", "PasswordReset.html");
-                        var message = await System.IO.File.ReadAllTextAsync(path);
+                      
+                        var message = await System.IO.File.ReadAllTextAsync(path);                      
 
-                        
-
-                        //  var message = System.IO.File.ReadAllText(@"~/EmailTemplate/PasswordReset.html");
+                     
                         var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
 
-                        //var CourseNameResult = await .QueryAsync("GetCourseNameByCourseID", new { requestRegister.CourseCode }, commandType: CommandType.StoredProcedure);
-                        //var CourseName = CourseNameResult.FirstOrDefault();
-
+                    
                         var CourseCode = new StudentEnrollment
                         {
                             CourseCode = requestRegister.CourseCode,
@@ -235,7 +229,6 @@ namespace LMS.Controllers
                         {
                             return BadRequest(false);
                         }
-                        return Ok(emailExists);
 
                     }
 
@@ -245,23 +238,8 @@ namespace LMS.Controllers
                 {
 
                     return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-                }
-                // var StudentEnrolment = await _studentEnrollmen(UserDetails);
-                // Account Id= GUID
-                // IsStudent
-                // Student Code - 
-                // 1. Account Insert 
-                // 2. userdestkpp
-
-
-                // Check ISStudent 
-                // If Student  get Last STudent Code and create New 
-                // Is Paid then add Billing Record 
-                // INsert StudentEnrollment and BillingPayment and UsersDetails
-                // Send Email 
-                // ProfileImg Set Detailt Image Path 
-
-                return Ok();
+                }       
+                
             }
 
         }

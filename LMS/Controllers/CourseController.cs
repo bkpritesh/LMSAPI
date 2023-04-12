@@ -13,8 +13,8 @@ namespace LMS.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourse _courseService;
-		private static NLog.Logger Log = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-		public CourseController(ICourse courseService)
+        private static NLog.Logger Log = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        public CourseController(ICourse courseService)
         {
             _courseService = courseService;
         }
@@ -23,9 +23,9 @@ namespace LMS.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get()
-		{
-			Log.Error("Manin");
-			var course = await _courseService.GetCourse();
+        {
+            Log.Error("Manin");
+            var course = await _courseService.GetCourse();
             return Ok(course);
         }
 
@@ -37,7 +37,7 @@ namespace LMS.Controllers
 
             if (Course != null)
             {
-                Course.CategoryCode =CourseCode;
+                Course.CategoryCode = CourseCode;
             }
             if (Course == null)
             {
@@ -52,44 +52,44 @@ namespace LMS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCourse([FromBody] AddCourse course)
         {
-           
-
-                var result = await _courseService.AddCourse(course);
-                return Ok(result);
-            }
 
 
-
-            [HttpPut("CourseCode")]
-            public async Task<IActionResult> UpdateCourse(string Coursecode, [FromBody] Course course)
-            {
-                if (Coursecode != course.CourseCode)
-                {
-                    return BadRequest();
-                }
-
-                var update = await _courseService.UpdateCourse(course);
-
-
-
-                return Ok(update);
-            }
-
-
-            [HttpDelete("{CourseCode}")]
-            public async Task<IActionResult> DeleteCourse(string CourseCode)
-            {
-                await _courseService.DeleteCourse(CourseCode);
-                return Ok();
-            }
-
-
-            [HttpPost("CourseSearch")]
-            public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
-            {
-                var result = await _courseService.CourseFilter(courseFilter);
-                return Ok(result);
-            }
+            var result = await _courseService.AddCourse(course);
+            return Ok(result);
         }
-	}
 
+
+
+        [HttpPut("CourseCode")]
+        public async Task<IActionResult> UpdateCourse(string Coursecode, [FromBody] Course course)
+        {
+            if (Coursecode != course.CourseCode)
+            {
+                return BadRequest();
+            }
+
+            var update = await _courseService.UpdateCourse(course);
+
+
+
+            return Ok(update);
+        }
+
+
+        [HttpDelete("{CourseCode}")]
+        public async Task<IActionResult> DeleteCourse(string CourseCode)
+        {
+            await _courseService.DeleteCourse(CourseCode);
+            return Ok();
+        }
+
+
+        [HttpPost("CourseSearch")]
+        public async Task<IActionResult> GetCourseFilter(RequestCourseFilter courseFilter)
+        {
+            var result = await _courseService.CourseFilter(courseFilter);
+            return Ok(result);
+        }
+
+    }
+}

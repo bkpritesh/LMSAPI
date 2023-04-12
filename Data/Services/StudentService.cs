@@ -24,11 +24,53 @@ namespace Data.Services
         }
 
 
-        public async Task<IEnumerable<dynamic>> GetStudent()
+        public async Task<IEnumerable<StudentFNameandLnameBinding>> GetStudent()
         {
-            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
-            return results;
+            var results = await _dbConnection.QueryAsync<StudentFNameandLnameBinding>("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
+
+            var studentsWithFullName = results.Select(s => new StudentFNameandLnameBinding
+            {
+                UGUID = s.UGUID,
+                Email = s.Email,
+                FName = s.FName,
+                MName = s.MName,
+                LName = s.LName,
+                Address = s.Address,
+                State = s.State,
+                City = s.City,
+                Country = s.Country,
+                ContactNo = s.ContactNo,
+                Education = s.Education,
+                SkillSet = s.SkillSet,
+                BirthDate = s.BirthDate,
+                JoiningDate = s.JoiningDate,
+                ProfileImg = s.ProfileImg,
+                StudentCode = s.StudentCode
+            })
+            .Select(s => new StudentFNameandLnameBinding
+            {
+                UGUID = s.UGUID,
+                Email = s.Email,
+                FName = s.FName,
+                MName = s.MName,
+                LName = s.LName,
+                Address = s.Address,
+                State = s.State,
+                City = s.City,
+                Country = s.Country,
+                ContactNo = s.ContactNo,
+                Education = s.Education,
+                SkillSet = s.SkillSet,
+                BirthDate = s.BirthDate,
+                JoiningDate = s.JoiningDate,
+                ProfileImg = s.ProfileImg,
+                StudentCode = s.StudentCode,
+                FullName = $"{s.FName} {s.LName}"
+            });
+
+            return studentsWithFullName;
         }
+
 
 
 
@@ -82,7 +124,7 @@ namespace Data.Services
 
         //public async Task<Student> UpdateStudent(Student student)
         //{
-            
+
         //    var parameters = new DynamicParameters();
         //    parameters.Add("StudentID", student.StudentID);
         //    parameters.Add("@FirstName", student.FirstName);

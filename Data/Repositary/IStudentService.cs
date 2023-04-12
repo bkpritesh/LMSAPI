@@ -12,8 +12,8 @@ namespace Data.Repositary
 
 
 
-        Task<IEnumerable<dynamic>> GetStudent();
-      
+        Task<IEnumerable<StudentFNameandLnameBinding>> GetStudent();
+
         //Task<Student> GetStudentByID(int id);
         //Task<Student> AddStudent(Student student);
 
