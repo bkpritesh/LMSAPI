@@ -21,5 +21,7 @@ namespace Model
         public string SkillTags { get; set; }
         public int Lectures { get; set; }
         public int DurationWeek { get; set; }
+
+        public string? Name { get; set; }
     }
 }
