@@ -243,5 +243,44 @@ namespace LMS.Controllers
             }
 
         }
+
+
+
+
+
+
+
+
+
+        [HttpPut("{AccountId}")]
+        public async Task<IActionResult> UpdateStudetsDetails(string AccountId, [FromBody] UserDetails userDetails)
+        {
+            if (AccountId != null)
+            {
+                userDetails.AccountId = AccountId;
+            }
+            if (AccountId != userDetails.AccountId)
+            {
+                return BadRequest("The category ID in the URL doesn't match the one in the request body.");
+            }
+
+            var updateStudetsDetails = await _userDetail.UpdateStudetsDetails(userDetails);
+
+  
+            return Ok(updateStudetsDetails);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

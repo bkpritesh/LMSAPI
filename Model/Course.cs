@@ -17,7 +17,7 @@ namespace Model
         public string Description { get; set; }
         public int Level { get; set; }
         public decimal CourseFee { get; set; }
-        public bool IsFree { get; set; }
+        public bool? IsFree { get; set; }
         public string SkillTags { get; set; }
         public int Lectures { get; set; }
         public int DurationWeek { get; set; }

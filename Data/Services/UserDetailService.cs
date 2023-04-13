@@ -106,6 +106,45 @@ namespace Data.Services
             var results = await _dbConnection.QueryAsync<UserDetails>("InsertUserDetail", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
-   
+
+
+
+
+
+        public async Task<UserDetails> UpdateStudetsDetails(UserDetails RgDetail)
+        {
+
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@AccountId", RgDetail.AccountId);
+            parameters.Add("@Email", RgDetail.Email);
+            parameters.Add(@"Fname", RgDetail.FName);
+            parameters.Add("@Mname", RgDetail.MName);
+            parameters.Add("@Lname", RgDetail.LName);
+            parameters.Add("@Address", RgDetail.Address);
+            parameters.Add("@State", RgDetail.State);
+            parameters.Add("@City", RgDetail.City);
+            parameters.Add("@Country", RgDetail.Country);
+            parameters.Add("@ContactNo", RgDetail.ContactNo);
+            parameters.Add("@Education", RgDetail.Education);
+            parameters.Add("@SkillSet", RgDetail.SkillSet);
+            parameters.Add("@BirthDate", RgDetail.BirthDate);
+            parameters.Add("@JoiningDate", RgDetail.JoiningDate);
+            parameters.Add("@LeavingDate", RgDetail.LeavingDate);
+            parameters.Add("@IsLeaving ", RgDetail.IsLeaving);
+
+            //
+
+            parameters.Add("@ProfileDes", RgDetail.ProfileDes);
+            //
+            parameters.Add("@ProfileImg", RgDetail.ProfileImg);
+
+    
+
+
+            var results = await _dbConnection.QueryAsync<UserDetails>("UpdateStudentUserDetails", parameters, commandType: CommandType.StoredProcedure);
+            return results.SingleOrDefault();
+        }
+
     }
 }

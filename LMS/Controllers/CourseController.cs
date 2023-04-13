@@ -35,10 +35,6 @@ namespace LMS.Controllers
         {
             var Course = await _courseService.GetCourseByID(CourseCode);
 
-            if (Course != null)
-            {
-                Course.CategoryCode = CourseCode;
-            }
             if (Course == null)
             {
                 return NotFound();
