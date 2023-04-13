@@ -35,25 +35,37 @@ namespace LMS.Controllers
             return Ok(batch);
         }
 
-        [HttpGet("BatchCode")]
-        public async Task<IActionResult> GetBatchByID(string BatchCode)
-        {
-            var batch = await _batchService.GetBatchByID(BatchCode);
+        //[HttpGet("BatchCode")]
+        //public async Task<IActionResult> GetBatchByID(string BatchCode)
+        //{
+        //    var batch = await _batchService.GetBatchByID(BatchCode);
 
-            if (batch != null)
-            {
-                batch.BatchCode = BatchCode;
-            }
-            if (batch == null)
+        //    if (batch != null)
+        //    {
+        //        batch.BatchCode = BatchCode;
+        //    }
+        //    if (batch == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(batch);w
+        //}
+        [HttpGet("{batchCode}")]
+        public async Task<ActionResult<GetBatch>> GetBatchByID(string batchCode)
+        {
+            var getBatch = await _batchService.GetBatchByID(batchCode);
+
+            if (getBatch == null)
             {
                 return NotFound();
             }
 
-            return Ok(batch);
+            return Ok(getBatch);
         }
 
-        
-        [HttpGet("batchId")]
+
+        [HttpGet("GetLastBatchID")]
         public async Task<IActionResult> GetLastBatchID()
         {
             Log.Error("Manin");
@@ -112,8 +124,8 @@ namespace LMS.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{CourseCode}")]
+        [HttpGet("course/{courseCode}")]
+   
         public async Task<IActionResult> GetCoureNameByBCID(string CourseCode)
         {
             var Category = await _batchService.GetCoureNameByBCID(CourseCode);
