@@ -19,8 +19,8 @@ namespace Model
         public int Assessment { get; set; }
         public string? Description { get; set; }
         public string Students { get; set; }
-        public string StartTIme { get; set;}
-        public string EndTIme { get; set; }
+        public string StartTime { get; set;}
+        public string EndTime { get; set; }
         public string  InstructorCode { get; set;}
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Assistment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Data.Repositary
 {
     public  interface IAssistment
     {
-
+        Task<Assessment> CreateAssessment(Assessment assessment, AssesstmentCodeANDCourseCode file,string AssesstmentCode);
+        Task<string> GetAssesstmentCode();
     }
 }

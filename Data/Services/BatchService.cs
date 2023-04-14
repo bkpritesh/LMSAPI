@@ -176,8 +176,8 @@ namespace Data.Services
             parameters.Add("@Assessment", Batch.Assessment);
 
             parameters.Add("@Description",Batch.Description);
-            parameters.Add("@StartTime", Batch.StartTIme);
-            parameters.Add("@EndTime", Batch.EndTIme);
+            parameters.Add("@StartTime", Batch.StartTime);
+            parameters.Add("@EndTime", Batch.EndTime);
             parameters.Add("@InstructorCode", Batch.InstructorCode);
             var results = await _dbConnection.QueryAsync<Batch>("AddBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
@@ -198,9 +198,9 @@ namespace Data.Services
          
             parameters.Add("@Assessment", Batch.Assessment);
             parameters.Add("@Description", Batch.Description);
-            parameters.Add("@StartTime", Batch.Assessment);
-            parameters.Add("@EndTime", Batch.Assessment);
-            parameters.Add("@InstructorCode", Batch.Assessment);
+            parameters.Add("@StartTime", Batch.StartTime);
+            parameters.Add("@EndTime", Batch.EndTime);
+            parameters.Add("@InstructorCode", Batch.InstructorCode);
 
             var results = await _dbConnection.QueryAsync<Batch>("UpdateBatch", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();

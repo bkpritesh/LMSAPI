@@ -10,8 +10,8 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
+builder.Services.AddScoped<AssistmentService>();
+builder.Services.AddScoped<IAssistment, AssistmentService>();
 builder.Services.AddScoped<IInquiries,InquiriesService>();
 builder.Services.AddScoped<BatchDetailService>();
 builder.Services.AddScoped<IBatchDetail, BatchDetailService>();
