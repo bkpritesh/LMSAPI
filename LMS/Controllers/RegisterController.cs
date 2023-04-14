@@ -277,6 +277,19 @@ namespace LMS.Controllers
 
 
 
+        [HttpGet("StudentCode")]
+        public async Task<IActionResult> GetStudentDetailById(string StudentCode)
+        {
+            var Course = await _userDetail.GetStudentDetailsByID(StudentCode);
+
+            if (Course == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Course);
+        }
+
 
 
 

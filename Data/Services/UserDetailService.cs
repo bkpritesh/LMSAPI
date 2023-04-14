@@ -146,5 +146,17 @@ namespace Data.Services
             return results.SingleOrDefault();
         }
 
+
+
+
+        public async Task<UserDetails> GetStudentDetailsByID(string StudentCode)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@StudentCode", StudentCode);
+            var results = await _dbConnection.QueryAsync<UserDetails>("GetStudentDetailsByID", parameters, commandType: CommandType.StoredProcedure);
+            return results.FirstOrDefault();
+        }
+
+
     }
 }
