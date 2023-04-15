@@ -23,21 +23,6 @@ namespace Data.Services
         }
 
 
-        //public async Task<List<FilterCourse>> FilterCourse(string categoryCodes, string courseName, int? level, string skills, bool? isFree)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@CategoryCodes", categoryCodes);
-        //    parameters.Add("@CourseName", courseName);
-        //    parameters.Add("@Level", level);
-        //    parameters.Add("@Skills", skills);
-        //    parameters.Add("@IsFree", isFree);
-
-        //    var courses = await _dbConnection.QueryAsync<FilterCourse>("FilterCourse", parameters, commandType: CommandType.StoredProcedure);
-        //    return courses.ToList();
-        //}
-
-
-
         public async Task<List<FilterCourse>> FilterCourses(FilterCourse Fcourse)
         {
             var parameters = new DynamicParameters();

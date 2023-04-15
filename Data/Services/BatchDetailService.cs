@@ -24,26 +24,19 @@ namespace Data.Services
 
 
 
-        public async Task<BatchDetails> CreateBatchDetail(BatchDetails batchDetails,ChatperBinding chatper)
+        public async Task<BDWithChapter> CreateBatchDetail(BDWithChapter batchDetails,ChatperBinding chatper)
         {
             var parameters = new DynamicParameters();
 
             parameters.Add("@CourseCode", batchDetails.CourseCode);
             parameters.Add("@BatchCode", batchDetails.BatchCode);
-          
-            parameters.Add("@CompletionDate", batchDetails.CompletionDate);
-            parameters.Add("@IsCompleted", batchDetails.IsCompleted);
-            parameters.Add("@PresentStudents", batchDetails.PresentStudentsCount);
-            parameters.Add("@AbsentStudents", batchDetails.AbsentStudentsCount);
-            parameters.Add("@MeetingLink", batchDetails.MeetingLink);
-            parameters.Add("@RecordingLink", batchDetails.RecordingLink);
-            parameters.Add("@Resourse", batchDetails.Resource);
+     
             parameters.Add("@ChapterCode", chatper.ChapterCode);
             parameters.Add("@ChapterName", chatper.ChapterName);
             parameters.Add("@ChapterDescription", chatper.ChapterDescription);
             parameters.Add("@ExpectedDate", chatper.ExpectedDate);
 
-            var results = await _dbConnection.QueryAsync<BatchDetails>("AddBatchDetails", parameters, commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync<BDWithChapter>("AddBatchDetails", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
 

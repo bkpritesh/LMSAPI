@@ -11,5 +11,13 @@ namespace Data.Repositary
     {
         Task<Assessment> CreateAssessment(Assessment assessment, AssesstmentCodeANDCourseCode file,string AssesstmentCode);
         Task<string> GetAssesstmentCode();
+
+
+        //get the Assesstment bY THE COURSE ID 
+        Task<dynamic> GetAssesstmentByCourseId(string CourseCode);
+
+
+        //get the Question bY THE Assessment CODE 
+        Task<dynamic> GetQuestionsByAssesstmentId(string AssessmentCode);
     }
 }

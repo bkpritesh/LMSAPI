@@ -2,11 +2,14 @@
 using Data.Repositary;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Model;
 using Model.Assistment;
+using NLog.Fluent;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +30,42 @@ namespace Data.Services
 
 
 
+         //  for getting the documentPath to store in the next parameter
+
+        //var results = await _dbConnection.QueryAsync("GetDocumentPathByDocID", new { DocID }, commandType: CommandType.StoredProcedure);
+        //return results;
+
+             //
+            //
+           //   GETTING ALL THE ASSESSTMENT BY THE COURSE ID 
+          //
+         // 
+        public async Task<dynamic> GetAssesstmentByCourseId(string CourseCode)
+        {
+            var results = await _dbConnection.QueryAsync("SELECT [AssessmentCode] ,[AssessmentName] ,[CourseCode] FROM [LMS].[dbo].[TBLAssessmentQuestions] where CourseCode = @CourseCode ", new { CourseCode= CourseCode } );
+
+            return results;
+        }
+
+
+            //
+           //
+          //   GETTING ALL THE QUESTITIONS  BY THE ASSESTEMNT 
+         //
+        // 
+        public async Task<dynamic> GetQuestionsByAssesstmentId(string AssessmentCode)
+        {
+            var results = await _dbConnection.QueryAsync("SELECT [QuestionId],[Question],[Option1],[Option2]\r\n      ,[Option3]\r\n      ,[Option4]FROM [LMS].[dbo].[TBLAssessmentQuestions] where [AssessmentCode] = @AssessmentCode ", new { AssessmentCode = AssessmentCode });
+
+            return results;
+        }
+
+
+
+
+
+
+
 
 
 
@@ -37,7 +76,9 @@ namespace Data.Services
             var parameters = new DynamicParameters();
 
             parameters.Add("@AssessmentCode", AssesstmentCode);
+            parameters.Add("@AssessmentName", file.AssessmentName);
             parameters.Add("@CourseCode", file.CourseCode);
+            parameters.Add("@QuestionId", assessment.QuestionId);
             parameters.Add("@Question", assessment.QuestionText);
             parameters.Add("@Option1", assessment.Option1);
             parameters.Add("@Option2", assessment.Option2);
@@ -45,7 +86,9 @@ namespace Data.Services
             parameters.Add("@Option4", assessment.Option4);
             parameters.Add("@CorrectAnswer", assessment.CorrectAnswer);
 
-            var results = await _dbConnection.QueryAsync<Assessment>("AddAssesstment", parameters, commandType: CommandType.StoredProcedure);
+
+
+            var results = await _dbConnection.QueryAsync<Assessment>("[dbo].[AddAssessment]", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
         }
 

@@ -27,7 +27,7 @@ namespace LMS.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateBatchDetail([FromForm] BatchDetails batch)
+        public async Task<ActionResult> CreateBatchDetail([FromForm] BDWithChapter batch)
         {
             try
             {

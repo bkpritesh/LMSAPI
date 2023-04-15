@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public  class BatchDetails
+    public class BatchDetails
     {
-        public string? CourseCode { get; set; }  
+        public string? CourseCode { get; set; }
         public string? BatchCode { get; set; }
         public IFormFile File { get; set; }
         public DateTime? CompletionDate { get; set; }
@@ -18,7 +18,7 @@ namespace Model
         public int? PresentStudentsCount { get; set; }
         public int? AbsentStudentsCount { get; set; }
 
-     
+
         public string? MeetingLink { get; set; }
         public string? RecordingLink { get; set; }
         public string? Resource { get; set; }
