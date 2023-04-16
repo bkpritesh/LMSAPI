@@ -15,9 +15,12 @@ namespace Data.Repositary
 
         //get the Assesstment bY THE COURSE ID 
         Task<dynamic> GetAssesstmentByCourseId(string CourseCode);
-
-
+      
         //get the Question bY THE Assessment CODE 
         Task<dynamic> GetQuestionsByAssesstmentId(string AssessmentCode);
+
+
+        Task<int> SubmitQuizResults(Dictionary<string, string> quizData);
+    //    Task<int> SubmitQuizResults(Dictionary<string, string[]> quizData);
     }
 }

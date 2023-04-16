@@ -65,10 +65,6 @@ namespace LMS.Controllers
                         await _assistmentService.CreateAssessment(assessment,file, AssesstmentCode);
                     }
 
-
-
-
-
                 }
 
                 // return a success response
@@ -112,6 +108,27 @@ namespace LMS.Controllers
             return Ok(Assestment);
         }
 
+
+
+
+
+
+
+
+
+        [HttpPost("submit")]
+        public async Task<ActionResult<int>> SubmitQuiz([FromBody] Dictionary<string, string> quizData)
+        {
+            try
+            {
+                int score = await _assistmentService.SubmitQuizResults(quizData);
+                return Ok(score);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 
