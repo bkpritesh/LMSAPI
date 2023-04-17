@@ -267,7 +267,7 @@ namespace Data.Services
                     bool isCorrect = answer.Equals(correctAnswer);
 
                     // Update the score
-                    score += isCorrect ? 1 : -1;
+                    score += isCorrect ? 1 : 0;
                 }
 
                 // Calculate the percentage score
@@ -275,7 +275,7 @@ namespace Data.Services
                 float percentage = (float)score / totalQuestions * 100;
 
                 // Determine if the quiz was passed
-                bool isPass = percentage >= 50;
+                bool isPass = percentage >= 70;
 
                 // Insert the quiz result into the database
                 string insertQuery = "INSERT INTO QuizResults (Score, IsPass, TotalQuestion) VALUES (@Score, @IsPass, @TotalQuestion)";

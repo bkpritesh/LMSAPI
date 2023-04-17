@@ -26,7 +26,7 @@ namespace Data.Services
 
         public async Task<IEnumerable<StudentFNameandLnameBinding>> GetStudent()
         {
-            var results = await _dbConnection.QueryAsync<StudentFNameandLnameBinding>("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [LMS].[dbo].[TBLUserDetail] where IsStudent='true'");
+            var results = await _dbConnection.QueryAsync<StudentFNameandLnameBinding>("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[StudentCode] FROM [dbo].[TBLUserDetail] where IsStudent='true'");
 
             var studentsWithFullName = results.Select(s => new StudentFNameandLnameBinding
             {

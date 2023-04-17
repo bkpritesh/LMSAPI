@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<AssistmentService>();
 builder.Services.AddScoped<IAssistment, AssistmentService>();
 builder.Services.AddScoped<IInquiries,InquiriesService>();
-builder.Services.AddScoped<BatchDetailService>();
+builder.Services.AddScoped<BatchDetailService>(); 
 builder.Services.AddScoped<IBatchDetail, BatchDetailService>();
 builder.Services.AddScoped<BatchService>();
 builder.Services.AddSingleton<IBatch,BatchService>();

@@ -23,7 +23,7 @@ namespace Data.Services
     public class AccountService : IAccountService
     {
         private readonly IDbConnection _dbConnection;
-
+       
         public AccountService(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("SqlConnection");
