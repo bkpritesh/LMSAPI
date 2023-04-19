@@ -147,8 +147,6 @@ namespace Data.Services
         }
 
 
-
-
         public async Task<dynamic> GetStudentDetailsByID(string StudentCode)
         {
             var parameters = new DynamicParameters();
