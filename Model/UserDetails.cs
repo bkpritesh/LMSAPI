@@ -36,6 +36,16 @@ namespace Model
         public string? AccountType { get; set; }
         public string? StudentCode { get; set; }
         public string? InstructorCode { get; set; }
+        /// <summary>
+        /// /////////////////////////////////////////////////////////////
+        /// </summary>
+        public decimal? Amount { get; set; }
+
+        public decimal? price { get; set; }
+        public decimal? Discount { get; set; }
+
+        public decimal? TotalFees { get; set; }
+        public string? CourseName { get;}
 
       
     }
