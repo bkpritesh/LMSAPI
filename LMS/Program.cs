@@ -3,10 +3,15 @@ using Data.Repositary;
 using Data.Services;
 using LMS.Utility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Model;
 using System.Text;
+
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,4 +112,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseCors("corsapp");
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Document")),
+    RequestPath = new PathString("/Document")
+});
 app.Run();

@@ -240,7 +240,7 @@ namespace Data.Services
         //    }
         //}
 
-        public async Task<int> SubmitQuizResults(Dictionary<string, string> quizData)
+        public async Task<ExamResult> SubmitQuizResults(Dictionary<string, string> quizData, AssesstANDStudCode AstANDStud)
         {
             // Start a transaction
             SqlConnection sqlConnection = (SqlConnection)_dbConnection;
@@ -276,19 +276,21 @@ namespace Data.Services
 
                 // Determine if the quiz was passed
                 bool isPass = percentage >= 70;
-
-                // Insert the quiz result into the database
-                string insertQuery = "INSERT INTO QuizResults (Score, IsPass, TotalQuestion) VALUES (@Score, @IsPass, @TotalQuestion)";
-                SqlCommand insertCommand = new SqlCommand(insertQuery, (SqlConnection)_dbConnection, transaction);
-                insertCommand.Parameters.AddWithValue("@Score", score);
+                SqlCommand insertCommand = new SqlCommand("InsertStudentAssessmentMarks", (SqlConnection)_dbConnection, transaction);
+                insertCommand.CommandType = CommandType.StoredProcedure;
+                insertCommand.Parameters.AddWithValue("@AssessmentCode", AstANDStud.AssessmentCode);
+                insertCommand.Parameters.AddWithValue("@StudentCode", AstANDStud.StudentCode);
+                insertCommand.Parameters.AddWithValue("@ObtainMarks", score);
                 insertCommand.Parameters.AddWithValue("@IsPass", isPass);
                 insertCommand.Parameters.AddWithValue("@TotalQuestion", totalQuestions);
+                insertCommand.Parameters.AddWithValue("@Percentage", percentage);
                 await insertCommand.ExecuteNonQueryAsync();
 
-                // Commit the transaction
+               // Commit the transaction
                 transaction.Commit();
 
-                return score;
+                return new ExamResult { Score = score, TotalQuestions = totalQuestions, Percentage = percentage ,IsPass= isPass };
+             //   return score;
             }
             catch (Exception ex)
             {

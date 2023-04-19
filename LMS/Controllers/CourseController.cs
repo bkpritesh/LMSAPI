@@ -72,12 +72,14 @@ namespace LMS.Controllers
         }
 
 
+
         [HttpDelete("{CourseCode}")]
         public async Task<IActionResult> DeleteCourse(string CourseCode)
         {
             await _courseService.DeleteCourse(CourseCode);
             return Ok();
         }
+
 
 
         [HttpPost("CourseSearch")]

@@ -5,6 +5,7 @@ using Model;
 using NLog.Web;
 using OfficeOpenXml;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace LMS.Controllers
@@ -41,7 +42,8 @@ namespace LMS.Controllers
                         var chapterCode = worksheet.Cells[i, 1].Value?.ToString();
                         var chapterName = worksheet.Cells[i, 2].Value?.ToString();
                         var chapterDescription = worksheet.Cells[i, 3].Value?.ToString();
-                        var expectedDate = DateTime.Parse(worksheet.Cells[i, 4].Value?.ToString());
+                        var expectedDateString = worksheet.Cells[i, 4].Value?.ToString();
+                        var expectedDate = DateTime.ParseExact(expectedDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         // create a new ChapterBinding object
                         var chapter = new ChatperBinding

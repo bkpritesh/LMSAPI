@@ -2,6 +2,8 @@
 using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
+using Model.Courses;
+using Model.Students;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -161,5 +163,17 @@ namespace Data.Services
         //    var results = await _dbConnection.QueryAsync<Student>("DeleteStudentByID", parameters, commandType: CommandType.StoredProcedure);
         //    return results;
         //}
+
+
+
+
+
+        public async Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string StudentCode)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@StudentCode", StudentCode);
+            var result = await _dbConnection.QueryFirstOrDefaultAsync<GetStudentEnrolledInCourse>("GetEnrolledCourseByStudentID", parameter, commandType: CommandType.StoredProcedure);
+            return result;
+        }
     }
 }

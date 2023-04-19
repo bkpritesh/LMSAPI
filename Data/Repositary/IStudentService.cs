@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Courses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Data.Repositary
 
 
         Task<IEnumerable<StudentFNameandLnameBinding>> GetStudent();
-
+        Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string studentEnrollment);
         //Task<Student> GetStudentByID(int id);
         //Task<Student> AddStudent(Student student);
 

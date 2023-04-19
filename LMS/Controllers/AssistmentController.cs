@@ -115,13 +115,40 @@ namespace LMS.Controllers
 
 
 
+        //[HttpPost("submit")]
+
+        //    public async Task<ActionResult<int>> SubmitQuiz([FromBody] Dictionary<string, string> quizData, AssesstANDStudCode aNDStudCode)
+
+        ////public async Task<ActionResult<int>> SubmitQuiz([FromBody] Dictionary<string, string> quizData, AssesstANDStudCode aNDStudCode)
+        //{
+        //    try
+        //    {
+        //        // Create an instance of AssesstANDStudCode from the input data
+        //        var assessmentAndStudent = new AssesstANDStudCode
+        //        {
+        //            AssessmentCode = aNDStudCode.AssessmentCode,
+        //
+        //            = aNDStudCode.StudentCode,
+        //        };
+
+        //        int score = await _assistmentService.SubmitQuizResults(quizData, assessmentAndStudent);
+        //        return Ok(score);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+
+
+     
 
         [HttpPost("submit")]
-        public async Task<ActionResult<int>> SubmitQuiz([FromBody] Dictionary<string, string> quizData)
+        public async Task<ActionResult<ExamResult>> SubmitQuiz([FromBody] SubmitQuizModel model)
         {
             try
             {
-                int score = await _assistmentService.SubmitQuizResults(quizData);
+                ExamResult score = await _assistmentService.SubmitQuizResults(model.QuizData, model.AssesstANDStudCode);
                 return Ok(score);
             }
             catch (Exception ex)
@@ -129,6 +156,8 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
 
 

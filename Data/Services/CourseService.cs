@@ -98,8 +98,12 @@ namespace Data.Services
             parameters.Add("@CourseCode", Ccourse.CourseCode);
             var gettingDocbyDocID = await _dbConnection.QueryAsync<string>("[GetDocumentPathByDocID]", new { Ccourse.DocID }, commandType: CommandType.StoredProcedure);
             var DocumnentPath = gettingDocbyDocID.FirstOrDefault();
+            if (DocumnentPath != null)
+            {
+                parameters.Add("@CourseBanner", DocumnentPath);
+            }
             parameters.Add("@CategoryCode", Ccourse.CategoryCode);
-            parameters.Add("@CourseBanner", DocumnentPath);
+     
             parameters.Add("@CourseName", Ccourse.CourseName); 
             parameters.Add("@Description", Ccourse.Description);
             parameters.Add("@Level", Ccourse.Level);

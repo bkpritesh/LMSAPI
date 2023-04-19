@@ -30,6 +30,34 @@ namespace LMS.Controllers
 
 
 
+        //[HttpGet("StudentCode")]
+        //public async Task<IActionResult> GetEnrolledCourseByStudentID(string StudentCode)
+        //{
+        //    var studentCode = await _StudentService.GetEnrolledCourseByStudentID(StudentCode);
+
+        //    if (studentCode == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(studentCode);
+        //}
+
+        [HttpGet("{StudentCode}")]
+        public async Task<IActionResult> GetEnrolledCourseByStudentID(string StudentCode)
+        {
+            var studentEnrollment = await _StudentService.GetEnrolledCourseByStudentID(StudentCode);
+
+            if (studentEnrollment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(studentEnrollment);
+        }
+
+
+
 
         //[HttpGet("{id}")]
         //public async Task<IActionResult> GetStudentByID(int id)
