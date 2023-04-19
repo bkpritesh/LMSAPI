@@ -13,6 +13,7 @@ namespace Data.Services
 
         public string StudentID { get; set; }
 
+        public string InstructorId { get; set; }
         public string RestToken { get; set; }             
     }
 }

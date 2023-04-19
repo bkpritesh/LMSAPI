@@ -11,6 +11,7 @@ public interface IAccountID
         Guid AccountId { get; set; }
 
         string StudentID { get; set; }
+        string InstructorId { get; set; }
 
         string RestToken { get;set; }
     }

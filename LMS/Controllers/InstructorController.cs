@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Identity.Client;
 using Model;
+
 using Model.Students;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -25,11 +26,12 @@ namespace LMS.Controllers
         private readonly IUserDetail _userDetail;
         private readonly IStudentEnrollment _studentEnrollment;
         private readonly IBIllPayment _BillPayment;
+        private readonly IInstructorService _instructorService;
 
         public InstructorController(IInstructorService InstructorService, IRegisterService RgService, IWebHostEnvironment hostingEnvironment,
             IConfiguration configuration, IAccountID accountID, ICommanUtility commanUtility,
             IUserDetail userDetail, IStudentEnrollment studentEnrollment,
-            IBIllPayment billPayment)
+            IBIllPayment billPayment, IInstructorService instructorService)
         {
             _InstructorService = InstructorService;
             _RgService = RgService;
@@ -40,6 +42,7 @@ namespace LMS.Controllers
             _userDetail = userDetail;
             _studentEnrollment = studentEnrollment;
             _BillPayment = billPayment;
+            _instructorService = instructorService;
         }
 
 
@@ -52,163 +55,136 @@ namespace LMS.Controllers
         }
 
 
-        //[HttpPost("Student")]
-        //public async Task<IActionResult> RegisterInstructor(RegisterInstructor registerInstructor)
-        //{
+        [HttpPost("Instructor")]
+        public async Task<IActionResult> RegisterInstructor(RegisterInstructor registerInstructor)
+        {
 
-        //    {
+          
 
-        //        var password = "test@123";
-        //        var encrypted = _commanUtility.EncryptPassword(password);
-        //        var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                var password = "test@123";
+                var encrypted = _commanUtility.EncryptPassword(password);
+                var VerificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
 
-        //        //Reset token stored to the IAccount Serives 
-        //        var ResetToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-        //        _accountID.RestToken = ResetToken;
-
-
-
-        //        var AccountID = Guid.NewGuid();
-        //        _accountID.AccountId = AccountID;
-
-
-        //        var account = new Account
-        //        {
-        //            VerificationToken = VerificationToken,
-        //            FirstName = requestRegister.FName,
-        //            LastName = requestRegister.FName,
-        //            Email = requestRegister.Email,
-        //            PasswordHash = encrypted,
-        //            DisplayName = requestRegister.FName + requestRegister.LName,
-        //            Address = requestRegister.Address,
-        //            Skills = requestRegister.SkillSet,
-        //            AccountType = requestRegister.AccountType,
+                //Reset token stored to the IAccount Serives 
+                var ResetToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+                _accountID.RestToken = ResetToken;
 
 
 
-        //        };
-        //        var accountId = await _RgService.AddAccount(account);
-
-        //        if (requestRegister.IsStudent)
-        //        {
-        //            var UserDetails = new UserDetails
-        //            {
-
-        //                IsStudent = requestRegister.IsStudent,
-
-        //                Email = requestRegister.Email,
-        //                FName = requestRegister.FName,
-        //                MName = requestRegister.MName,
-        //                LName = requestRegister.LName,
-        //                Address = requestRegister.Address,
-        //                City = requestRegister.City,
-        //                State = requestRegister.State,
-        //                Country = requestRegister.Country,
-        //                ContactNo = requestRegister.ContactNo,
-        //                Education = requestRegister.Education,
-        //                SkillSet = requestRegister.SkillSet,
-        //                BirthDate = requestRegister.BirthDate,
-        //                JoiningDate = requestRegister.JoiningDate,
+                var AccountID = Guid.NewGuid();
+                _accountID.AccountId = AccountID;
 
 
-        //            };
-
-        //            var UD = await _userDetail.AddUserDetail(UserDetails);
-        //        }
-
-
-        //        var StudEnrolment = new StudentEnrollment
-        //        {
-        //            CategoryCode = requestRegister.CategoryCode,
-        //            CourseCode = requestRegister.CourseCode,
-        //            CourseFees = requestRegister.CourseFees,
-        //            Discount = requestRegister.Discount,
-        //            TotalFees = requestRegister.CourseFees - requestRegister.Discount,
-
-
-        //        };
-        //        var StudR = await _studentEnrollment.Enrollment(StudEnrolment);
-
-        //        if (requestRegister.IsPaid)
-        //        {
-        //            var bill = new BillPayment
-        //            {
-        //                Amount = requestRegister.PaidAmount,
-        //                CourseCode = requestRegister.CourseCode,
-        //                IsPaid = requestRegister.IsPaid,
-
-
-        //            };
-
-        //            var Billpayment = await _BillPayment.BillPayment(bill);
-
-        //        }
+                var account = new Account
+                {
+                    VerificationToken = VerificationToken,
+                    FirstName = registerInstructor.FName,
+                    LastName = registerInstructor.LName,
+                    Email = registerInstructor.Email,
+                    PasswordHash = encrypted,
+                    DisplayName = registerInstructor.FName + registerInstructor.LName,
+                    Address = registerInstructor.Address,
+                    Skills = registerInstructor.SkillSet,
+                    AccountType = registerInstructor.AccountType,
 
 
 
-        //        try
-        //        {
+                };
+                var accountId = await _RgService.AddAccount(account);
 
-        //            var emailExists = requestRegister.Email;
+                if (registerInstructor.IsInstructor)
+                {
+                    var UserDetails = new UserDetails
+                    {
 
-        //            if (emailExists != null)
-        //            {
-        //                var senderEmail = requestRegister.Email;
-        //                var subject = "Addmission Confrimation ";
+                        IsInstructor = registerInstructor.IsInstructor,
 
-        //                var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "StudentAdmission.html");
-
-
-
-        //                var message = await System.IO.File.ReadAllTextAsync(path);
-
-
-        //                var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
-
-
-        //                var CourseCode = new StudentEnrollment
-        //                {
-        //                    CourseCode = requestRegister.CourseCode,
-
-        //                };
-        //                var CourseName = await _studentEnrollment.GetCourse(CourseCode);
-
-        //                message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/resetpassword?RestToken=" + ResetToken)
-        //                                 .Replace("[Course Name]", CourseName)
-        //                                 .Replace("[Address]", requestRegister.Address)
-        //                                 .Replace("[Student Name]", requestRegister.FName + requestRegister.LName);
-
-        //                bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+                        Email = registerInstructor.Email,
+                        FName = registerInstructor.FName,
+                        MName = registerInstructor.MName,
+                        LName = registerInstructor.LName,
+                        Address = registerInstructor.Address,
+                        City = registerInstructor.City,
+                        State = registerInstructor.State,
+                        Country = registerInstructor.Country,
+                        ContactNo = registerInstructor.ContactNo,
+                        Education = registerInstructor.Education,
+                        SkillSet = registerInstructor.SkillSet,
+                        BirthDate = registerInstructor.BirthDate,
+                        JoiningDate = registerInstructor.JoiningDate,
 
 
-        //                if (isEmailSent)
-        //                {
-        //                    return Ok(true);
-        //                }
-        //                else
-        //                {
-        //                    return BadRequest(false);
-        //                }
+                    };
 
-        //            }
+                    var UD = await _instructorService.AddInstructorDetail(UserDetails);
+                }
 
-        //            return BadRequest(false);
-        //        }
-        //        catch (Exception ex)
-        //        {
 
-        //            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //        }
-
-        //    }
-
-        //}
+            
 
 
 
+            try
+            {
+
+                var emailExists = registerInstructor.Email;
+
+                if (emailExists != null)
+                {
+                    var senderEmail = registerInstructor.Email;
+                    var subject = "Addmission Confrimation ";
+
+                    var path = Path.Combine(_hostingEnvironment.ContentRootPath, "EmailTemplate", "StudentAdmission.html");
 
 
 
+                    var message = await System.IO.File.ReadAllTextAsync(path);
+
+
+                    var resetPasswordLink = _configuration.GetValue<string>("ResetPasswordLink");
+
+
+                    var CourseCode = new StudentEnrollment
+                    {
+                        CourseCode = registerInstructor.CourseCode,
+
+                    };
+                    var CourseName = await _studentEnrollment.GetCourse(CourseCode);
+
+                    message = message.Replace("{ResetPasswordLink}", resetPasswordLink + "/resetpassword?RestToken=" + ResetToken)
+                                     .Replace("[Course Name]", CourseName)
+                                     .Replace("[Address]", registerInstructor.Address)
+                                     .Replace("[Student Name]", registerInstructor.FName + registerInstructor.LName);
+
+                    bool isEmailSent = SendEmail.EmailSend(senderEmail, subject, message, null);
+
+
+                    if (isEmailSent)
+                    {
+                        return Ok(true);
+                    }
+                    else
+                    {
+                        return BadRequest(false);
+                    }
+
+                }
+
+                return BadRequest(false);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
 
     }
 }
+
+
+
+
+
+

@@ -116,7 +116,7 @@ namespace LMS.Controllers
                 {
                     VerificationToken= VerificationToken,
                     FirstName = requestRegister.FName,
-                    LastName = requestRegister.FName,
+                    LastName = requestRegister.LName,
                     Email = requestRegister.Email,
                     PasswordHash = encrypted,
                     DisplayName = requestRegister.FName + requestRegister.LName,
