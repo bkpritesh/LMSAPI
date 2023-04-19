@@ -96,6 +96,8 @@ namespace Data.Services
         {
             var parameters = new DynamicParameters();   
             parameters.Add("@CourseCode", Ccourse.CourseCode);
+           
+
             var gettingDocbyDocID = await _dbConnection.QueryAsync<string>("[GetDocumentPathByDocID]", new { Ccourse.DocID }, commandType: CommandType.StoredProcedure);
             var DocumnentPath = gettingDocbyDocID.FirstOrDefault();
             if (DocumnentPath != null)
