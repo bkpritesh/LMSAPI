@@ -112,9 +112,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseCors("corsapp");
+
 app.UseStaticFiles(new StaticFileOptions()
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Document")),
     RequestPath = new PathString("/Document")
 });
+
 app.Run();
