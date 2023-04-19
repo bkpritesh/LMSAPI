@@ -136,22 +136,22 @@ namespace LMS.Controllers
                 switch (DocumentType)
                 {
                     case "CategoryImage":
-                        uploadsPath = Path.Combine(uploadsPath, "CategoryImages");
+                        uploadsPath = Path.Combine(uploadsPath, "CategoryImage");
                         break;
                     case "CourseImage":
-                        uploadsPath = Path.Combine(uploadsPath, "CourseImages");
+                        uploadsPath = Path.Combine(uploadsPath, "CourseImage");
                         break;
                     case "ProfileImage":
-                        uploadsPath = Path.Combine(uploadsPath, "ProfileImages");
+                        uploadsPath = Path.Combine(uploadsPath, "ProfileImage");
                         break;
                     case "Admission":
-                        uploadsPath = Path.Combine(uploadsPath, "Admissions");
+                        uploadsPath = Path.Combine(uploadsPath, "Admission");
                         break;
                     case "CourseCircular":
-                        uploadsPath = Path.Combine(uploadsPath, "CourseCirculars");
+                        uploadsPath = Path.Combine(uploadsPath, "CourseCircular");
                         break;
                     case "LessonPlan":
-                        uploadsPath = Path.Combine(uploadsPath, "LessonPlans");
+                        uploadsPath = Path.Combine(uploadsPath, "LessonPlan");
                         break;
                     default:
                         return BadRequest("Invalid document type.");
