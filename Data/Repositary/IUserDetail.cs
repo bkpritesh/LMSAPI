@@ -17,6 +17,6 @@ namespace Data.Repositary
 
         Task<UserDetails> UpdateStudetsDetails(UserDetails RgDetail);
 
-        Task<UserDetails> GetStudentDetailsByID(string StudentCode);
+        Task<dynamic> GetStudentDetailsByID(string StudentCode);
     }
 }

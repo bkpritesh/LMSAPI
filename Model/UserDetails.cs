@@ -36,5 +36,7 @@ namespace Model
         public string? AccountType { get; set; }
         public string? StudentCode { get; set; }
         public string? InstructorCode { get; set; }
+
+      
     }
 }
