@@ -15,6 +15,12 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+
+
+builder.Services.AddScoped<IDashBoard, DashBoardService>();
 builder.Services.AddScoped<AssistmentService>();
 builder.Services.AddScoped<IAssistment, AssistmentService>();
 builder.Services.AddScoped<IInquiries,InquiriesService>();
