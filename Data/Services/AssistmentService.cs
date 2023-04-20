@@ -42,7 +42,7 @@ namespace Data.Services
         // 
         public async Task<dynamic> GetAssesstmentByCourseId(string CourseCode)
         {
-            var results = await _dbConnection.QueryAsync("SELECT [AssessmentCode] ,[AssessmentName] ,[CourseCode] FROM [LMS].[dbo].[TBLAssessmentQuestions] where CourseCode = @CourseCode ", new { CourseCode = CourseCode });
+            var results = await _dbConnection.QueryAsync("SELECT  DISTINCT [AssessmentCode] ,[AssessmentName] ,[CourseCode] FROM [dbo].[TBLAssessmentQuestions] where CourseCode = @CourseCode ", new { CourseCode = CourseCode });
 
             return results;
         }

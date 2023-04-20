@@ -51,12 +51,9 @@ namespace Data.Services
 
 
 
-
-
         public async Task<IEnumerable<dynamic>> GetCountOfStudentInCourse(int year)
-        {
-         
-               
+        {        
+              
                 var results = await _dbConnection.QueryAsync("SELECT c.[CourseName], COUNT(se.[EId]) AS [NumberOfStudentsEnrolled] FROM [dbo].[TBLCourse] c LEFT JOIN [dbo].[TBLStudentEnrollment] se ON c.[CourseCode] = se.[CourseCode] WHERE YEAR(se.[CreatedDate]) = @Year GROUP BY c.[CourseName] ORDER BY c.[CourseName];", new { Year = year });
                 return results;
             
