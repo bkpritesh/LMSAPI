@@ -55,7 +55,7 @@ namespace Data.Services
         // 
         public async Task<dynamic> GetQuestionsByAssesstmentId(string AssessmentCode)
         {
-            var results = await _dbConnection.QueryAsync("SELECT [QuestionId],[Question],[Option1],[Option2]\r\n      ,[Option3]\r\n      ,[Option4]FROM [LMS].[dbo].[TBLAssessmentQuestions] where [AssessmentCode] = @AssessmentCode ", new { AssessmentCode = AssessmentCode });
+            var results = await _dbConnection.QueryAsync("SELECT [QuestionId],[Question],[Option1],[Option2]\r\n      ,[Option3]\r\n      ,[Option4]FROM [dbo].[TBLAssessmentQuestions] where [AssessmentCode] = @AssessmentCode ", new { AssessmentCode = AssessmentCode });
 
             return results;
         }
