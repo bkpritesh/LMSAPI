@@ -8,6 +8,7 @@ using NLog.Fluent;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -256,12 +257,14 @@ namespace Data.Services
                 {
                     string question = entry.Key;
                     string answer = entry.Value;
+                    
 
-                    // Query the correct answer for the question
-                    string selectQuery = "SELECT [CorrectAnswer] FROM [TBLAssessmentQuestions] WHERE [Question] = @Question";
+                    string selectQuery = "SELECT [CorrectAnswer] FROM [TBlAssessmentQuestions] WHERE [QuestionID] = @Question AND [AssessmentCode] = @AssessmentCode";
                     SqlCommand selectCommand = new SqlCommand(selectQuery, (SqlConnection)_dbConnection, transaction);
                     selectCommand.Parameters.AddWithValue("@Question", question);
+                    selectCommand.Parameters.AddWithValue("@AssessmentCode", AstANDStud.AssessmentCode);
                     string correctAnswer = (string)selectCommand.ExecuteScalar();
+
 
                     // Compare the answer in the JSON data with the correct answer
                     bool isCorrect = answer.Equals(correctAnswer);

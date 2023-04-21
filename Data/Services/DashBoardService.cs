@@ -70,7 +70,14 @@ namespace Data.Services
         }
 
 
+         public async Task<IEnumerable<dynamic>> GetPayment(int year)
+        {
 
+     
+            var results = await _dbConnection.QueryAsync("[GetPaymentDetailsByYear]", new { Year = year }, commandType: CommandType.StoredProcedure);
+            return results;
+
+        }
 
 
 

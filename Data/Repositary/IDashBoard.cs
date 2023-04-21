@@ -21,6 +21,8 @@ namespace Data.Repositary
 
         Task<IEnumerable<dynamic>> GetCountOfStudentInCourse(int year);
 
-         Task<IEnumerable<dynamic>> GetCourseCountByYM(int year);
+        Task<IEnumerable<dynamic>> GetCourseCountByYM(int year);
+
+        Task<IEnumerable<dynamic>> GetPayment(int year);
     }
 }
