@@ -32,6 +32,7 @@ namespace Data.Services
             parameters.Add("@Skills", Fcourse.SkillTags);
             parameters.Add("@IsFree", Fcourse.IsFree);
 
+
             var courses = await _dbConnection.QueryAsync<FilterCourse>("FilterCourse", parameters, commandType: CommandType.StoredProcedure);
             return courses.ToList();
         }

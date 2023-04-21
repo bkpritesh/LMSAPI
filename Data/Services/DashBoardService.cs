@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Data.Services
 {
@@ -58,6 +59,18 @@ namespace Data.Services
                 return results;
             
         }
+
+        public async Task<IEnumerable<dynamic>> GetCourseCountByYM(int year)
+        {
+
+     
+            var results = await _dbConnection.QueryAsync("[GetCourseCountByYM]", new { Year = year }, commandType: CommandType.StoredProcedure);
+            return results;
+
+        }
+
+
+
 
 
 

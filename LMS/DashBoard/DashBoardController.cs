@@ -75,5 +75,21 @@ namespace LMS.DashBoard
         }
 
 
+        [HttpGet("GetCourseCountByYM/{year}")]
+        public async Task<IActionResult> GetCourseCountByYM(int year)
+        {
+            try
+            {
+                // Call the GetCountOfStudentInCourse method to get the enrollment count for the specified year
+                var CourseCountByYM = await _dashBoard.GetCourseCountByYM(year);
+                return Ok(CourseCountByYM);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions and return an error response
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
