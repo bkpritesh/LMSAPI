@@ -141,14 +141,29 @@ namespace LMS.Controllers
         //}
 
 
-     
+
+
+        //[HttpPost("submit")]
+        //public async Task<ActionResult<ExamResult>> SubmitQuiz([FromBody] SubmitQuizModel model)
+        //{
+        //    try
+        //    {
+        //        ExamResult score = await _assistmentService.SubmitQuizResults(model.QuizQuestions, model.AssesstANDStudCode);
+        //        return Ok(score);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+
 
         [HttpPost("submit")]
         public async Task<ActionResult<ExamResult>> SubmitQuiz([FromBody] SubmitQuizModel model)
         {
             try
             {
-                ExamResult score = await _assistmentService.SubmitQuizResults(model.QuizData, model.AssesstANDStudCode);
+                ExamResult score = await _assistmentService.SubmitQuizResults(model);
                 return Ok(score);
             }
             catch (Exception ex)
@@ -156,6 +171,24 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        //[HttpPost("submit")]
+        //public async Task<ActionResult<ExamResult>> SubmitQuiz([FromBody] SubmitQuizModel model)
+        //{
+        //    try
+        //    {
+        //        // Convert List<QuizQuestion> to Dictionary<string, string>
+        //        var quizData = model.QuizQuestions.ToDictionary(q => q.Question, q => q.Answer);
+        //        ExamResult score = await _assistmentService.SubmitQuizResults(quizData, model.AssesstANDStudCode);
+        //        return Ok(score);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+
 
 
 

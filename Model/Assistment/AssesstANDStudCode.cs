@@ -9,8 +9,8 @@ namespace Model.Assistment
 {
     public class AssesstANDStudCode
     {
-        public string AssessmentCode { get; set; }  
-        public string StudentCode { get; set; }
+        public string? AssessmentCode { get; set; }  
+        public string? StudentCode { get; set; }
 
        
     }

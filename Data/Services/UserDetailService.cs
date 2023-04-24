@@ -158,5 +158,12 @@ namespace Data.Services
         }
 
 
+
+        public async Task<UserDetails> GetUserDetailsByID(string AccountID)
+        {
+            var results = await _dbConnection.QueryAsync<UserDetails>("SELECT * FROM TBLUserDetail WHERE AccountId = @accountId", new { accountId = AccountID });
+            return results.FirstOrDefault();
+        }
+
     }
 }

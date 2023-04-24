@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using Model.Assistment;
 
 namespace Data.Services
 {
@@ -123,62 +124,6 @@ namespace Data.Services
 
 
 
-        //public int SubmitQuizResults(Dictionary<string, string> quizData)
-        //{
-        //    // Start a transaction
-        //    SqlTransaction transaction = (SqlTransaction)_dbConnection.BeginTransaction();
-
-
-        //    try
-        //    {
-        //        // Prepare a command to insert the quiz results into the database
-        //        string insertQuery = "INSERT INTO QuizResults (Question, Answer, IsCorrect) VALUES (@Question, @Answer, @IsCorrect)";
-        //        SqlCommand insertCommand = new SqlCommand(insertQuery, (SqlConnection)_dbConnection, transaction);
-
-        //        insertCommand.Parameters.Add("@Question", SqlDbType.NVarChar);
-        //        insertCommand.Parameters.Add("@Answer", SqlDbType.NVarChar);
-        //        insertCommand.Parameters.Add("@IsCorrect", SqlDbType.Bit);
-
-        //        // Loop through the quiz data and check the answers against the database
-        //        int score = 0;
-        //        foreach (KeyValuePair<string, string> entry in quizData)
-        //        {
-        //            string question = entry.Key;
-        //            string answer = entry.Value;
-
-        //            // Query the correct answer for the question
-        //            string selectQuery = "SELECT [CorrectAnswer] FROM [TBLAssessmentQuestions] WHERE [Question] = @Question";
-        //            SqlCommand selectCommand = new SqlCommand(selectQuery, (SqlConnection)_dbConnection, transaction);
-        //            selectCommand.Parameters.AddWithValue("@Question", question);
-        //            string correctAnswer = (string)selectCommand.ExecuteScalar();
-
-        //            // Compare the answer in the JSON data with the correct answer
-        //            bool isCorrect = answer.Equals(correctAnswer);
-
-        //            // Update the score
-        //            score += isCorrect ? 1 : -1;
-
-        //            // Insert the quiz result into the database
-        //            insertCommand.Parameters["@Question"].Value = question;
-        //            insertCommand.Parameters["@Answer"].Value = answer;
-        //            insertCommand.Parameters["@IsCorrect"].Value = isCorrect;
-        //            insertCommand.ExecuteNonQuery();
-        //        }
-
-        //        // Commit the transaction
-        //        transaction.Commit();
-
-        //        return score;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Roll back the transaction if there was an error
-        //        transaction.Rollback();
-        //        throw ex;
-        //    }
-        //}
-
-
         //public async Task<int> SubmitQuizResults(Dictionary<string, string> quizData)
         //{
         //    // Start a transaction
@@ -241,7 +186,8 @@ namespace Data.Services
         //    }
         //}
 
-        public async Task<ExamResult> SubmitQuizResults(Dictionary<string, string> quizData, AssesstANDStudCode AstANDStud)
+
+        public async Task<ExamResult> SubmitQuizResults(SubmitQuizModel submitQuizModel)
         {
             // Start a transaction
             SqlConnection sqlConnection = (SqlConnection)_dbConnection;
@@ -252,21 +198,19 @@ namespace Data.Services
             {
                 int score = 0;
 
-                // Loop through the quiz data and check the answers against the database
-                foreach (KeyValuePair<string, string> entry in quizData)
+                // Loop through the quiz questions in the SubmitQuizModel
+                foreach (var quizQuestion in submitQuizModel.QuizQuestions)
                 {
-                    string question = entry.Key;
-                    string answer = entry.Value;
-                    
+                    string question = quizQuestion.Question;
+                    string answer = quizQuestion.Answer;
 
                     string selectQuery = "SELECT [CorrectAnswer] FROM [TBlAssessmentQuestions] WHERE [QuestionID] = @Question AND [AssessmentCode] = @AssessmentCode";
                     SqlCommand selectCommand = new SqlCommand(selectQuery, (SqlConnection)_dbConnection, transaction);
                     selectCommand.Parameters.AddWithValue("@Question", question);
-                    selectCommand.Parameters.AddWithValue("@AssessmentCode", AstANDStud.AssessmentCode);
+                    selectCommand.Parameters.AddWithValue("@AssessmentCode", submitQuizModel.AssesstANDStudCode.AssessmentCode);
                     string correctAnswer = (string)selectCommand.ExecuteScalar();
 
-
-                    // Compare the answer in the JSON data with the correct answer
+                    // Compare the answer in the model with the correct answer
                     bool isCorrect = answer.Equals(correctAnswer);
 
                     // Update the score
@@ -274,26 +218,25 @@ namespace Data.Services
                 }
 
                 // Calculate the percentage score
-                int totalQuestions = quizData.Count;
+                int totalQuestions = submitQuizModel.QuizQuestions.Count;
                 float percentage = (float)score / totalQuestions * 100;
 
                 // Determine if the quiz was passed
                 bool isPass = percentage >= 70;
                 SqlCommand insertCommand = new SqlCommand("InsertStudentAssessmentMarks", (SqlConnection)_dbConnection, transaction);
                 insertCommand.CommandType = CommandType.StoredProcedure;
-                insertCommand.Parameters.AddWithValue("@AssessmentCode", AstANDStud.AssessmentCode);
-                insertCommand.Parameters.AddWithValue("@StudentCode", AstANDStud.StudentCode);
+                insertCommand.Parameters.AddWithValue("@AssessmentCode", submitQuizModel.AssesstANDStudCode.AssessmentCode);
+                insertCommand.Parameters.AddWithValue("@StudentCode", submitQuizModel.AssesstANDStudCode.StudentCode);
                 insertCommand.Parameters.AddWithValue("@ObtainMarks", score);
                 insertCommand.Parameters.AddWithValue("@IsPass", isPass);
                 insertCommand.Parameters.AddWithValue("@TotalQuestion", totalQuestions);
                 insertCommand.Parameters.AddWithValue("@Percentage", percentage);
                 await insertCommand.ExecuteNonQueryAsync();
 
-               // Commit the transaction
+                // Commit the transaction
                 transaction.Commit();
 
-                return new ExamResult { Score = score, TotalQuestions = totalQuestions, Percentage = percentage ,IsPass= isPass };
-             //   return score;
+                return new ExamResult { Score = score, TotalQuestions = totalQuestions, Percentage = percentage, IsPass = isPass };
             }
             catch (Exception ex)
             {
@@ -303,76 +246,8 @@ namespace Data.Services
             }
         }
 
-        //public async Task<int> SubmitQuizResults(Dictionary<string, string[]> quizData)
-        //{
-        //    // Start a transaction
-        //    SqlConnection sqlConnection = (SqlConnection)_dbConnection;
-        //    await sqlConnection.OpenAsync();
-        //    SqlTransaction transaction = (SqlTransaction)_dbConnection.BeginTransaction();
-
-        //    try
-        //    {
-        //        int score = 0;
-
-        //        // Loop through the quiz data and check the answers against the database
-        //        foreach (KeyValuePair<string, string[]> entry in quizData)
-        //        {
-        //            string question = entry.Key;
-        //            string[] answers = entry.Value;
-
-        //            // Query the correct answer for the question
-        //            string selectQuery = "SELECT [CorrectAnswer] FROM [TBLAssessmentQuestions] WHERE [Question] = @Question";
-        //            SqlCommand selectCommand = new SqlCommand(selectQuery, (SqlConnection)_dbConnection, transaction);
-        //            selectCommand.Parameters.AddWithValue("@Question", question);
-        //            string correctAnswer = (string)selectCommand.ExecuteScalar();
-
-        //            // Compare the answer in the JSON data with the correct answer
-        //            bool isCorrect = false;
-        //            foreach (string answer in answers)
-        //            {
-        //                if (correctAnswer.Equals(answer))
-        //                {
-        //                    isCorrect = true;
-        //                    break;
-        //                }
-        //            }
-
-        //            // Update the score
-        //            score += isCorrect ? 1 : -1;
-        //        }
-
-        //        // Calculate the percentage score
-        //        int totalQuestions = quizData.Count;
-        //        float percentage = (float)score / totalQuestions * 100;
-
-        //        // Determine if the quiz was passed
-        //        bool isPass = percentage >= 50;
-
-        //        // Insert the quiz result into the database
-        //        string insertQuery = "INSERT INTO QuizResults (Score, IsPass, TotalQuestion) VALUES (@Score, @IsPass, @TotalQuestion)";
-        //        SqlCommand insertCommand = new SqlCommand(insertQuery, (SqlConnection)_dbConnection, transaction);
-        //        insertCommand.Parameters.AddWithValue("@Score", score);
-        //        insertCommand.Parameters.AddWithValue("@IsPass", isPass);
-        //        insertCommand.Parameters.AddWithValue("@TotalQuestion", totalQuestions);
-        //        await insertCommand.ExecuteNonQueryAsync();
-
-        //        // Commit the transaction
-        //        transaction.Commit();
-
-        //        return score;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Roll back the transaction if there was an error
-        //        transaction.Rollback();
-        //        throw ex;
-        //    }
-        //}
 
 
-
-
-    
     }
 }
  

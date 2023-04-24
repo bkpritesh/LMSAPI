@@ -20,7 +20,10 @@ namespace Data.Repositary
         Task<dynamic> GetQuestionsByAssesstmentId(string AssessmentCode);
 
 
-        Task<ExamResult> SubmitQuizResults(Dictionary<string, string> quizData, AssesstANDStudCode AstANDStud);
-    //    Task<int> SubmitQuizResults(Dictionary<string, string[]> quizData);
+       // Task<ExamResult> SubmitQuizResults(Dictionary<string, string> quizData, AssesstANDStudCode AstANDStud);
+        //    Task<int> SubmitQuizResults(Dictionary<string, string[]> quizData);
+
+
+        Task<ExamResult> SubmitQuizResults(SubmitQuizModel submitQuizModel);
     }
 }
