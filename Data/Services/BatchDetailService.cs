@@ -55,6 +55,8 @@ namespace Data.Services
             parameters.Add("@MeetingLink", model.MeetingLink);
             parameters.Add("@RecordingLink", model.RecordingLink);
             parameters.Add("@Resource", model.Resource);
+            parameters.Add("@Resource", model.Resource);
+            parameters.Add("@CreatedBy", model.CreatedBy);
             parameters.Add("@ModifiedDate", model.ModifiedDate);
             parameters.Add("@ModifiedBy", model.ModifiedBy);
 
@@ -74,7 +76,7 @@ namespace Data.Services
 
         public async Task<IEnumerable<dynamic>> GetDetailByBCHCode(string Bcode, string chapterCode)
         {
-            var results = await _dbConnection.QueryAsync("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode AND ChapterCode = @ChapterCode", new { BatchCode = Bcode, ChapterCode = chapterCode });
+            var results = await _dbConnection.QueryAsync("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode AND (ChapterCode = @ChapterCode OR @ChapterCode IS NULL)", new { BatchCode = Bcode, ChapterCode = chapterCode });
             return results;
         }
 

@@ -21,6 +21,8 @@ namespace Model
         public string MeetingLink { get; set; }
         public string RecordingLink { get; set; }
         public string Resource { get; set; }
+
+        public DateTime CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
     }

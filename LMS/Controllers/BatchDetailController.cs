@@ -3,6 +3,7 @@ using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Batchs;
 using NLog.Web;
 using OfficeOpenXml;
 using System;
@@ -119,8 +120,9 @@ namespace LMS.Controllers
             }
         }
 
-        [HttpGet("{BatchCode}/{chapterCode}")]
-        public async Task<IActionResult> GetDetailByBCHCode(string BatchCode, string chapterCode)
+
+        [HttpGet("GetDetailByBCHCode")]
+        public async Task<IActionResult> GetDetailByBCHCode(string? BatchCode, string? chapterCode)
         {
             try
             {
@@ -133,6 +135,7 @@ namespace LMS.Controllers
                 return StatusCode(500, $"Error retrieving batches: {ex.Message}");
             }
         }
+
 
 
 
