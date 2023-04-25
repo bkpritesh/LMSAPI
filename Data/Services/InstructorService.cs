@@ -33,8 +33,6 @@ namespace Data.Services
             return results;
         }
 
-
-
         public async Task<UserDetails> AddInstructorDetail(UserDetails RgDetail)
         {
 
@@ -58,8 +56,6 @@ namespace Data.Services
             }
             var nextInstructorID = $"I-{NewInstructorID + 1:D4}";
             _accountID.InstructorId = nextInstructorID;
-
-
             parameters.Add("@IsInstructor", RgDetail.IsInstructor);
             parameters.Add("@Email", RgDetail.Email);
             parameters.Add(@"Fname", RgDetail.FName);
@@ -75,9 +71,7 @@ namespace Data.Services
             parameters.Add("@BirthDate", RgDetail.BirthDate);
             parameters.Add("@JoiningDate", RgDetail.JoiningDate);
             parameters.Add("@IsLeaving ", RgDetail.IsLeaving);
-
             //
-
             parameters.Add("@ProfileDes", RgDetail.ProfileDes);
             //
             parameters.Add("@ProfileImg", RgDetail.ProfileImg);
@@ -97,7 +91,5 @@ namespace Data.Services
             var results = await _dbConnection.QueryAsync("GetBatchDetailsByInstructorCode", new { InstructorCode = InstructorCode }, commandType: CommandType.StoredProcedure);
             return results;
         }
-
-
     }
 }

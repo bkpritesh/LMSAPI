@@ -90,10 +90,10 @@ namespace LMS.Controllers
         }
 
 
-        [HttpPut("{courseCode}/{batchCode}/{chapterCode}")]
-        public async Task<IActionResult> UpdateBatchDetail(string courseCode, string batchCode, string chapterCode, [FromBody] BatchDetails batch)
+        [HttpPut("{batchCode}/{chapterCode}")]
+        public async Task<IActionResult> UpdateBatchDetail( string batchCode, string chapterCode, [FromBody] BatchDetails batch)
         {
-            if (courseCode != batch.CourseCode || batchCode != batch.BatchCode || chapterCode != batch.ChapterCode)
+            if ( batchCode != batch.BatchCode || chapterCode != batch.ChapterCode)
             {
                 return BadRequest();
             }

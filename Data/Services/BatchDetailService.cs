@@ -44,7 +44,7 @@ namespace Data.Services
         public async Task<BatchDetails> UpdateBatchDetail(BatchDetails model)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@CourseCode", model.CourseCode);
+
             parameters.Add("@BatchCode", model.BatchCode);
             parameters.Add("@ChapterCode", model.ChapterCode);
             parameters.Add("@ExpectedDate", model.ExpectedDate);

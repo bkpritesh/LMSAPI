@@ -10,7 +10,7 @@ namespace Model
 {
     public class BatchDetails
     {
-        public string? CourseCode { get; set; }
+     //   public string? CourseCode { get; set; }
         public string BatchCode { get; set; }
         public string ChapterCode { get; set; }
         public DateTime ExpectedDate { get; set; }
