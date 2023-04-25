@@ -92,6 +92,11 @@ namespace Data.Services
         }
 
 
+        public async Task<IEnumerable<dynamic>> GetBDByInstructorCode(string InstructorCode)
+        {
+            var results = await _dbConnection.QueryAsync("SELECT [BatchCode] ,[BatchName] ,[CourseCode] ,[BatchTime] ,[Assessment] ,[Description] ,[StartTime] ,[EndTime] ,[InstructorCode] FROM [dbo].[TBLBatch] where InstructorCode= @InstructorCode", new { InstructorCode = InstructorCode });
+            return results;
+        }
 
 
 

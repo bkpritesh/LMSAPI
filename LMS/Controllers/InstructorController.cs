@@ -180,6 +180,24 @@ namespace LMS.Controllers
 
         }
 
+        [HttpGet("{instructorCode}")]
+        public async Task<IActionResult> GetBatchesByInstructorCode(string instructorCode)
+        {
+            try
+            {
+                var batches = await _instructorService.GetBDByInstructorCode(instructorCode);
+                return Ok(batches);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the database operation
+                return StatusCode(500, $"Error retrieving batches: {ex.Message}");
+            }
+        }
+
+
+
+
     }
 }
 

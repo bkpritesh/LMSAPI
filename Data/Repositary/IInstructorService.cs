@@ -13,6 +13,8 @@ namespace Data.Repositary
         Task<IEnumerable<dynamic>> GetInstructor();
 
         Task<UserDetails> AddInstructorDetail(UserDetails RgDetail);
+
+        Task<IEnumerable<dynamic>> GetBDByInstructorCode(string InstructorCode);
         //    Task<IEnumerable<Instructor>> GetInstructors();
         //Task<Instructor> GetInstructorByID(int id);
         //Task<Instructor> AddInstructor(Instructor instructor);
