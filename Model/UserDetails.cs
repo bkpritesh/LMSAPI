@@ -45,6 +45,8 @@ namespace Model
         public decimal? Discount { get; set; }
 
         public decimal? TotalFees { get; set; }
+        
+        public string? CourseCode { get;}
         public string? CourseName { get;}
 
       

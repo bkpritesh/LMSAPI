@@ -40,5 +40,29 @@ namespace Data.Services
             return results.SingleOrDefault();
         }
 
+
+        public async Task<BatchDetails> UpdateBatchDetail(BatchDetails model)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@CourseCode", model.CourseCode);
+            parameters.Add("@BatchCode", model.BatchCode);
+            parameters.Add("@ChapterCode", model.ChapterCode);
+            parameters.Add("@ExpectedDate", model.ExpectedDate);
+            parameters.Add("@CompletionDate", model.CompletionDate);
+            parameters.Add("@IsCompleted", model.IsCompleted);
+            parameters.Add("@PresentStudent", model.PresentStudent);
+            parameters.Add("@AbsentStudent", model.AbsentStudent);
+            parameters.Add("@MeetingLink", model.MeetingLink);
+            parameters.Add("@RecordingLink", model.RecordingLink);
+            parameters.Add("@Resource", model.Resource);
+            parameters.Add("@ModifiedDate", model.ModifiedDate);
+            parameters.Add("@ModifiedBy", model.ModifiedBy);
+
+            var results = await _dbConnection.QueryAsync<BatchDetails>("UpdateBatchDetails", parameters, commandType: CommandType.StoredProcedure);
+            return results.SingleOrDefault();
+        }
+
+
+
     }
 }

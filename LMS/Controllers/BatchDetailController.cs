@@ -1,4 +1,5 @@
-﻿using Data.Services;
+﻿using Dapper;
+using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -69,5 +70,39 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+
+        [HttpPut("BatchCode")]
+        public async Task<IActionResult> UpdateBatchDetail(string BatchCode, [FromBody] BatchDetails batch)
+        {
+            if (BatchCode != batch.BatchCode)
+            {
+                return BadRequest();
+            }
+
+            var update = await _batchDetailService.UpdateBatchDetail(batch);
+
+
+
+            return Ok(update);
+        }
+
+
+        [HttpPut("{courseCode}/{batchCode}/{chapterCode}")]
+        public async Task<IActionResult> UpdateBatchDetail(string courseCode, string batchCode, string chapterCode, [FromBody] BatchDetails batch)
+        {
+            if (courseCode != batch.CourseCode || batchCode != batch.BatchCode || chapterCode != batch.ChapterCode)
+            {
+                return BadRequest();
+            }
+
+            var updatedBatch = await _batchDetailService.UpdateBatchDetail(batch);
+
+            return Ok(updatedBatch);
+        }
+
+
     }
 }

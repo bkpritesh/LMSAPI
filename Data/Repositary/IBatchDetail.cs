@@ -10,5 +10,7 @@ namespace Data.Repositary
     public  interface IBatchDetail
     {
         Task<BDWithChapter> CreateBatchDetail(BDWithChapter batchDetails, ChatperBinding chatper);
+
+        Task<BatchDetails> UpdateBatchDetail(BatchDetails model);
     }
 }

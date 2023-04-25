@@ -217,7 +217,7 @@ namespace Data.Services
                     score += isCorrect ? 1 : 0;
                 }
 
-                // Calculate the percentage score
+                // Calculate the percentage score 
                 int totalQuestions = submitQuizModel.QuizQuestions.Count;
                 float percentage = (float)score / totalQuestions * 100;
 
