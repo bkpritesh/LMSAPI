@@ -12,5 +12,6 @@ namespace Data.Repositary
         Task<BDWithChapter> CreateBatchDetail(BDWithChapter batchDetails, ChatperBinding chatper);
 
         Task<BatchDetails> UpdateBatchDetail(BatchDetails model);
+        Task<IEnumerable<dynamic>> GetStudentByBCode(string Bcode);
     }
 }

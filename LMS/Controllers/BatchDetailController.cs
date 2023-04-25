@@ -104,5 +104,23 @@ namespace LMS.Controllers
         }
 
 
+        [HttpGet("{BatchCode}")]
+        public async Task<IActionResult> GetStudentByBCode(string BatchCode)
+        {
+            try
+            {
+                var batcheStudent  = await _batchDetailService.GetStudentByBCode(BatchCode);
+                return Ok(batcheStudent);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the database operation
+                return StatusCode(500, $"Error retrieving batches: {ex.Message}");
+            }
+        }
+
+
+
+
     }
 }

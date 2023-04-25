@@ -64,5 +64,14 @@ namespace Data.Services
 
 
 
+
+        public async Task<IEnumerable<dynamic>> GetStudentByBCode(string Bcode)
+        {
+            var results = await _dbConnection.QueryAsync("[GetStudentByBatchCode]", new { Batchcode = Bcode }, commandType: CommandType.StoredProcedure);
+            return results;
+        }
+
+
+
     }
 }
