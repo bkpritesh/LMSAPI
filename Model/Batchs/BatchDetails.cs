@@ -16,8 +16,8 @@ namespace Model
         public DateTime ExpectedDate { get; set; }
         public DateTime CompletionDate { get; set; }
         public bool IsCompleted { get; set; }
-        public int PresentStudent { get; set; }
-        public int AbsentStudent { get; set; }
+        public string PresentStudent { get; set; }
+        public string AbsentStudent { get; set; }
         public string MeetingLink { get; set; }
         public string RecordingLink { get; set; }
         public string Resource { get; set; }

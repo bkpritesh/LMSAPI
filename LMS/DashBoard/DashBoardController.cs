@@ -107,5 +107,25 @@ namespace LMS.DashBoard
             }
         }
 
+
+
+        [HttpGet("GetPaymentDetailsByYear/{year}")]
+        public async Task<IActionResult> GetPaymentDetailsByMonth(int year)
+        {
+            try
+            {
+                // Call the GetCountOfStudentInCourse method to get the enrollment count for the specified year
+                var CourseCountByYM = await _dashBoard.GetPayment(year);
+                return Ok(CourseCountByYM);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions and return an error response
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
     }
 }

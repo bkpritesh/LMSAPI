@@ -29,7 +29,7 @@ namespace Data.Services
 
         public async Task<IEnumerable<dynamic>> GetInstructor()
         {
-            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[InstructorCode] FROM [LMS].[dbo].[TBLUserDetail] where IsInstructor='true'");
+            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[InstructorCode] FROM [dbo].[TBLUserDetail] where IsInstructor='true'");
             return results;
         }
 
