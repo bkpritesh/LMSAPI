@@ -94,107 +94,10 @@ namespace Data.Services
 
         public async Task<IEnumerable<dynamic>> GetBDByInstructorCode(string InstructorCode)
         {
-            var results = await _dbConnection.QueryAsync("SELECT [BatchCode] ,[BatchName] ,[CourseCode] ,[BatchTime] ,[Assessment] ,[Description] ,[StartTime] ,[EndTime] ,[InstructorCode] FROM [dbo].[TBLBatch] where InstructorCode= @InstructorCode", new { InstructorCode = InstructorCode });
+            var results = await _dbConnection.QueryAsync("GetBatchDetailsByInstructorCode", new { InstructorCode = InstructorCode }, commandType: CommandType.StoredProcedure);
             return results;
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public async Task<Instructor> GetInstructorByID(int id)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@InstructorID", id);
-
-        //    var results = await _dbConnection.QueryAsync<Instructor>("GetInstructor", parameters, commandType: CommandType.StoredProcedure);
-        //    return results.FirstOrDefault();
-        //}
-
-
-        //public async Task<Instructor> AddInstructor(Instructor instructor)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@Name", instructor.Name);
-        //    parameters.Add("@Qualification", instructor.Qualification);
-        //    parameters.Add("@EmailID", instructor.EmailID);
-        //    parameters.Add("@Contact", instructor.Contact);
-        //    parameters.Add("@Skills",instructor.Skills);
-        //    parameters.Add("@Address", instructor.Address);
-        //    parameters.Add("@State", instructor.State);
-        //    parameters.Add("@City", instructor.City);
-        //    parameters.Add("@Country", instructor.Country);
-        //    parameters.Add("@Experience", instructor.Experience);
-
-
-
-        //    var results = await _dbConnection.QueryAsync<Instructor>("AddInstructor", parameters, commandType: CommandType.StoredProcedure);
-        //    return results.SingleOrDefault();
-        //}
-
-
-        //public async Task<Instructor> UpdateInstructor(Instructor instructor)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@InstructorId", instructor.InstructorId);
-        //    parameters.Add("@Name", instructor.Name);
-        //    parameters.Add("@Qualification", instructor.Qualification);
-        //    parameters.Add("@EmailID", instructor.EmailID);
-        //    parameters.Add("@Contact", instructor.Contact);
-        //    parameters.Add("@Skills", instructor.Skills);
-        //    parameters.Add("@Address", instructor.Address);
-        //    parameters.Add("@State", instructor.State);
-        //    parameters.Add("@City", instructor.City);
-        //    parameters.Add("@Country", instructor.Country);
-        //    parameters.Add("@Experience", instructor.Experience);
-
-
-
-        //    var results = await _dbConnection.QueryAsync<Instructor>("UpdateInstructor", parameters, commandType: CommandType.StoredProcedure);
-        //    return results.SingleOrDefault();
-        //}
-
-
-        //public async Task<IEnumerable<Instructor>> DeleteInstructorById(int id)
-        //{
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@InstructorId", id);
-
-        //    var results = await _dbConnection.QueryAsync<Instructor>("DeleteStudentByID", parameters, commandType: CommandType.StoredProcedure);
-        //    return results;
-        //}
     }
 }

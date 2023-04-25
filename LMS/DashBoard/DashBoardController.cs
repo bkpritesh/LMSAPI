@@ -115,7 +115,7 @@ namespace LMS.DashBoard
             try
             {
                 // Call the GetCountOfStudentInCourse method to get the enrollment count for the specified year
-                var CourseCountByYM = await _dashBoard.GetPayment(year);
+                var CourseCountByYM = await _dashBoard.GetPaymentByYM(year);
                 return Ok(CourseCountByYM);
             }
             catch (Exception ex)
