@@ -72,6 +72,12 @@ namespace Data.Services
         }
 
 
+        public async Task<IEnumerable<dynamic>> GetDetailByBCHCode(string Bcode, string chapterCode)
+        {
+            var results = await _dbConnection.QueryAsync("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode AND ChapterCode = @ChapterCode", new { BatchCode = Bcode, ChapterCode = chapterCode });
+            return results;
+        }
+
 
     }
 }
