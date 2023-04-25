@@ -109,7 +109,7 @@ namespace LMS.DashBoard
 
 
 
-        [HttpGet("GetPaymentDetailsByYear/{year}")]
+        [HttpGet("GetPaymentDetailsByYM/{year}")]
         public async Task<IActionResult> GetPaymentDetailsByMonth(int year)
         {
             try
