@@ -167,13 +167,23 @@ namespace Data.Services
 
 
 
-
-        public async Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string StudentCode)
+        public async Task<IEnumerable<GetStudentEnrolledInCourse>> GetEnrolledCoursesByStudentID(string studentCode)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@StudentCode", StudentCode);
-            var result = await _dbConnection.QueryFirstOrDefaultAsync<GetStudentEnrolledInCourse>("GetEnrolledCourseByStudentID", parameter, commandType: CommandType.StoredProcedure);
-            return result;
+            parameter.Add("@StudentCode", studentCode);
+
+            var results = await _dbConnection.QueryAsync<GetStudentEnrolledInCourse>("GetEnrolledCourseByStudentID", parameter, commandType: CommandType.StoredProcedure);
+
+            return results;
         }
+
+
+        //public async Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string StudentCode)
+        //{
+        //    var parameter = new DynamicParameters();
+        //    parameter.Add("@StudentCode", StudentCode);
+        //    var result = await _dbConnection.QueryAsync<GetStudentEnrolledInCourse>("GetEnrolledCourseByStudentID", parameter, commandType: CommandType.StoredProcedure);
+        //    return result;
+        //}
     }
 }

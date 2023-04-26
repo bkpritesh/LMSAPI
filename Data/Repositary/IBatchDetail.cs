@@ -13,6 +13,10 @@ namespace Data.Repositary
 
         Task<BatchDetails> UpdateBatchDetail(BatchDetails model);
         Task<IEnumerable<dynamic>> GetStudentByBCode(string Bcode);
-        Task<IEnumerable<dynamic>> GetDetailByBCHCode(string Bcode, string chapterCode);
+     //   Task<IEnumerable<dynamic>> GetDetailByBCHCode(string Bcode, string chapterCode);
+
+        Task<BatchDetails> GetDetailByBCHCode(string Bcode, string chapterCode);
+
+        Task<IEnumerable<dynamic>> GetDetailByBCode(string Bcode);
     }
 }
