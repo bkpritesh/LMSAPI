@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Batchs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace Data.Repositary
         Task<IEnumerable<dynamic>> GetStudentByBCode(string Bcode);
      //   Task<IEnumerable<dynamic>> GetDetailByBCHCode(string Bcode, string chapterCode);
 
-        Task<BatchDetails> GetDetailByBCHCode(string Bcode, string chapterCode);
+        Task<BatchDetailWithChapter> GetDetailByBCHCode(string Bcode, string chapterCode);
 
-        Task<IEnumerable<BatchDetails>> GetDetailByBCode(string Bcode);
+        Task<IEnumerable<BatchDetailWithChapter>> GetDetailByBCode(string Bcode);
     }
 }
