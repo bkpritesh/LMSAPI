@@ -2,6 +2,7 @@
 using Data.Repositary;
 using Microsoft.Extensions.Configuration;
 using Model;
+using Model.Batchs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -74,17 +75,17 @@ namespace Data.Services
         }
 
 
-        public async Task<BatchDetails> GetDetailByBCHCode(string Bcode, string chapterCode)
+        public async Task<BatchDetailWithChapter> GetDetailByBCHCode(string Bcode, string chapterCode)
         {
-            var result = await _dbConnection.QueryFirstOrDefaultAsync<BatchDetails>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode AND (ChapterCode = @ChapterCode OR @ChapterCode IS NULL)", new { BatchCode = Bcode, ChapterCode = chapterCode });
+            var result = await _dbConnection.QueryFirstOrDefaultAsync<BatchDetailWithChapter>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode AND (ChapterCode = @ChapterCode OR @ChapterCode IS NULL)", new { BatchCode = Bcode, ChapterCode = chapterCode });
             return result;
         }
 
 
 
-        public async Task<IEnumerable<BatchDetails>> GetDetailByBCode(string Bcode)
+        public async Task<IEnumerable<BatchDetailWithChapter>> GetDetailByBCode(string Bcode)
         {
-            var results = await _dbConnection.QueryAsync<BatchDetails>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode ", new { BatchCode = Bcode});
+            var results = await _dbConnection.QueryAsync<BatchDetailWithChapter>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode ", new { BatchCode = Bcode});
             return results;
         }
 
