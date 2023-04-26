@@ -82,9 +82,9 @@ namespace Data.Services
 
 
 
-        public async Task<IEnumerable<dynamic>> GetDetailByBCode(string Bcode)
+        public async Task<IEnumerable<BatchDetails>> GetDetailByBCode(string Bcode)
         {
-            var results = await _dbConnection.QueryAsync("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode ", new { BatchCode = Bcode});
+            var results = await _dbConnection.QueryAsync<BatchDetails>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode ", new { BatchCode = Bcode});
             return results;
         }
 

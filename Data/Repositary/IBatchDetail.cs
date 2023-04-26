@@ -17,6 +17,6 @@ namespace Data.Repositary
 
         Task<BatchDetails> GetDetailByBCHCode(string Bcode, string chapterCode);
 
-        Task<IEnumerable<dynamic>> GetDetailByBCode(string Bcode);
+        Task<IEnumerable<BatchDetails>> GetDetailByBCode(string Bcode);
     }
 }
