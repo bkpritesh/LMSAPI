@@ -57,7 +57,7 @@ namespace Data.Services
             parameters.Add("@RecordingLink", model.RecordingLink);
             parameters.Add("@Resource", model.Resource);
             parameters.Add("@Resource", model.Resource);
-            parameters.Add("@CreatedBy", model.CreatedBy);
+            parameters.Add ("@CreatedBy", model.CreatedBy);
             parameters.Add("@ModifiedDate", model.ModifiedDate);
             parameters.Add("@ModifiedBy", model.ModifiedBy);
 
@@ -88,9 +88,6 @@ namespace Data.Services
             var results = await _dbConnection.QueryAsync<BatchDetailWithChapter>("SELECT * FROM [dbo].[BatchDetails] WHERE BatchCode = @BatchCode ", new { BatchCode = Bcode});
             return results;
         }
-
-
-
 
     }
 }

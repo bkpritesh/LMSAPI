@@ -9,6 +9,7 @@ namespace Model.Batchs
  
         public class BatchDetailWithChapter
         {
+
             public int Id { get; set; }
             public string CourseCode { get; set; }
             public string BatchCode { get; set; }

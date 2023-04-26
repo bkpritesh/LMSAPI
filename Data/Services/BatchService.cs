@@ -209,7 +209,7 @@ namespace Data.Services
 
 
 
-        public async Task<StudentBatch> AddStudentBatch(StudentBatch Batch)
+        public async Task<StudentBatch> UpdateStudentBatch(StudentBatch Batch)
         {
 
 
@@ -227,6 +227,23 @@ namespace Data.Services
 
         }
 
+        public async Task<StudentBatch> AddStudentBatch(StudentBatch Batch)
+        {
+
+
+            var parameters = new DynamicParameters();
+
+
+            parameters.Add("@BatchCode", Batch.BatchCode);
+
+
+            parameters.Add("@Student", Batch.StudentCode);
+
+
+            var results = await _dbConnection.QueryAsync<StudentBatch>("AddStudentBatch", parameters, commandType: CommandType.StoredProcedure);
+            return results.SingleOrDefault();
+
+        }
 
         public async Task<IEnumerable<dynamic>> GetCoureNameByBCID(string CourseCode)
         {
