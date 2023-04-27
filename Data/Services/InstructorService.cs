@@ -54,7 +54,8 @@ namespace Data.Services
             {
                 NewInstructorID = 0;
             }
-            var nextInstructorID = $"I-{NewInstructorID + 1:D4}";
+            var nextInstructorID = $"I-{NewInstructorID + 1:0000}";
+
             _accountID.InstructorId = nextInstructorID;
             parameters.Add("@IsInstructor", RgDetail.IsInstructor);
             parameters.Add("@Email", RgDetail.Email);

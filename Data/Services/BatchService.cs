@@ -138,7 +138,7 @@ namespace Data.Services
             {
                 NewBatchId = 0;
             }
-            var NextBatchId = $"B-{NewBatchId + 1:D4}";
+            var NextBatchId = $"B-{NewBatchId + 1:0000}";
 
             return (NextBatchId);
         }
@@ -164,7 +164,7 @@ namespace Data.Services
             {
                 NewBatchId = 0;
             }
-            var NextBatchId = $"B-{NewBatchId + 1:D4}";
+            var NextBatchId = $"B-{NewBatchId + 1:0000}";
                 
 
             var parameters = new DynamicParameters();

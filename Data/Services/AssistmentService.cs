@@ -114,7 +114,7 @@ namespace Data.Services
             {
                 NewAssesstmentCode = 0;
             }
-            var NextAssesstmentCode = $"AS-{NewAssesstmentCode + 1:D4}";
+            var NextAssesstmentCode = $"AS-{NewAssesstmentCode + 1:0000}";
 
             return NextAssesstmentCode;
         }

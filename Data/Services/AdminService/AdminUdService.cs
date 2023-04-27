@@ -50,7 +50,7 @@ namespace Data.Services.AdminService
             {
                 NewInstructorID = 0;
             }
-            var nextInstructorID = $"I-{NewInstructorID + 1:D4}";
+            var nextInstructorID = $"I-{NewInstructorID + 1:0000}";
             _accountID.InstructorId = nextInstructorID;
 
 
