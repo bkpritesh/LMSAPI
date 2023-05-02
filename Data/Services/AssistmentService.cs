@@ -114,7 +114,7 @@ namespace Data.Services
             {
                 NewAssesstmentCode = 0;
             }
-            var NextAssesstmentCode = $"AS-{NewAssesstmentCode + 1:D4}";
+            var NextAssesstmentCode = $"AS-{NewAssesstmentCode + 1:0000}";
 
             return NextAssesstmentCode;
         }
@@ -217,7 +217,7 @@ namespace Data.Services
                     score += isCorrect ? 1 : 0;
                 }
 
-                // Calculate the percentage score
+                // Calculate the percentage score 
                 int totalQuestions = submitQuizModel.QuizQuestions.Count;
                 float percentage = (float)score / totalQuestions * 100;
 

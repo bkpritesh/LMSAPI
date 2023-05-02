@@ -70,7 +70,7 @@ namespace Data.Services
             {
                 NewStudId = 0;
             }
-            var nextStudentID = $"S-{NewStudId + 1:D4}";
+            var nextStudentID = $"S-{NewStudId + 1:0000}";
             _accountId.StudentID = nextStudentID;
             
 

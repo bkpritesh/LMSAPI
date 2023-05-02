@@ -10,17 +10,21 @@ namespace Model
 {
     public class BatchDetails
     {
-        public string? CourseCode { get; set; }
-        public string? BatchCode { get; set; }
-        public IFormFile File { get; set; }
-        public DateTime? CompletionDate { get; set; }
-        public bool? IsCompleted { get; set; }
-        public int? PresentStudentsCount { get; set; }
-        public int? AbsentStudentsCount { get; set; }
+     //   public string? CourseCode { get; set; }
+        public string BatchCode { get; set; }
+        public string ChapterCode { get; set; }
+        public DateTime ExpectedDate { get; set; }
+        public DateTime CompletionDate { get; set; }
+        public bool IsCompleted { get; set; }
+        public string PresentStudent { get; set; }
+        public string AbsentStudent { get; set; }
+        public string MeetingLink { get; set; }
+        public string RecordingLink { get; set; }
+        public string Resource { get; set; }
 
-
-        public string? MeetingLink { get; set; }
-        public string? RecordingLink { get; set; }
-        public string? Resource { get; set; }
+        public DateTime CreatedBy { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
     }
+
 }

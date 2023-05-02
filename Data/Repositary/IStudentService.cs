@@ -14,13 +14,16 @@ namespace Data.Repositary
 
 
         Task<IEnumerable<StudentFNameandLnameBinding>> GetStudent();
-        Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string studentEnrollment);
-        //Task<Student> GetStudentByID(int id);
-        //Task<Student> AddStudent(Student student);
+      //  Task<GetStudentEnrolledInCourse> GetEnrolledCourseByStudentID(string studentEnrollment);
 
-        //Task<Student> UpdateStudent(Student student);
+        Task<IEnumerable<GetStudentEnrolledInCourse>> GetEnrolledCoursesByStudentID(string studentCode);
+        
+            //Task<Student> GetStudentByID(int id);
+            //Task<Student> AddStudent(Student student);
 
-        //Task<IEnumerable<Student>> DeleteStudent(int id);
+            //Task<Student> UpdateStudent(Student student);
 
-    }
+            //Task<IEnumerable<Student>> DeleteStudent(int id);
+
+        }
 }

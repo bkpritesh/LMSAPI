@@ -1,7 +1,9 @@
-﻿using Data.Services;
+﻿using Dapper;
+using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Batchs;
 using NLog.Web;
 using OfficeOpenXml;
 using System;
@@ -69,5 +71,93 @@ namespace LMS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+
+        [HttpPut("BatchCode")]
+        public async Task<IActionResult> UpdateBatchDetail(string BatchCode, [FromBody] BatchDetails batch)
+        {
+            if (BatchCode != batch.BatchCode)
+            {
+                return BadRequest();
+            }
+
+            var update = await _batchDetailService.UpdateBatchDetail(batch);
+
+
+
+            return Ok(update);
+        }
+
+
+        [HttpPut("{batchCode}/{chapterCode}")]
+        public async Task<IActionResult> UpdateBatchDetail( string batchCode, string chapterCode, [FromBody] BatchDetails batch)
+        {
+            if ( batchCode != batch.BatchCode || chapterCode != batch.ChapterCode)
+            {
+                return BadRequest();
+            }
+
+            var updatedBatch = await _batchDetailService.UpdateBatchDetail(batch);
+
+            return Ok(updatedBatch);
+        }
+
+
+        [HttpGet("{BatchCode}")]
+        public async Task<IActionResult> GetStudentByBCode(string BatchCode)
+        {
+            try
+            {
+                var batcheStudent  = await _batchDetailService.GetStudentByBCode(BatchCode);
+                return Ok(batcheStudent);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the database operation
+                return StatusCode(500, $"Error retrieving batches: {ex.Message}");
+            }
+        }
+
+
+
+
+        [HttpGet("GetDetailByBCode")]
+        public async Task<IActionResult> GetDetailByBCode(string? BatchCode)
+        {
+            try
+            {
+                var batcheStudent = await _batchDetailService.GetDetailByBCode(BatchCode);
+                return Ok(batcheStudent);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the database operation
+                return StatusCode(500, $"Error retrieving batches: {ex.Message}");
+            }
+        }
+
+
+
+        [HttpGet("GetDetailByBCHCode")]
+        public async Task<IActionResult> GetDetailByBCHCode(string? BatchCode, string? chapterCode)
+        {
+            try
+            {
+                var batcheStudent = await _batchDetailService.GetDetailByBCHCode(BatchCode, chapterCode);
+                return Ok(batcheStudent);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the database operation
+                return StatusCode(500, $"Error retrieving batches: {ex.Message}");
+            }
+        }
+
+
+
+
+
     }
 }

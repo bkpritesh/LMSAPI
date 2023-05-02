@@ -1,39 +1,35 @@
 ﻿using Dapper;
 using Data.Repositary;
+using Data.Repositary.Admin;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
 using Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Services
+namespace Data.Services.AdminService
 {
-
-    public class InstructorService : IInstructorService
+    public  class AdminUdService : IAdminUD
     {
 
         private readonly IAccountID _accountID;
         private readonly IDbConnection _dbConnection;
 
-        public InstructorService(IConfiguration configuration, IAccountID accountID)
+        public AdminUdService(IConfiguration configuration, IAccountID accountID)
         {
             var connectionString = configuration.GetConnectionString("SqlConnection");
             _dbConnection = new SqlConnection(connectionString);
-            _accountID = accountID; 
+            _accountID = accountID;
         }
 
-        public async Task<IEnumerable<dynamic>> GetInstructor()
-        {
-            var results = await _dbConnection.QueryAsync("SELECT [UGUID], [Email] ,[FName] ,[MName] ,[LName] ,[Address] ,[State] ,[City] ,[Country] ,[ContactNo] ,[Education] ,[SkillSet] ,[BirthDate] ,[JoiningDate] ,[ProfileImg] ,[InstructorCode] FROM [dbo].[TBLUserDetail] where IsInstructor='true'");
-            return results;
-        }
+ 
 
-        public async Task<UserDetails> AddInstructorDetail(UserDetails RgDetail)
+
+        public async Task<UserDetails> AddAdminInUD(UserDetails RgDetail)
         {
 
 
@@ -55,8 +51,9 @@ namespace Data.Services
                 NewInstructorID = 0;
             }
             var nextInstructorID = $"I-{NewInstructorID + 1:0000}";
-
             _accountID.InstructorId = nextInstructorID;
+
+
             parameters.Add("@IsInstructor", RgDetail.IsInstructor);
             parameters.Add("@Email", RgDetail.Email);
             parameters.Add(@"Fname", RgDetail.FName);
@@ -72,7 +69,9 @@ namespace Data.Services
             parameters.Add("@BirthDate", RgDetail.BirthDate);
             parameters.Add("@JoiningDate", RgDetail.JoiningDate);
             parameters.Add("@IsLeaving ", RgDetail.IsLeaving);
+
             //
+
             parameters.Add("@ProfileDes", RgDetail.ProfileDes);
             //
             parameters.Add("@ProfileImg", RgDetail.ProfileImg);
@@ -82,15 +81,8 @@ namespace Data.Services
             parameters.Add("@InstructorCode", _accountID.InstructorId);
 
 
-            var results = await _dbConnection.QueryAsync<UserDetails>("InsertInstructor", parameters, commandType: CommandType.StoredProcedure);
+            var results = await _dbConnection.QueryAsync<UserDetails>("AddAdmin", parameters, commandType: CommandType.StoredProcedure);
             return results.SingleOrDefault();
-        }
-
-
-        public async Task<IEnumerable<dynamic>> GetBDByInstructorCode(string InstructorCode)
-        {
-            var results = await _dbConnection.QueryAsync("GetBatchDetailsByInstructorCode", new { InstructorCode = InstructorCode }, commandType: CommandType.StoredProcedure);
-            return results;
         }
     }
 }

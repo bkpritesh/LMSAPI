@@ -73,7 +73,7 @@ namespace Data.Services
             {
                 NewCategoryId = 0;
             }
-            var nextCategoryId = $"CID-{NewCategoryId + 1:D4}";
+            var nextCategoryId = $"CID-{NewCategoryId + 1:0000}";
 
             var parameters = new DynamicParameters(); 
             parameters.Add("@CourseBanner", DocPath);

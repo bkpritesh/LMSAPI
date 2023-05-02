@@ -108,7 +108,48 @@ namespace LMS.Controllers
 
 
 
-        [HttpPut("BatchCode")]
+        //[HttpPut("BatchCode")]
+        //public async Task<IActionResult> UpdateBatch(string BatchCode, [FromBody] Batch batch)
+        //{
+        //    if (BatchCode != batch.BatchCode)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    //var update = await _batchService.UpdateBatch(batch);
+
+        //    try
+        //    {
+        //        var newBatch = await _batchService.UpdateBatch(batch);
+        //        var studentsJson = batch.Students;
+
+
+
+        //        var studentsList = JsonConvert.DeserializeObject<List<StudentBatch>>(studentsJson); // deserialize JSON string into List<Batch> object
+        //        var studentCodes = string.Join(",", studentsList.Select(s => s.StudentCode)); // select the StudentCode properties and join them into a comma-separated string
+
+
+        //        foreach (var student in studentsList)
+        //        {
+        //            var studentBatch = new StudentBatch
+        //            {
+        //                BatchCode = batch.BatchCode,
+        //                StudentCode = student.StudentCode
+        //            };
+        //            await _batchService.AddStudentBatch(studentBatch);
+        //        }
+
+
+        //        return Ok(batch);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }                   
+        //}
+
+
+        [HttpPut("{BatchCode}")]
         public async Task<IActionResult> UpdateBatch(string BatchCode, [FromBody] Batch batch)
         {
             if (BatchCode != batch.BatchCode)
@@ -116,12 +157,33 @@ namespace LMS.Controllers
                 return BadRequest();
             }
 
-            var update = await _batchService.UpdateBatch(batch);
+            try
+            {
+                var newBatch = await _batchService.UpdateBatch(batch);
+                var studentsJson = batch.Students;
 
+                var studentsList = JsonConvert.DeserializeObject<List<StudentBatch>>(studentsJson); // deserialize JSON string into List<StudentBatch> object
+                var studentCodes = string.Join(",", studentsList.Select(s => s.StudentCode)); // select the StudentCode properties and join them into a comma-separated string
 
+                foreach (var student in studentsList)
+                {
+                    var studentBatch = new StudentBatch
+                    {
+                        BatchCode = batch.BatchCode,
+                        StudentCode = student.StudentCode
+                    };
+                    await _batchService.UpdateStudentBatch(studentBatch);
+                }
 
-            return Ok(update);
+                return Ok(batch);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
+
+
 
 
         [HttpGet("course/{courseCode}")]

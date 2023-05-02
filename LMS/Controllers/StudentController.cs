@@ -46,7 +46,7 @@ namespace LMS.Controllers
         [HttpGet("{StudentCode}")]
         public async Task<IActionResult> GetEnrolledCourseByStudentID(string StudentCode)
         {
-            var studentEnrollment = await _StudentService.GetEnrolledCourseByStudentID(StudentCode);
+            var studentEnrollment = await _StudentService.GetEnrolledCoursesByStudentID(StudentCode);
 
             if (studentEnrollment == null)
             {
