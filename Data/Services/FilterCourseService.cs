@@ -37,5 +37,11 @@ namespace Data.Services
             return courses.ToList();
         }
 
-    }
+
+		public async Task<IEnumerable<BatchChapter>> GetCourseDetails(string CourseCode)
+		{
+			var results = await _dbConnection.QueryAsync<BatchChapter>("SELECT ChapterCode,ChapterName,ChapterDescription FROM [dbo].[BatchDetails] WHERE CourseCode='" + CourseCode + "'");
+			return results.ToList();
+		}
+	}
 }
