@@ -45,7 +45,9 @@ namespace LMS.Controllers
                         var chapterName = worksheet.Cells[i, 2].Value?.ToString();
                         var chapterDescription = worksheet.Cells[i, 3].Value?.ToString();
                         var expectedDateString = worksheet.Cells[i, 4].Value?.ToString();
-                        var expectedDate = DateTime.ParseExact(expectedDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        var expectedDate = DateTime.ParseExact(expectedDateString, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+                       // var expectedDate = DateTime.ParseExact(expectedDateString, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                         // create a new ChapterBinding object
                         var chapter = new ChatperBinding
@@ -53,7 +55,7 @@ namespace LMS.Controllers
                             ChapterCode = chapterCode,
                             ChapterName = chapterName,
                             ChapterDescription = chapterDescription,
-                            ExpectedDate = expectedDate
+                            ExpectedDate = expectedDate.Date
                         };
 
                         // pass the chapter details along with the batch details to your service or database for processing
