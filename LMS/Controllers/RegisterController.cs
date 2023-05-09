@@ -103,9 +103,9 @@ namespace LMS.Controllers
                         ContactNo = requestRegister.ContactNo,
                         Education = requestRegister.Education,
                         SkillSet = requestRegister.SkillSet,
-                        BirthDate = requestRegister.BirthDate,
+                        BirthDate = requestRegister.BirthDate,                      
                         JoiningDate = requestRegister.JoiningDate,
-                       
+                        AccountType=requestRegister.AccountType,
                        
                     };
 
