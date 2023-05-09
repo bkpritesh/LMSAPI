@@ -191,22 +191,24 @@ namespace LMS.Controllers
                         var chapterDescription = worksheet.Cells[i, 3].Value?.ToString();
                         var expectedDateString = worksheet.Cells[i, 4].Value?.ToString();
 
+                        CultureInfo culture = new CultureInfo("en-GB"); // set the culture to match the date format in your Excel file
+                        Thread.CurrentThread.CurrentCulture = culture;
                         DateTime expectedDate;
-                        if (!DateTime.TryParseExact(expectedDateString, dateFormats.ToArray(), CultureInfo.InvariantCulture, DateTimeStyles.None, out expectedDate))
+                        if (!DateTime.TryParseExact(expectedDateString, dateFormats.ToArray(), culture, DateTimeStyles.None, out expectedDate))
                         {
                             throw new ArgumentException($"Invalid date format: {expectedDateString}");
                         }
 
-                        var expectedDateFormatted = expectedDate.ToString("dd-MM-yyyy");
                         // create a new ChapterBinding object
                         var chapter = new ChatperBinding
                         {
                             ChapterCode = chapterCode,
                             ChapterName = chapterName,
                             ChapterDescription = chapterDescription,
-                            ExpectedDate = DateTime.ParseExact(expectedDateFormatted, "dd-MM-yyyy", CultureInfo.InvariantCulture)
-                            //ExpectedDate = expectedDate.Date
+                            ExpectedDate = expectedDate
                         };
+
+
 
                         // pass the chapter details along with the batch details to your service or database for processing
                         await _batchDetailService.CreateBatchDetail(batch, chapter);
