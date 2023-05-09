@@ -159,30 +159,7 @@ namespace LMS.Controllers
                     var worksheet = package.Workbook.Worksheets[0]; // assuming the data is on the first worksheet
                     var rowCount = worksheet.Dimension.Rows;
 
-                    // List of format strings to try when parsing the date
-                    var dateFormats = new List<string>
-            {
-                "dd-MM-yyyy HH:mm:ss",
-                "yyyy-MM-ddTHH:mm:ss",
-                "yyyy-MM-ddTHH:mm:ssZ",
-                "yyyy-MM-dd HH:mm:ss",
-                "yyyy/MM/dd HH:mm:ss",
-                "dd/MM/yyyy HH:mm:ss",
-                "dd-MMM-yyyy HH:mm:ss",
-                "dd MMM yyyy HH:mm:ss",
-                "MM/dd/yyyy HH:mm:ss",
-                "MMM dd, yyyy HH:mm:ss",
-                "dd-MM-yyyy",
-                "yyyy-MM-dd",
-                "yyyy/MM/dd",
-                "dd/MM/yyyy",
-                "dd-MMM-yyyy",
-                "dd MMM yyyy",
-                "MM/dd/yyyy",
-                "MMM dd, yyyy"
-            };
-
-                    for (int i = 2; i <= rowCount; i++) // assuming the first row contains headers
+                   for (int i = 2; i <= rowCount; i++) // assuming the first row contains headers
                     {
                         var chapterCode = worksheet.Cells[i, 1].Value?.ToString();
                         var chapterName = worksheet.Cells[i, 2].Value?.ToString();
@@ -195,23 +172,13 @@ namespace LMS.Controllers
                         // get the culture used in the Excel sheet
                         CultureInfo excelCulture = new CultureInfo("en-GB"); // replace with the actual culture used in your Excel sheet
 
-                        // parse the date using the Excel culture
-                        DateTime expectedDate;
-                        if (!DateTime.TryParseExact(expectedDateString, dateFormats.ToArray(), excelCulture, DateTimeStyles.None, out expectedDate))
-                        {
-                            throw new ArgumentException($"Invalid date format: {expectedDateString}");
-                        }
-
-                        // format the date using the current user's culture
-                        string expectedDateFormatted = expectedDate.ToString("dd/MM/yyyy", currentCulture);
-
-                        // create a new ChapterBinding object
+              
                         var chapter = new ChatperBinding
                         {
                             ChapterCode = chapterCode,
                             ChapterName = chapterName,
                             ChapterDescription = chapterDescription,
-                            ExpectedDate = DateTime.Parse(expectedDateFormatted)
+                            ExpectedDate = DateTime.Parse(expectedDateString)
                         };
 
                         // pass the chapter details along with the batch details to your service or database for processing
