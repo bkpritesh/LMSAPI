@@ -58,21 +58,19 @@ namespace Data.Services
 
             var  StudID  = await _dbConnection.ExecuteScalarAsync<string>("SELECT TOP 1 StudentCOde FROM [TBLUserDetail] ORDER BY StudentCOde DESC");
 
-            int NewStudId;
+            int newStudId = 0;
             if (!string.IsNullOrEmpty(StudID))
             {
-                if (!int.TryParse(StudID.Substring(5), out NewStudId))
+                if (!int.TryParse(StudID.Substring(2), out newStudId))
                 {
-                    NewStudId = 0;
+                    newStudId = 0;
                 }
             }
-            else
-            {
-                NewStudId = 0;
-            }
-            var nextStudentID = $"S-{NewStudId + 1:0000}";
+            var nextStudentID = $"S-{newStudId + 1:D4}";
+    
             _accountId.StudentID = nextStudentID;
-            
+
+
 
             parameters.Add("@IsStudent", RgDetail.IsStudent);
             parameters.Add("@Email", RgDetail.Email);
